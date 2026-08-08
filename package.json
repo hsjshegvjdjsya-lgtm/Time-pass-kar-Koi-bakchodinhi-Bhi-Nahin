@@ -1,7 +1,7 @@
 {
-  "name": "starxd",
+  "name": "shyamxd",
   "version": "2.0.0",
-  "description": "WhatsApp Bot by Malvin King",
+  "description": "WhatsApp Bot by Shyam King",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -13,12 +13,12 @@
     "install:panel": "npm install --legacy-peer-deps",
     "install:force": "npm install --force",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docker:build": "docker build -t docker run -e SESSION_ID=$SESSION_ID starxd"
+    "docker:build": "docker build -t docker run -e SESSION_ID=$SESSION_ID DEX~"
   },
   "keywords": [
-    "whatsapp-bot", "star-xd","starxd"
+    "whatsapp-bot", "shyam-xd","shyamxd"
   ],
-  "author": "Malvin King",
+  "author": "Shyam King",
   "license": "ISC",
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",

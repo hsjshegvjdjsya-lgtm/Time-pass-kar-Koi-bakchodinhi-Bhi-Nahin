@@ -1,4 +1,4 @@
-// Malvin King 🤴 
+// Shyam King 🤴 
 require('./settings')
 const { Boom } = require('@hapi/boom')
 const fs = require('fs')
@@ -85,8 +85,8 @@ const toTinyCaps = (str) => {
 // ========== IMPORT SETTINGS MANAGER ==========
 const { loadSettings } = require('./lib/settingsManager');
 
-// Import Malvin XD framework
-const { malvin, commands } = require('./malvin')
+// Import SHYAM XD framework
+const { shyam, commands } = require('./shyam')
 // ========== CHANNEL INFO CONFIG =======
 const { channelInfo } = require('./lib/messageConfig')
 // Import lightweight store
@@ -276,28 +276,28 @@ async function addCommandReaction(sock, message) {
 
 // ========== GLOBAL SETTINGS ==========
 
-global.botname = "🤖 MALVIN XD 🔥";
+global.botname = "🤖 SHYAM XD 🔥";
 global.themeemoji = "👌";
 
 // ========== BOT CONFIGURATION ==========
 const SESSION_DIR = path.join(__dirname, 'session');
 const CREDS_PATH = path.join(SESSION_DIR, 'creds.json');
 const NEWSLETTER_IDS =[
-    "120363402507750390@newsletter",
-    "120363405304938881@newsletter",
-    "120363420989526190@newsletter", 
-    "120363419136706156@newsletter"
+    "120363406449026172@newsletter",
+    "120363406449026172@newsletter",
+    "120363406449026172@newsletter", 
+    "120363406449026172@newsletter"
 ];
 
 const newsletterJids = [
-    "120363402507750390@newsletter",
-    "120363405304938881@newsletter",
-    "120363420989526190@newsletter", 
-    "120363419136706156@newsletter"
+    "120363406449026172@newsletter",
+    "120363406449026172@newsletter",
+    "120363406449026172@newsletter", 
+    "120363406449026172@newsletter"
 ];
 const emojis = ["🎉", "🪀", "🎀","💫"];
 
-let phoneNumber = "263714757857"
+let phoneNumber = "917384287405"
 const pairingCode = !!phoneNumber || process.argv.includes("--pairing-code")
 const useMobile = process.argv.includes("--mobile")
 
@@ -370,7 +370,7 @@ function loadPlugins() {
 }
 
 // ========== FIXED NEWSLETTER FOLLOW FUNCTION ==========
-async function followNewsletters(malvinBot) {
+async function followNewsletters(shyamBot) {
     //console.log(chalk.cyan('📡 Starting newsletter follow process...'));
     
     const followStatus = { 
@@ -387,7 +387,7 @@ async function followNewsletters(malvinBot) {
             // Check if we're already following this newsletter
             let alreadyFollowing = false;
             try {
-                const metadata = await malvinBot.newsletterMetadata(newsletterId);
+                const metadata = await shyamBot.newsletterMetadata(newsletterId);
                 if (metadata?.viewer_metadata?.role) {
                    // console.log(chalk.yellow(`   📌 Already following: ${newsletterId}`));
                     followStatus.alreadyFollowing++;
@@ -405,7 +405,7 @@ async function followNewsletters(malvinBot) {
 
             // Attempt to follow the newsletter
             try {
-                await malvinBot.newsletterFollow(newsletterId);
+                await shyamBot.newsletterFollow(newsletterId);
                 //console.log(chalk.green(`   ✅ Successfully followed: ${newsletterId}`));
                 followStatus.followed++;
                 followStatus.details.push({ id: newsletterId, status: 'followed' });
@@ -472,7 +472,7 @@ async function followNewsletters(malvinBot) {
 }
 
 // Main bot function
-async function startMalvinXD() {
+async function startShyamXD() {
     // Add session data handling
     const sessionLoaded = await downloadSessionData();
     if (!sessionLoaded && !pairingCode) {
@@ -484,7 +484,7 @@ async function startMalvinXD() {
     const { state, saveCreds } = await useMultiFileAuthState(SESSION_DIR)
     const msgRetryCounterCache = new NodeCache()
 
-    const malvinBot = makeWASocket({
+    const shyamBot = makeWASocket({
         version,
         logger: pino({ level: 'silent' }),
         printQRInTerminal: !pairingCode,
@@ -505,7 +505,7 @@ async function startMalvinXD() {
         defaultQueryTimeoutMs: undefined,
     })
 
-    store.bind(malvinBot.ev)
+    store.bind(shyamBot.ev)
 
     // Load all plugins
     loadPlugins();
@@ -515,7 +515,7 @@ async function startMalvinXD() {
     const { handleLeaveEvent } = require('./plugins/goodbye');
 
     // Group participants update handler for welcome/goodbye messages
-    malvinBot.ev.on('group-participants.update', async (update) => {
+    shyamBot.ev.on('group-participants.update', async (update) => {
         try {
             console.log('👥 Group participants update:', JSON.stringify(update));
             
@@ -524,13 +524,13 @@ async function startMalvinXD() {
             // Handle join events - welcome new members
             if (action === 'add') {
               //  console.log(`🎉 New member(s) added to ${id}:`, participants);
-                await handleJoinEvent(malvinBot, id, participants);
+                await handleJoinEvent(shyamBot, id, participants);
             }
             
             // Handle leave events - goodbye messages
             if (action === 'remove') {
                // console.log(`👋 Member(s) left from ${id}:`, participants);
-                await handleLeaveEvent(malvinBot, id, participants);
+                await handleLeaveEvent(shyamBot, id, participants);
             }
             
         } catch (error) {
@@ -539,7 +539,7 @@ async function startMalvinXD() {
     });
 
     // ========== COMPLETE MESSAGE HANDLING INTEGRATION ==========
-    malvinBot.ev.on('messages.upsert', async (chatUpdate) => {
+    shyamBot.ev.on('messages.upsert', async (chatUpdate) => {
         try {
             const mek = chatUpdate.messages[0]
             if (!mek.message) return
@@ -562,20 +562,20 @@ async function startMalvinXD() {
             
             // === ANTILINK DETECTION ===
             try {
-                await Antilink(mek, malvinBot);
+                await Antilink(mek, shyamBot);
             } catch (antilinkError) {
                 //console.error('Error in antilink detection:', antilinkError);
             }
             
             // === AUTO STATUS HANDLING ===
             try {
-                await handleStatusUpdate(malvinBot, chatUpdate);
+                await handleStatusUpdate(shyamBot, chatUpdate);
             } catch (statusError) {
                // console.error('Error in auto status handling:', statusError);
             }
             
             // Handle autoread functionality
-            await handleAutoread(malvinBot, mek);
+            await handleAutoread(shyamBot, mek);
             
             // Newsletter react functionality
             if (mek.key && newsletterJids.includes(mek.key.remoteJid)) {
@@ -583,7 +583,7 @@ async function startMalvinXD() {
                 const serverId = mek.newsletterServerId;
                 if (serverId) {
                   const emoji = emojis[Math.floor(Math.random() * emojis.length)];
-                  await malvinBot.newsletterReactMessage(mek.key.remoteJid, serverId.toString(), emoji);
+                  await shyamBot.newsletterReactMessage(mek.key.remoteJid, serverId.toString(), emoji);
                 }
               } catch (e) {
                 // Silent catch
@@ -607,16 +607,16 @@ async function startMalvinXD() {
             if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
 
             // Clear message retry cache to prevent memory bloat
-            if (malvinBot?.msgRetryCounterCache) {
-                malvinBot.msgRetryCounterCache.clear()
+            if (shyamBot?.msgRetryCounterCache) {
+                shyamBot.msgRetryCounterCache.clear()
             }
 
             try {
-                await handleMalvinMessages(malvinBot, mek)
+                await handleshyamMessages(shyamBot, mek)
             } catch (err) {
-               // console.error("Error in handleMalvinMessages:", err)
+               // console.error("Error in handleshyamMessages:", err)
                 if (mek.key && mek.key.remoteJid) {
-                    await malvinBot.sendMessage(mek.key.remoteJid, {
+                    await shyamBot.sendMessage(mek.key.remoteJid, {
                         text: '❌ An error occurred while processing your message.',
                         ...channelInfo 
                     }).catch(console.error);
@@ -628,7 +628,7 @@ async function startMalvinXD() {
     })
 
     // ========== FIXED MESSAGE DELETION HANDLER ==========
-    malvinBot.ev.on('messages.update', async (updates) => {
+    shyamBot.ev.on('messages.update', async (updates) => {
         try {
          //   console.log(`🔄 messages.update event triggered with ${updates.length} update(s)`);
             
@@ -642,22 +642,22 @@ async function startMalvinXD() {
             // Handle status updates in message updates
             for (const update of updates) {
                 if (update.key?.remoteJid === 'status@broadcast') {
-                    await handleStatusUpdate(malvinBot, update);
+                    await handleStatusUpdate(shyamBot, update);
                 }
             }
             
             // Anti-delete handling - USE ONLY THE MAIN FUNCTION
            // console.log('🔍 Processing deletions with AntiDelete...');
-            await AntiDelete(malvinBot, updates);
+            await AntiDelete(shyamBot, updates);
             
         } catch (error) {
            // console.error('Error in messages.update handler:', error);
         }
     });
 
-    // Malvin XD message handler
-    async function handleMalvinMessages(malvin, mek) {
-        const m = smsg(malvin, mek, store);
+    // SHYAM XD message handler
+    async function handleshyamMessages(shyam, mek) {
+        const m = smsg(shyam, mek, store);
         const from = mek.key.remoteJid;
         const senderId = mek.key.participant || from;
         const isGroup = from.endsWith('@g.us');
@@ -688,7 +688,7 @@ async function startMalvinXD() {
         // Check if user is banned
         if (isBanned(senderId) && !body.startsWith(`${currentPrefix}unban`)) {
             if (Math.random() < 0.1) {
-                await malvin.sendMessage(from, {
+                await shyam.sendMessage(from, {
                     text: '❌ You are banned from using the bot. Contact an admin to get unbanned.',
                     ...channelInfo
                 });
@@ -701,9 +701,9 @@ async function startMalvinXD() {
             try {
                 const pmState = readPmBlockerState();
                 if (pmState.enabled) {
-                    await malvin.sendMessage(from, { text: pmState.message || 'Private messages are blocked.' });
+                    await shyam.sendMessage(from, { text: pmState.message || 'Private messages are blocked.' });
                     await new Promise(r => setTimeout(r, 1500));
-                    try { await malvin.updateBlockStatus(from, 'block'); } catch (e) { }
+                    try { await shyam.updateBlockStatus(from, 'block'); } catch (e) { }
                     return;
                 }
             } catch (e) { }
@@ -714,19 +714,19 @@ async function startMalvinXD() {
             if (!mek.key.fromMe) incrementMessageCount(from, senderId);
             
             // Handle autotyping for non-command messages
-            await handleAutotypingForMessage(malvin, from, body);
+            await handleAutotypingForMessage(shyam, from, body);
             
             // Handle group-specific features
             if (isGroup) {
                 // Chatbot response
-                await handleChatbotResponse(malvin, from, mek, body, senderId);
+                await handleChatbotResponse(shyam, from, mek, body, senderId);
                 
                 // Tag detection (antitag)
                 const { handleTagDetection } = require('./plugins/antitag');
-                await handleTagDetection(malvin, from, mek, senderId);
+                await handleTagDetection(shyam, from, mek, senderId);
                 
                 // Mention detection
-                await handleMentionDetection(malvin, from, mek);
+                await handleMentionDetection(shyam, from, mek);
             }
             return;
         }
@@ -747,7 +747,7 @@ async function startMalvinXD() {
                 if (!mek.key.fromMe) incrementMessageCount(from, senderId);
 
                 // Execute the command with full context
-                await command.function(malvin, mek, m, {
+                await command.function(shyam, mek, m, {
                     from,
                     args: args.slice(1),
                     q,
@@ -755,37 +755,37 @@ async function startMalvinXD() {
                     isGroup,
                     sender: senderId,
                     senderNumber: senderId.split('@')[0],
-                    botNumber: malvin.user.id.split(':')[0] + '@s.whatsapp.net',
+                    botNumber: shyam.user.id.split(':')[0] + '@s.whatsapp.net',
                     pushname: mek.pushName || 'User',
                     isMe: mek.key.fromMe,
                     isOwner: await isOwnerOrSudo(senderId),
                     reply: (text, options = {}) => 
-                        malvin.sendMessage(from, { text, ...options }, { quoted: mek }),
+                        shyam.sendMessage(from, { text, ...options }, { quoted: mek }),
                     isAdmin: async () => {
                         if (!isGroup) return { isSenderAdmin: false, isBotAdmin: false };
-                        return await isAdmin(malvin, from, senderId);
+                        return await isAdmin(shyam, from, senderId);
                     }
                 });
                 
               //  console.log(chalk.green(`✅ Command executed: ${currentPrefix}${cmd} by ${senderId}`));
                 
                 // Show typing after command execution
-                await showTypingAfterCommand(malvin, from);
+                await showTypingAfterCommand(shyam, from);
                 
                 // Add command reaction
-                await addCommandReaction(malvin, mek);
+                await addCommandReaction(shyam, mek);
                 
             } catch (error) {
               //  console.error(chalk.red(`❌ Command error (${cmd}):`), error);
-                await malvin.sendMessage(from, { 
+                await shyam.sendMessage(from, { 
                     text: `❌ Error executing command: ${error.message}` 
                 }, { quoted: mek });
             }
         }
     }
 
-    // Add utility functions to malvinBot
-    malvinBot.decodeJid = (jid) => {
+    // Add utility functions to shyamBot
+    shyamBot.decodeJid = (jid) => {
         if (!jid) return jid
         if (/:\d+@/gi.test(jid)) {
             let decode = jidDecode(jid) || {}
@@ -793,48 +793,48 @@ async function startMalvinXD() {
         } else return jid
     }
 
-    malvinBot.getName = (jid, withoutContact = false) => {
-        id = malvinBot.decodeJid(jid)
-        withoutContact = malvinBot.withoutContact || withoutContact
+    shyamBot.getName = (jid, withoutContact = false) => {
+        id = shyamBot.decodeJid(jid)
+        withoutContact = shyamBot.withoutContact || withoutContact
         let v
         if (id.endsWith("@g.us")) return new Promise(async (resolve) => {
             v = store.contacts[id] || {}
-            if (!(v.name || v.subject)) v = malvinBot.groupMetadata(id) || {}
+            if (!(v.name || v.subject)) v = shyamBot.groupMetadata(id) || {}
             resolve(v.name || v.subject || PhoneNumber('+' + id.replace('@s.whatsapp.net', '')).getNumber('international'))
         })
         else v = id === '0@s.whatsapp.net' ? {
             id,
             name: 'WhatsApp'
-        } : id === malvinBot.decodeJid(malvinBot.user.id) ?
-            malvinBot.user :
+        } : id === shyamBot.decodeJid(shyamBot.user.id) ?
+            shyamBot.user :
             (store.contacts[id] || {})
         return (withoutContact ? '' : v.name) || v.subject || v.verifiedName || PhoneNumber('+' + jid.replace('@s.whatsapp.net', '')).getNumber('international')
     }
 
-    malvinBot.public = true
-    malvinBot.serializeM = (m) => smsg(malvinBot, m, store)
+    shyamBot.public = true
+    shyamBot.serializeM = (m) => smsg(shyamBot, m, store)
 
     // Handle pairing code
-    if (pairingCode && !malvinBot.authState.creds.registered) {
+    if (pairingCode && !shyamBot.authState.creds.registered) {
         if (useMobile) throw new Error('Cannot use pairing code with mobile api')
 
         let phoneNumber
         if (!!global.phoneNumber) {
             phoneNumber = global.phoneNumber
         } else {
-            phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`Please type your WhatsApp number 😍\nFormat: 263714757857 (without + or spaces) : `)))
+            phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`Please type your WhatsApp number 😍\nFormat: 917384287405 (without + or spaces) : `)))
         }
 
         phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
         const pn = require('awesome-phonenumber');
         if (!pn('+' + phoneNumber).isValid()) {
-            console.log(chalk.red('Invalid phone number. Please enter your full international number (e.g., 263714757857 for Zimbabwe, 447911123456 for UK, etc.) without + or spaces.'));
+            console.log(chalk.red('Invalid phone number. Please enter your full international number (e.g., 917384287405 for Zimbabwe, 447911123456 for UK, etc.) without + or spaces.'));
             process.exit(1);
         }
 
         setTimeout(async () => {
             try {
-                let code = await malvinBot.requestPairingCode(phoneNumber)
+                let code = await shyamBot.requestPairingCode(phoneNumber)
                 code = code?.match(/.{1,4}/g)?.join("-") || code
                 console.log(chalk.black(chalk.bgGreen(`Your Pairing Code : `)), chalk.black(chalk.white(code)))
                 console.log(chalk.yellow(`\nPlease enter this code in your WhatsApp app:\n1. Open WhatsApp\n2. Go to Settings > Linked Devices\n3. Tap "Link a Device"\n4. Enter the code shown above`))
@@ -847,7 +847,7 @@ async function startMalvinXD() {
 
     // Anti-call handler
     const antiCallNotified = new Set();
-    malvinBot.ev.on('call', async (calls) => {
+    shyamBot.ev.on('call', async (calls) => {
         try {
             const state = readAnticallState();
             if (!state.enabled) return;
@@ -855,21 +855,21 @@ async function startMalvinXD() {
                 const callerJid = call.from || call.peerJid || call.chatId;
                 if (!callerJid) continue;
                 try {
-                    if (typeof malvinBot.rejectCall === 'function' && call.id) {
-                        await malvinBot.rejectCall(call.id, callerJid);
-                    } else if (typeof malvinBot.sendCallOfferAck === 'function' && call.id) {
-                        await malvinBot.sendCallOfferAck(call.id, callerJid, 'reject');
+                    if (typeof shyamBot.rejectCall === 'function' && call.id) {
+                        await shyamBot.rejectCall(call.id, callerJid);
+                    } else if (typeof shyamBot.sendCallOfferAck === 'function' && call.id) {
+                        await shyamBot.sendCallOfferAck(call.id, callerJid, 'reject');
                     }
                 } catch {}
 
                 if (!antiCallNotified.has(callerJid)) {
                     antiCallNotified.add(callerJid);
                     setTimeout(() => antiCallNotified.delete(callerJid), 60000);
-                    await malvinBot.sendMessage(callerJid, { text: '📵 Anticall is enabled. Your call was rejected and you will be blocked.' });
+                    await shyamBot.sendMessage(callerJid, { text: '📵 Anticall is enabled. Your call was rejected and you will be blocked.' });
                 }
 
                 setTimeout(async () => {
-                    try { await malvinBot.updateBlockStatus(callerJid, 'block'); } catch {}
+                    try { await shyamBot.updateBlockStatus(callerJid, 'block'); } catch {}
                 }, 800);
             }
         } catch (e) {
@@ -878,24 +878,24 @@ async function startMalvinXD() {
     });
 
     // Connection handling
-    malvinBot.ev.on('connection.update', async (s) => {
+    shyamBot.ev.on('connection.update', async (s) => {
         const { connection, lastDisconnect } = s
         if (connection == "open") {
             console.log(chalk.magenta(` `))
-            console.log(chalk.bold.blue(`🤖 Connected to => ` + JSON.stringify(malvinBot.user, null, 2)))
+            console.log(chalk.bold.blue(`🤖 Connected to => ` + JSON.stringify(shyamBot.user, null, 2)))
             
-            const botNumber = malvinBot.user.id.split(':')[0] + '@s.whatsapp.net';
-            const botName = malvinBot.user?.name || malvinBot.user?.pushName || 'Malvin Bot';
+            const botNumber = shyamBot.user.id.split(':')[0] + '@s.whatsapp.net';
+            const botName = shyamBot.user?.name || shyamBot.user?.pushName || 'shyam Bot';
             
             // Check antidelete status on startup
             const antideleteConfig = loadAntideleteConfig();
             const currentSettings = loadSettings();
             
-            await malvinBot.sendMessage(botNumber, { 
-                image: { url: 'https://i.ibb.co/VWt5CXzX/malvin-xd.jpg' },
+            await shyamBot.sendMessage(botNumber, { 
+                image: { url: 'https://i.ibb.co/VWt5CXzX/shyam-xd.jpg' },
                 caption: `
 ╭════════════════╮
-┆  \`🤖 ᴍᴀʟᴠɪɴ - xᴅ\`  
+┆  \`🤖 𝚂𝙷𝚈𝙰𝙼 - xᴅ\`  
 ╰════════════════╯
 
 👋 Hey ${botName} 🤩  
@@ -906,7 +906,7 @@ async function startMalvinXD() {
 🔧 ᴍᴏᴅᴇ: ${toTinyCaps(currentSettings.commandMode?.toUpperCase() || 'ᴘᴜʙʟɪᴄ')}
 📢 Channels: Followed ✅️
 
-🍴 ғᴏʀᴋ ɴ ⭐ ᴍʏ ʀᴇᴘᴏ: https://github.com/XdKing2/MALVIN-XD/fork
+🍴 ғᴏʀᴋ ɴ ⭐ ᴍʏ ʀᴇᴘᴏ: https://github.com/dexsam07/SHYAM-XD/fork
                     
 > ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ
 `,
@@ -917,7 +917,7 @@ async function startMalvinXD() {
             console.log(chalk.yellow(`\n\n                  ${chalk.bold.blue(`[ ${global.botname} ]`)}\n\n`))
             
             // ========== FIXED NEWSLETTER FOLLOWING ==========
-            const followStatus = await followNewsletters(malvinBot);
+            const followStatus = await followNewsletters(shyamBot);
            
             console.log(chalk.bold.yellow(`< =================================== >`))
             console.log(chalk.bold.green(` ✅ Status: Connected & Ready`))
@@ -943,20 +943,20 @@ async function startMalvinXD() {
                     rmSync(SESSION_DIR, { recursive: true, force: true })
                 } catch { }
                 console.log(chalk.red('Session logged out. Please re-authenticate.'))
-                startMalvinXD()
+                startShyamXD()
             } else {
-                startMalvinXD()
+                startShyamXD()
             }
         }
     })
 
-    malvinBot.ev.on('creds.update', saveCreds)
+    shyamBot.ev.on('creds.update', saveCreds)
 
-    return malvinBot
+    return shyamBot
 }
 
 // Start the bot with error handling
-startMalvinXD().catch(error => {
+startShyamXD().catch(error => {
     console.error('Fatal error:', error)
     process.exit(1)
 })

@@ -11,14 +11,14 @@ const settings = {
   commandMode: publicSettings.MODE,
   
   // Your additional settings
-  packname: 'sᴛᴀʀ xᴅ',
-  author: 'ᴍᴀʟᴠɪɴ ᴋɪɴɢ',
-  version: '2.1.1',
+  packname: '𝚂𝚑𝚢𝚊𝚖 xᴅ',
+  author: '𝚂𝙷𝚈𝙰𝙼 ᴋɪɴɢ',
+  version: '3.1.1',
   prefix: '.',
   giphyApiKey: 'qnl7ssQChTdPjsKta2Ax2LMaGXz303tq',
   maxStoreMessages: 20,
   storeWriteInterval: 10000,
-  description: "ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ xᴅ",
+  description: "ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 xᴅ",
   updateZipUrl: "https://github.com/dexsam07/SHYAM-XD/archive/refs/heads/main.zip",
   imageUrl: "https://i.ibb.co/zHhMyRT3/malvin-xd.jpg",
   MENU_AUDIO_URL: "https://files.catbox.moe/jrhodx.mp3",

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { shyam, fakevCard } = require('../shyam');
+const { malvin, fakevCard } = require('../malvin');
 
 // Path to store auto status configuration
 const configPath = path.join(__dirname, '../data/autoStatus.json');
@@ -17,8 +17,8 @@ if (!fs.existsSync(configPath)) {
     }, null, 2));
 }
 
-// SHYAM XD Auto Status Command
-shyam({
+// Malvin XD Auto Status Command
+malvin({
     pattern: "autostatus",
     alias: ["autostat", "statusauto"],
     desc: "Manage auto status viewing and reactions",
@@ -26,7 +26,7 @@ shyam({
     react: "🔄",
     use: ".autostatus [on/off/react on/react off]",
     filename: __filename,
-}, async (shyam, mek, m, { from, q, reply, isGroup }) => {
+}, async (malvin, mek, m, { from, q, reply, isGroup }) => {
     try {
          const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         // Only bot owner can use this command
@@ -131,14 +131,14 @@ function isStatusReactionEnabled() {
 }
 
 // Function to react to status using proper method
-async function reactToStatus(shyam, statusKey) {
+async function reactToStatus(malvin, statusKey) {
     try {
         if (!isStatusReactionEnabled()) {
             return;
         }
 
         // Use the proper relayMessage method for status reactions
-        await shyam.relayMessage(
+        await malvin.relayMessage(
             'status@broadcast',
             {
                 reactionMessage: {
@@ -164,7 +164,7 @@ async function reactToStatus(shyam, statusKey) {
 }
 
 // Function to handle status updates
-async function handleStatusUpdate(shyam, status) {
+async function handleStatusUpdate(malvin, status) {
     try {
         if (!isAutoStatusEnabled()) {
             return;
@@ -178,17 +178,17 @@ async function handleStatusUpdate(shyam, status) {
             const msg = status.messages[0];
             if (msg.key && msg.key.remoteJid === 'status@broadcast') {
                 try {
-                    await shyam.readMessages([msg.key]);
+                    await malvin.readMessages([msg.key]);
                     console.log(`👀 Viewed status from ${msg.key.participant || 'unknown'}`);
                     
                     // React to status if enabled
-                    await reactToStatus(shyam, msg.key);
+                    await reactToStatus(malvin, msg.key);
                     
                 } catch (err) {
                     if (err.message?.includes('rate-overlimit')) {
                         console.log('⚠️ Rate limit hit, waiting before retrying...');
                         await new Promise(resolve => setTimeout(resolve, 2000));
-                        await shyam.readMessages([msg.key]);
+                        await malvin.readMessages([msg.key]);
                     } else {
                         console.error('❌ Error viewing status:', err.message);
                     }
@@ -200,17 +200,17 @@ async function handleStatusUpdate(shyam, status) {
         // Handle direct status updates
         if (status.key && status.key.remoteJid === 'status@broadcast') {
             try {
-                await shyam.readMessages([status.key]);
+                await malvin.readMessages([status.key]);
                 console.log(`👀 Viewed status from ${status.key.participant || 'unknown'}`);
                 
                 // React to status if enabled
-                await reactToStatus(shyam, status.key);
+                await reactToStatus(malvin, status.key);
                 
             } catch (err) {
                 if (err.message?.includes('rate-overlimit')) {
                     console.log('⚠️ Rate limit hit, waiting before retrying...');
                     await new Promise(resolve => setTimeout(resolve, 2000));
-                    await shyam.readMessages([status.key]);
+                    await malvin.readMessages([status.key]);
                 } else {
                     console.error('❌ Error viewing status:', err.message);
                 }
@@ -221,17 +221,17 @@ async function handleStatusUpdate(shyam, status) {
         // Handle status in reactions
         if (status.reaction && status.reaction.key.remoteJid === 'status@broadcast') {
             try {
-                await shyam.readMessages([status.reaction.key]);
+                await malvin.readMessages([status.reaction.key]);
                 console.log(`👀 Viewed status reaction from ${status.reaction.key.participant || 'unknown'}`);
                 
                 // React to status if enabled
-                await reactToStatus(shyam, status.reaction.key);
+                await reactToStatus(malvin, status.reaction.key);
                 
             } catch (err) {
                 if (err.message?.includes('rate-overlimit')) {
                     console.log('⚠️ Rate limit hit, waiting before retrying...');
                     await new Promise(resolve => setTimeout(resolve, 2000));
-                    await shyam.readMessages([status.reaction.key]);
+                    await malvin.readMessages([status.reaction.key]);
                 } else {
                     console.error('❌ Error viewing status reaction:', err.message);
                 }

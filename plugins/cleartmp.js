@@ -45,10 +45,10 @@ async function clearTmpDirectory() {
     return { success, message, count: totalDeleted };
 }
 
-// Malvin XD Clear Temp Command
-const { malvin, fakevCard } = require('../malvin');
+// SHYAM XD Clear Temp Command
+const { shyam, fakevCard } = require('../shyam');
 
-malvin({
+shyam({
     pattern: "cleartmp",
     alias: ["cleartemp", "tmpclear", "cleanup"],
     desc: "Clear temporary files (Owner Only)",
@@ -56,7 +56,7 @@ malvin({
     react: "🧹",
     use: ".cleartmp",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) {
@@ -69,7 +69,7 @@ malvin({
         const result = await clearTmpDirectory();
         
         // Update the same message with results
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: result.success ? 
                 `✅ *TEMP FILES CLEANED*\n\n${result.message}` :
                 `❌ *CLEANUP FAILED*\n\n${result.message}`,

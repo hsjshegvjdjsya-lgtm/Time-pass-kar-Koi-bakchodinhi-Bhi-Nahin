@@ -1,25 +1,25 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { loadSettings } = require('../lib/settingsManager');
 const moment = require('moment-timezone');
 const fetch = require('node-fetch');
 const { channelInfo } = require('../lib/messageConfig');
 
-malvin({
+shyam({
     pattern: "github",
     alias: ["repo", "git", "source"],
     desc: "Show GitHub repository information",
     category: "general", 
     react: "🌟",
     filename: __filename
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         const currentSettings = loadSettings();
         
-        const res = await fetch('https://api.github.com/repos/XdKing2/MALVIN-XD');
+        const res = await fetch('https://api.github.com/repos/dexsam07/SHYAM-XD');
         if (!res.ok) throw new Error('Failed to fetch repo');
         const json = await res.json();
 
-        const botName = currentSettings.botName || 'ᴍᴀʟᴠɪɴ xᴅ';
+        const botName = currentSettings.botName || '𝚂𝙷𝚈𝙰𝙼 x𝙳';
         const txt = `
 ╭═✦〔 🥇 *${botName}* 〕✦═
 │ ⭐ *Name* : ${json.name}
@@ -37,7 +37,7 @@ malvin({
 
         const imageUrl = currentSettings.imageUrl;
         if (imageUrl) {
-            await malvin.sendMessage(
+            await shyam.sendMessage(
                 from,
                 {
                     image: { url: imageUrl },
@@ -47,7 +47,7 @@ malvin({
                 { quoted: fakevCard }
             );
         } else {
-            await malvin.sendMessage(
+            await shyam.sendMessage(
                 from,
                 {
                     text: txt,

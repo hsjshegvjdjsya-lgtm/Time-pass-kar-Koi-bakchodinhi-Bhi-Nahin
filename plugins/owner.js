@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 
-malvin({
+shyam({
     pattern: "owner",
     alias: ["creator", "dev", "developer"],
     desc: "Send bot owner's contact vCard",
@@ -9,12 +9,12 @@ malvin({
     react: "📞",
     filename: __filename,
     use: ".owner"
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         // Load owner info from settings
         
-        const ownerName = "ᴍᴀʟᴠɪɴ ᴋɪɴɢ";
-        const ownerNumber = "263780958186";
+        const ownerName = "𝚂𝙷𝚈𝙰𝙼 ᴋɪɴɢ";
+        const ownerNumber = "917384287404";
         
         // Create vCard
         const vcard = 'BEGIN:VCARD\n' + 
@@ -25,7 +25,7 @@ malvin({
                      'END:VCARD';
 
         // Send vCard contact
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             contacts: {
                 displayName: ownerName,
                 contacts: [{ vcard }]
@@ -34,7 +34,7 @@ malvin({
         }, { quoted: fakevCard });
 
         // Send additional info message
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: `
 *┏──〘 ᴏᴡɴᴇʀ ɪɴꜰᴏ 〙──⊷*
 *┃  👤 Name:* ${ownerName}
@@ -57,7 +57,7 @@ malvin({
     } catch (error) {
         console.error('Owner command error:', error);
         
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: `❌ *ᴇʀʀᴏʀ*
 
 Failed to send owner contact. Please try again later.

@@ -1,15 +1,15 @@
 //---------------------------------------------
-//           MALVIN-XD PROFILE PICTURE
+//           SHYAM-XD PROFILE PICTURE
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const fs = require('fs');
 const path = require('path');
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 
-malvin({
+shyam({
     pattern: "setpp",
     alias: ["setprofile", "setpic"],
     desc: "Set bot profile picture (Owner only)",
@@ -17,7 +17,7 @@ malvin({
     react: "🖼️",
     use: ".setpp (reply to image)",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         // Check if user is owner
@@ -58,7 +58,7 @@ malvin({
         fs.writeFileSync(imagePath, buffer);
 
         // Set the profile picture
-        await malvin.updateProfilePicture(malvin.user.id, { url: imagePath });
+        await shyam.updateProfilePicture(shyam.user.id, { url: imagePath });
 
         // Clean up
         fs.unlinkSync(imagePath);

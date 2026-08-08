@@ -1,8 +1,8 @@
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const axios = require('axios');
 
 
-malvin({
+shyam({
     pattern: "mediafire",
     alias: ["mf", "mediafiredl"],
     desc: "Download files from MediaFire",
@@ -10,13 +10,13 @@ malvin({
     react: "📁",
     use: ".mediafire <url>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
   try {
     if (!q) {
       return reply(`📁 *MediaFire Download*\n\nPlease provide a MediaFire URL.\n\nExample: .mediafire https://www.mediafire.com/file/...\n\n👤 *Requested by:* @${sender.split('@')[0]}`, { mentions: [sender] });
     }
 
-    await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+    await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
     const encodedUrl = encodeURIComponent(q);
     const apiUrl = `https://api.nekolabs.web.id/downloader/mediafire?url=${encodedUrl}`;
@@ -41,9 +41,9 @@ malvin({
     }
 
     // Send file info first
-    const infoMessage = `📁 *MediaFire Download*\n\n📄 *Filename:* ${filename}\n📦 *Size:* ${filesize}\n📅 *Uploaded:* ${uploaded}\n📋 *Type:* ${mimetype}\n\n👤 *Requested by:* @${sender.split('@')[0]}\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ`;
+    const infoMessage = `📁 *MediaFire Download*\n\n📄 *Filename:* ${filename}\n📦 *Size:* ${filesize}\n📅 *Uploaded:* ${uploaded}\n📋 *Type:* ${mimetype}\n\n👤 *Requested by:* @${sender.split('@')[0]}\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`;
 
-    await malvin.sendMessage(from, { 
+    await shyam.sendMessage(from, { 
       text: infoMessage,
       mentions: [sender]
     }, { quoted: fakevCard });
@@ -51,19 +51,19 @@ malvin({
     await reply(`📥 *Downloading ${filename}...*`);
 
     // Send the file
-    await malvin.sendMessage(from, {
+    await shyam.sendMessage(from, {
       document: { url: downloadUrl },
       fileName: filename,
       mimetype: mimetype,
-      caption: `📁 ${filename}\n📦 ${filesize}\n👤 @${sender.split('@')[0]}\n\n © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ`,
+      caption: `📁 ${filename}\n📦 ${filesize}\n👤 @${sender.split('@')[0]}\n\n © ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`,
       mentions: [sender]
     }, { quoted: fakevCard });
 
-    await malvin.sendMessage(from, { react: { text: '✅', key: mek.key } });
+    await shyam.sendMessage(from, { react: { text: '✅', key: mek.key } });
 
   } catch (error) {
     console.error('MediaFire Error:', error);
-    await malvin.sendMessage(from, { react: { text: '❌', key: mek.key } });
+    await shyam.sendMessage(from, { react: { text: '❌', key: mek.key } });
     
     if (error.response?.status === 404) {
       reply('❌ *File not found.*\n\nThe MediaFire link may be invalid or the file has been removed.');
@@ -77,7 +77,7 @@ malvin({
 
 
 // Google Drive Download Command
-malvin({
+shyam({
   pattern: "gdrive",
   alias: ["gdrivedownload", "gdownloader"],
   react: '📥',
@@ -85,13 +85,13 @@ malvin({
   category: "download",
   use: ".gdrive <google-drive-url>",
   filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
   try {
     if (!q || !q.includes("drive.google.com")) {
       return reply('❌ *Please provide a valid Google Drive URL*\n\nExample: .gdrive https://drive.google.com/file/d/...');
     }
 
-    await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+    await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
     const apiUrl = `https://api.nexoracle.com/downloader/gdrive`;
     const params = {
@@ -116,22 +116,22 @@ malvin({
 
     const fileBuffer = Buffer.from(fileResponse.data, 'binary');
 
-    const caption = `📥 *File Details*\n\n🔖 *Name:* ${fileName}\n📏 *Size:* ${fileSize}\n👤 *Requested by:* @${sender.split('@')[0]}\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍʀ ᴍᴀʟᴠɪɴ ᴋɪɴɢ`;
+    const caption = `📥 *File Details*\n\n🔖 *Name:* ${fileName}\n📏 *Size:* ${fileSize}\n👤 *Requested by:* @${sender.split('@')[0]}\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍʀ 𝚂𝙷𝚈𝙰𝙼 ᴋɪɴɢ`;
 
     if (mimetype.startsWith('image')) {
-      await malvin.sendMessage(from, {
+      await shyam.sendMessage(from, {
         image: fileBuffer,
         caption: caption,
         mentions: [sender]
       }, { quoted: fakevCard });
     } else if (mimetype.startsWith('video')) {
-      await malvin.sendMessage(from, {
+      await shyam.sendMessage(from, {
         video: fileBuffer,
         caption: caption,
         mentions: [sender]
       }, { quoted: fakevCard });
     } else {
-      await malvin.sendMessage(from, {
+      await shyam.sendMessage(from, {
         document: fileBuffer,
         mimetype: mimetype,
         fileName: fileName,
@@ -140,16 +140,16 @@ malvin({
       }, { quoted: fakevCard });
     }
 
-    await malvin.sendMessage(from, { react: { text: '✅', key: mek.key } });
+    await shyam.sendMessage(from, { react: { text: '✅', key: mek.key } });
   } catch (error) {
     console.error('GDrive Error:', error);
     reply('❌ *Unable to download the file. Please try again later.*');
-    await malvin.sendMessage(from, { react: { text: '❌', key: mek.key } });
+    await shyam.sendMessage(from, { react: { text: '❌', key: mek.key } });
   }
 });
 
 // GitHub Download Command
-malvin({
+shyam({
     pattern: "githubdl",
     alias: ['gitdl', 'githubdownload'],
     react: '📦',
@@ -157,7 +157,7 @@ malvin({
     category: "download",
     use: ".githubdl <username> <repository> <branch>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     const args = q ? q.split(' ') : [];
     
     if (!args[0]) {
@@ -175,17 +175,17 @@ malvin({
     
     await reply("📦 *Compressing repository to ZIP file...*");
 
-    await malvin.sendMessage(from, {
+    await shyam.sendMessage(from, {
         document: { url: url },
         fileName: `${repo}-${branch}.zip`,
         mimetype: 'application/zip',
-        caption: `📦 *GitHub Repository Download*\n\n👤 *User:* ${username}\n📁 *Repo:* ${repo}\n🌿 *Branch:* ${branch}\n👤 *Downloaded by:* @${sender.split('@')[0]}\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ`,
+        caption: `📦 *GitHub Repository Download*\n\n👤 *User:* ${username}\n📁 *Repo:* ${repo}\n🌿 *Branch:* ${branch}\n👤 *Downloaded by:* @${sender.split('@')[0]}\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`,
         mentions: [sender]
     }, { quoted: fakevCard });
 });
 
 // Twitter Download Command
-malvin({
+shyam({
     pattern: 'twitter',
     alias: ['tweet', 'twdl', 'twitterdl'],
     desc: 'Download Twitter videos',
@@ -193,13 +193,13 @@ malvin({
     react: '📹',
     use: '.twitter <twitter-url>',
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q || !q.startsWith('https://')) {
             return reply('❌ *Please provide a valid Twitter URL*');
         }
 
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
         const response = await axios.get(`https://www.dark-yasiya-api.site/download/twitter?url=${encodeURIComponent(q)}`);
         const data = response.data;
@@ -221,9 +221,9 @@ malvin({
 👤 *Requested by:* @${sender.split('@')[0]}
 
 *Reply with 1 or 2 to download*
-> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ`;
+> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`;
 
-        const sentMsg = await malvin.sendMessage(from, {
+        const sentMsg = await shyam.sendMessage(from, {
             image: { url: thumb },
             caption: caption,
             mentions: [sender]
@@ -237,7 +237,7 @@ malvin({
         };
 
         // Simple response handler (you might want to implement a proper session system)
-        malvin.ev.on('messages.upsert', async ({ messages }) => {
+        shyam.ev.on('messages.upsert', async ({ messages }) => {
             const receivedMsg = messages[0];
             if (!receivedMsg.message || receivedMsg.key.remoteJid !== from) return;
 
@@ -246,20 +246,20 @@ malvin({
             
             if (isReply && (text === '1' || text === '2')) {
                 try {
-                    await malvin.sendMessage(from, { react: { text: '⬇️', key: receivedMsg.key } });
+                    await shyam.sendMessage(from, { react: { text: '⬇️', key: receivedMsg.key } });
 
                     const videoUrl = text === '1' ? videoData.sd : videoData.hd;
                     if (!videoUrl) {
                         return reply('❌ *Invalid video URL*');
                     }
 
-                    await malvin.sendMessage(from, {
+                    await shyam.sendMessage(from, {
                         video: { url: videoUrl },
                         caption: `📥 *Downloaded in ${text === '1' ? 'SD' : 'HD'} quality*\n👤 *By:* @${sender.split('@')[0]}`,
                         mentions: [sender]
                     }, { quoted: fakevCard });
 
-                    await malvin.sendMessage(from, { react: { text: '✅', key: receivedMsg.key } });
+                    await shyam.sendMessage(from, { react: { text: '✅', key: receivedMsg.key } });
 
                 } catch (err) {
                     console.error('Download error:', err);
@@ -270,13 +270,13 @@ malvin({
 
     } catch (err) {
         console.error('Twitter Error:', err);
-        await malvin.sendMessage(from, { react: { text: '❌', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '❌', key: mek.key } });
         await reply('❌ *Error processing Twitter URL*');
     }
 });
 
 // Image Search Command
-malvin({
+shyam({
     pattern: "img",
     alias: ["image", "searchimg"],
     react: "🖼️",
@@ -284,10 +284,10 @@ malvin({
     category: "search",
     use: ".img <query>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
-            return reply("🖼️ *Please provide a search query*\n\nExample: .img malvin xd");
+            return reply("🖼️ *Please provide a search query*\n\nExample: .img shyam xd");
         }
 
         await reply(`🔍 *Searching for "${q}"...*`);
@@ -303,9 +303,9 @@ malvin({
         const selectedImages = results.sort(() => 0.5 - Math.random()).slice(0, 5);
         
         for (const image of selectedImages) {
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 image: { url: image.url },
-                caption: `📷 *Result for:* ${q}\n👤 *Requested by:* @${sender.split('@')[0]}\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ`,
+                caption: `📷 *Result for:* ${q}\n👤 *Requested by:* @${sender.split('@')[0]}\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`,
                 mentions: [sender]
             }, { quoted: fakevCard });
             
@@ -319,7 +319,7 @@ malvin({
 });
 
 // GitHub Clone Command
-malvin({
+shyam({
   pattern: 'gitclone',
   alias: ["git", "github"],
   desc: "Download GitHub repository as a zip file",
@@ -327,7 +327,7 @@ malvin({
   category: "download",
   use: ".gitclone <github-url>",
   filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
   if (!q) {
     return reply("❌ *GitHub link missing!*\n\nUsage: .gitclone https://github.com/username/repository");
   }
@@ -354,11 +354,11 @@ malvin({
 
     await reply(`📥 *Downloading Repository...*\n\n👤 *User:* ${username}\n📁 *Repo:* ${repo}\n👤 *By:* @${sender.split('@')[0]}`);
 
-    await malvin.sendMessage(from, {
+    await shyam.sendMessage(from, {
       document: { url: zipUrl },
       fileName,
       mimetype: 'application/zip',
-      caption: `📦 *GitHub Repository*\n\n👤 *User:* ${username}\n📁 *Repo:* ${repo}\n👤 *Downloaded by:* @${sender.split('@')[0]}\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴋɪɴɢ 👑`,
+      caption: `📦 *GitHub Repository*\n\n👤 *User:* ${username}\n📁 *Repo:* ${repo}\n👤 *Downloaded by:* @${sender.split('@')[0]}\n\n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴋɪɴɢ 👑`,
       mentions: [sender]
     }, { quoted: fakevCard });
 

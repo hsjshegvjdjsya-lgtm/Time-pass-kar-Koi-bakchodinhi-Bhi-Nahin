@@ -1,9 +1,9 @@
 const fs = require('fs');
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 
-// Malvin XD Ban Command
-malvin({
+// Shyam XD Ban Command
+shyam({
     pattern: "ban",
     alias: ["blockuser", "userban"],
     desc: "Ban user from using the bot",
@@ -11,7 +11,7 @@ malvin({
     react: "🔨",
     use: ".ban [mention user or reply to message]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isAdmin, isGroup }) => {
+}, async (shyam, mek, m, { from, q, reply, isAdmin, isGroup }) => {
     try {
     
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
@@ -48,8 +48,8 @@ malvin({
 
         // Prevent banning the bot itself
         try {
-            const botId = malvin.user.id.split(':')[0] + '@s.whatsapp.net';
-            const botLid = malvin.user.id.split(':')[0] + '@lid';
+            const botId = shyam.user.id.split(':')[0] + '@s.whatsapp.net';
+            const botLid = shyam.user.id.split(':')[0] + '@lid';
             
             if (userToBan === botId || userToBan === botLid) {
                 return reply("❌ You cannot ban the bot account.", { quoted: fakevCard });
@@ -129,7 +129,7 @@ malvin({
 });
 
 // Unban command
-malvin({
+shyam({
     pattern: "unban",
     alias: ["unblockuser", "userunban"],
     desc: "Unban user from using the bot",
@@ -137,7 +137,7 @@ malvin({
     react: "🔓",
     use: ".unban [mention user or provide JID]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isAdmin, isGroup }) => {
+}, async (shyam, mek, m, { from, q, reply, isAdmin, isGroup }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         let userToUnban;
@@ -226,7 +226,7 @@ malvin({
 });
 
 // Banlist command
-malvin({
+shyam({
     pattern: "banlist",
     alias: ["banned", "blockedusers"],
     desc: "Show list of banned users",
@@ -234,7 +234,7 @@ malvin({
     react: "📋",
     use: ".banlist",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isAdmin, isGroup }) => {
+}, async (shyam, mek, m, { from, q, reply, isAdmin, isGroup }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         // Check permissions

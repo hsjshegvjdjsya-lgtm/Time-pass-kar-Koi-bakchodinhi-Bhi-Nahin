@@ -4,7 +4,7 @@ const FormData = require("form-data");
 const fs = require("fs");
 const path = require("path");
 const os = require("os");
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { channelInfo } = require('../lib/messageConfig');
 
 // Utility function to format bytes
@@ -24,7 +24,7 @@ const API_KEYS = [
   "7b46d3cddc9b67ef690ed03dce9cb7d5"
 ];
 
-malvin({
+shyam({
   pattern: "tourl2",
   alias: ["imgtourl2", "imgurl2", "url2", "geturl2", "upload"],
   react: "📤",
@@ -32,7 +32,7 @@ malvin({
   category: "utility",
   use: ".tourl2 (reply to media)",
   filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
   try {
     if (!m.quoted) {
       return reply("❌ Reply to image, audio or video.");
@@ -77,7 +77,7 @@ malvin({
                 mime.includes("video") ? ".mp4" :
                 mime.includes("audio") ? ".mp3" : ".bin";
     
-    const name = `malvin-upload${ext}`;
+    const name = `shyam-upload${ext}`;
     const tmp = path.join(os.tmpdir(), `catbox_${Date.now()}${ext}`);
     
     // Write to temporary file
@@ -111,10 +111,10 @@ malvin({
 📁 *Size:* ${formatBytes(buffer.length)}
 🔗 *URL:* ${res.data}
 
-> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ-xᴅ
+> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼-xᴅ
     `.trim();
 
-    await malvin.sendMessage(from, {
+    await shyam.sendMessage(from, {
       text: message,
       ...channelInfo
     }, {
@@ -138,7 +138,7 @@ malvin({
   }
 });
 
-malvin({
+shyam({
   pattern: "tourl",
   alias: ["imgtourl", "imgurl", "url", "uploadimg"],
   react: "🔄",
@@ -146,7 +146,7 @@ malvin({
   category: "utility",
   use: ".tourl (reply to an image)",
   filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
   try {
     if (!m.quoted) {
       return reply("*[❗] Please reply to an image*");
@@ -184,7 +184,7 @@ malvin({
     else if (mime.includes("gif")) extension = ".gif";
     else if (mime.includes("webp")) extension = ".webp";
 
-    const fileName = `malvin-xd${extension}`;
+    const fileName = `shyam-xd${extension}`;
     const filePath = path.join(os.tmpdir(), fileName);
     fs.writeFileSync(filePath, buffer);
 
@@ -231,7 +231,7 @@ malvin({
 👤 *Uploaded by:* @${sender.split('@')[0]}
     `.trim();
 
-    await malvin.sendMessage(from, {
+    await shyam.sendMessage(from, {
       text: message,
       mentions: [sender],
       ...channelInfo
@@ -244,7 +244,7 @@ malvin({
     
     // Clean up temp files
     try {
-      const tmpFiles = fs.readdirSync(os.tmpdir()).filter(f => f.startsWith('malvin-xd'));
+      const tmpFiles = fs.readdirSync(os.tmpdir()).filter(f => f.startsWith('shyam-xd'));
       tmpFiles.forEach(file => {
         try {
           fs.unlinkSync(path.join(os.tmpdir(), file));
@@ -256,7 +256,7 @@ malvin({
   }
 });
 
-malvin({
+shyam({
   pattern: "docanalyze",
   alias: ["analyzedoc", "docai", "askdoc"],
   react: "📄",
@@ -264,7 +264,7 @@ malvin({
   category: "utility",
   use: ".docanalyze [your question] [reply to doc]",
   filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
   try {
     if (!m.quoted) {
       return reply("❌ Reply to a PDF or Word document.");
@@ -300,7 +300,7 @@ malvin({
 
     const originalFileName = quoted.filename || "document.pdf";
     const ext = path.extname(originalFileName) || ".pdf";
-    const fileName = `malvin-doc-${Date.now()}${ext}`;
+    const fileName = `shyam-doc-${Date.now()}${ext}`;
     const tmp = path.join(os.tmpdir(), fileName);
     fs.writeFileSync(tmp, buffer);
 
@@ -345,7 +345,7 @@ ${aiResponse}
 👤 *Requested by:* @${sender.split('@')[0]}
     `.trim();
 
-    await malvin.sendMessage(from, {
+    await shyam.sendMessage(from, {
       text: message,
       mentions: [sender],
       ...channelInfo
@@ -358,7 +358,7 @@ ${aiResponse}
     
     // Clean up temp files
     try {
-      const tmpFiles = fs.readdirSync(os.tmpdir()).filter(f => f.startsWith('malvin-doc-'));
+      const tmpFiles = fs.readdirSync(os.tmpdir()).filter(f => f.startsWith('shyam-doc-'));
       tmpFiles.forEach(file => {
         try {
           fs.unlinkSync(path.join(os.tmpdir(), file));

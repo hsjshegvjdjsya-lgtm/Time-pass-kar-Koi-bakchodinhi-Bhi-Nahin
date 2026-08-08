@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { downloadContentFromMessage } = require("@whiskeysockets/baileys");
 const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
@@ -53,7 +53,7 @@ async function ensureCoverImage() {
 }
 
 // ==================== TO VOICE NOTE ====================
-malvin({
+shyam({
     pattern: "tovn",
     alias: ["tovoice", "toptt"],
     desc: "Convert video or audio to voice note",
@@ -61,7 +61,7 @@ malvin({
     react: "🎤",
     use: ".tovn (reply to video/audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         const quotedMsg = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         const target = quotedMsg || mek.message;
@@ -116,11 +116,11 @@ malvin({
             fs.unlinkSync(outputPath);
         } catch {}
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             audio: voiceBuffer,
             mimetype: 'audio/ogg; codecs=opus',
             ptt: true,
-            caption: `🎤 *Voice Note Created*\n\n📁 *Original:* ${mediaType.toUpperCase()}\n💾 *Size:* ${formatBytes(buffer.length)}\n👤 *By:* @${sender.split('@')[0]}\n> © Powered by Malvin King`,
+            caption: `🎤 *Voice Note Created*\n\n📁 *Original:* ${mediaType.toUpperCase()}\n💾 *Size:* ${formatBytes(buffer.length)}\n👤 *By:* @${sender.split('@')[0]}\n> © Powered by shyam King`,
             mentions: [sender]
         }, { quoted: fakevCard });
 
@@ -131,7 +131,7 @@ malvin({
 });
 
 // ==================== TO AUDIO ====================
-malvin({
+shyam({
     pattern: "toaudio",
     alias: ["toaudiofile"],
     desc: "Convert video or voice to audio file",
@@ -139,7 +139,7 @@ malvin({
     react: "🎵",
     use: ".toaudio (reply to video/voice)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         const quotedMsg = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         const target = quotedMsg || mek.message;
@@ -194,10 +194,10 @@ malvin({
             fs.unlinkSync(outputPath);
         } catch {}
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             audio: audioBuffer,
             mimetype: 'audio/mpeg',
-            caption: `🎵 *Audio File Created*\n\n📁 *Original:* ${mediaType.toUpperCase()}\n💾 *Size:* ${formatBytes(buffer.length)}\n👤 *By:* @${sender.split('@')[0]}\n> © Powered by Malvin King`,
+            caption: `🎵 *Audio File Created*\n\n📁 *Original:* ${mediaType.toUpperCase()}\n💾 *Size:* ${formatBytes(buffer.length)}\n👤 *By:* @${sender.split('@')[0]}\n> © Powered by shyam King`,
             mentions: [sender]
         }, { quoted: fakevCard });
 
@@ -208,7 +208,7 @@ malvin({
 });
 
 // ==================== TO VIDEO ====================
-malvin({
+shyam({
     pattern: "tovideo",
     alias: ["audiovideo", "tovid"],
     desc: "Convert audio to video with cover image",
@@ -216,7 +216,7 @@ malvin({
     react: "🎬",
     use: ".tovideo (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         const quotedMsg = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         
@@ -264,10 +264,10 @@ malvin({
             fs.unlinkSync(outputPath);
         } catch {}
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             video: videoBuffer,
             mimetype: 'video/mp4',
-            caption: `🎬 *Video Created from Audio*\n\n💾 *Size:* ${formatBytes(videoBuffer.length)}\n👤 *By:* @${sender.split('@')[0]}\n> © Powered by Malvin King`,
+            caption: `🎬 *Video Created from Audio*\n\n💾 *Size:* ${formatBytes(videoBuffer.length)}\n👤 *By:* @${sender.split('@')[0]}\n> © Powered by shyam King`,
             mentions: [sender]
         }, { quoted: fakevCard });
 
@@ -278,7 +278,7 @@ malvin({
 });
 
 // ==================== TO MP3 ====================
-malvin({
+shyam({
     pattern: "tomp3",
     alias: ["tomp3file", "convertmp3"],
     desc: "Convert media to MP3 audio",
@@ -286,7 +286,7 @@ malvin({
     react: "🎶",
     use: ".tomp3 (reply to video/audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         const quotedMsg = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         const target = quotedMsg || mek.message;
@@ -336,11 +336,11 @@ malvin({
             fs.unlinkSync(outputPath);
         } catch {}
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             document: mp3Buffer,
             fileName: `converted_audio_${Date.now()}.mp3`,
             mimetype: 'audio/mpeg',
-            caption: `🎶 *MP3 File Created*\n\n💾 *Size:* ${formatBytes(mp3Buffer.length)}\n👤 *By:* @${sender.split('@')[0]}\n> © Powered by Malvin King`,
+            caption: `🎶 *MP3 File Created*\n\n💾 *Size:* ${formatBytes(mp3Buffer.length)}\n👤 *By:* @${sender.split('@')[0]}\n> © Powered by shyam King`,
             mentions: [sender]
         }, { quoted: fakevCard });
 

@@ -1,8 +1,8 @@
 const axios = require("axios");
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { channelInfo } = require('../lib/messageConfig');
 
-malvin({
+shyam({
   pattern: "tiktok",
   alias: ["tt", "tiktokdl"],
   react: '📥',
@@ -10,7 +10,7 @@ malvin({
   category: "download",
   use: ".tiktok <url>",
   filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
   const tiktokUrl = q;
 
   if (!tiktokUrl || !tiktokUrl.includes("tiktok.com")) {
@@ -110,18 +110,18 @@ malvin({
 │ ▸ 📥 *Downloads:* ${metrics.download_count?.toLocaleString() || 0}
 ╰─────
 
-> 🚀 Powered by Malvin Tech
+> 🚀 Powered by Shyam Tech
     `.trim();
 
     // Send video info
     if (thumbnail) {
-      await malvin.sendMessage(from, {
+      await shyam.sendMessage(from, {
         image: { url: thumbnail },
         caption: caption,
         ...channelInfo
       }, { quoted: fakevCard });
     } else {
-      await malvin.sendMessage(from, {
+      await shyam.sendMessage(from, {
         text: caption,
         ...channelInfo
       }, { quoted: fakevCard });
@@ -155,7 +155,7 @@ malvin({
       }
 
       // Send video
-      await malvin.sendMessage(from, {
+      await shyam.sendMessage(from, {
         video: videoBuffer,
         caption: `✅ *Download Complete!*\n\n🎬 *Video by:* @${author.username}\n💾 *Size:* ${fileSize}MB\n\n📥 Enjoy your video!`,
         ...channelInfo

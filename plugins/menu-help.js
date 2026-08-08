@@ -1,21 +1,21 @@
 const settings = require('../settings');
 const moment = require('moment-timezone');
-const { malvin, commands } = require('../malvin');
+const { shyam, commands } = require('../shyam');
 const os = require('os');
 const { getPrefix } = require('../lib/prefix');
 const { fakevCard } = require('../lib/fakevCard');
 
-malvin({
+shyam({
     pattern: 'help',
     alias: ['commands'],
     desc: 'Show all bot commands with categories',
     category: 'general',
     react: '📚',
     filename: __filename
-}, async (malvin, mek, m, { from, sender, reply }) => {
+}, async (shyam, mek, m, { from, sender, reply }) => {
     try {
         const prefix = getPrefix();
-        const timezone = settings.TIMEZONE || 'Africa/Harare';
+        const timezone = settings.TIMEZONE || 'Asia/kolkata';
         const time = moment().tz(timezone).format('HH:mm:ss');
         const date = moment().tz(timezone).format('DD/MM/YYYY');
 
@@ -48,13 +48,13 @@ malvin({
 
         // Build menu
         let menu = `
-╭─✦「 🤖 ${settings.BOT_NAME || 'ᴍᴀʟᴠɪɴ xᴅ'} 」✦─╮
+╭─✦「 🤖 ${settings.BOT_NAME || '𝚂𝙷𝚈𝙰𝙼 x𝙳'} 」✦─╮
 │ 👤 ᴜsᴇʀ: @${sender.split('@')[0]}
 │ ⏰ ᴛɪᴍᴇ: ${time}
 │ 📅 ᴅᴀᴛᴇ: ${date} 
 │ 🔧 ᴘʀᴇғɪx: ${prefix}
 │ 🧩 ᴄᴍᴅs: ${totalCommands}
-│ 👑 ᴏᴡɴᴇʀ: ${settings.OWNER_NAME || 'Malvin King'}
+│ 👑 ᴏᴡɴᴇʀ: ${settings.OWNER_NAME || 'shyam King'}
 ╰─✦──✦
 
 `;
@@ -79,13 +79,13 @@ malvin({
 
         menu += `\n💡 *Usage*: ${prefix}command\n`;
         menu += `🔍 *Total Commands*: ${totalCommands}\n\n`;
-        menu += `> ${settings.DESCRIPTION || 'Powered by Malvin Tech'}`;
+        menu += `> ${settings.DESCRIPTION || 'Powered by Shyam Tech'}`;
 
         // Send menu
-        await malvin.sendMessage(
+        await shyam.sendMessage(
             from,
             {
-                image: { url: settings.MENU_IMAGE_URL || 'https://i.ibb.co/VWt5CXzX/malvin-xd.jpg' },
+                image: { url: settings.MENU_IMAGE_URL || 'https://i.ibb.co/VWt5CXzX/shyam-xd.jpg' },
                 caption: menu,
                 contextInfo: {
                     mentionedJid: [sender],

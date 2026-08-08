@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 
 // ==================== GROUP STATS ====================
-malvin({
+shyam({
     pattern: "groupstats",
     alias: ["gstats", "groupinfo"],
     desc: "Show group statistics and information",
@@ -9,14 +9,14 @@ malvin({
     react: "📊",
     use: ".groupstats",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isGroup, isAdmin }) => {
+}, async (shyam, mek, m, { from, reply, isGroup, isAdmin }) => {
     try {
         if (!isGroup) return await reply('❌ This command can only be used in groups!');
         
         const adminStatus = await isAdmin();
         if (!adminStatus.isSenderAdmin) return await reply('❌ Only admins can view group stats!');
 
-        const groupMetadata = await malvin.groupMetadata(from);
+        const groupMetadata = await shyam.groupMetadata(from);
         const participants = groupMetadata.participants || [];
         
         const stats = {
@@ -42,7 +42,7 @@ malvin({
 });
 
 // ==================== LEAVE GROUP ====================
-malvin({
+shyam({
     pattern: 'leave',
     alias: ['left', 'leavegc', 'exit'],
     desc: 'Leave the current group',
@@ -50,7 +50,7 @@ malvin({
     react: '👋',
     use: '.leave',
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isGroup, sender }) => {
+}, async (shyam, mek, m, { from, reply, isGroup, sender }) => {
     try {
         if (!isGroup) return await reply('❌ This command can only be used in groups!');
 
@@ -58,7 +58,7 @@ malvin({
         if (!isOwner) return await reply('❌ Only bot owner can make the bot leave groups!');
 
         await reply('👋 Leaving the group...');
-        await malvin.groupLeave(from);
+        await shyam.groupLeave(from);
 
     } catch (error) {
         console.error('Leave error:', error);
@@ -67,7 +67,7 @@ malvin({
 });
 
 // ==================== UPDATE GROUP DESCRIPTION ====================
-malvin({
+shyam({
     pattern: 'gdesc',
     alias: ['setdesc'],
     desc: 'Change the group description',
@@ -75,7 +75,7 @@ malvin({
     react: '📜',
     use: '.gdesc <new description>',
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isGroup, isAdmin }) => {
+}, async (shyam, mek, m, { from, q, reply, isGroup, isAdmin }) => {
     try {
         if (!isGroup) return await reply('❌ This command can only be used in groups!');
         
@@ -85,7 +85,7 @@ malvin({
 
         if (!q) return await reply('❌ Please provide a new group description');
 
-        await malvin.groupUpdateDescription(from, q);
+        await shyam.groupUpdateDescription(from, q);
         await reply('✅ Group description has been updated successfully!');
 
     } catch (error) {
@@ -95,7 +95,7 @@ malvin({
 });
 
 // ==================== JOIN GROUP ====================
-malvin({
+shyam({
     pattern: 'join',
     alias: ['joingroup'],
     desc: 'Join a group via invite link',
@@ -103,7 +103,7 @@ malvin({
     react: '📬',
     use: '.join <group invite link>',
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         const isOwner = await require('../lib/isOwnerOrSudo')(sender);
         if (!isOwner) return await reply('❌ Only bot owner can use this command!');
@@ -115,7 +115,7 @@ malvin({
         const code = q.split('https://chat.whatsapp.com/')[1];
         if (!code) return await reply('❌ Invalid group invite link');
 
-        await malvin.groupAcceptInvite(code);
+        await shyam.groupAcceptInvite(code);
         await reply('✅ Successfully joined the group!');
 
     } catch (error) {
@@ -125,7 +125,7 @@ malvin({
 });
 
 // ==================== GET GROUP INVITE LINK ====================
-malvin({
+shyam({
     pattern: 'invite',
     alias: ['grouplink', 'link'],
     desc: 'Get the group invite link',
@@ -133,7 +133,7 @@ malvin({
     react: '🖇️',
     use: '.invite',
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isGroup, isAdmin }) => {
+}, async (shyam, mek, m, { from, reply, isGroup, isAdmin }) => {
     try {
         if (!isGroup) return await reply('❌ This command can only be used in groups!');
         
@@ -141,7 +141,7 @@ malvin({
         if (!adminStatus.isBotAdmin) return await reply('❌ Bot must be admin to get invite link!');
         if (!adminStatus.isSenderAdmin) return await reply('❌ Only admins can get group invite link!');
 
-        const code = await malvin.groupInviteCode(from);
+        const code = await shyam.groupInviteCode(from);
         await reply(`🖇️ *Group Invite Link*\n\nhttps://chat.whatsapp.com/${code}`);
 
     } catch (error) {
@@ -151,7 +151,7 @@ malvin({
 });
 
 // ==================== CLOSE GROUP BY TIME ====================
-malvin({
+shyam({
     pattern: 'closetime',
     alias: ['closegroup'],
     desc: 'Close group after specified time',
@@ -159,7 +159,7 @@ malvin({
     react: '🔒',
     use: '.closetime <number> <s/m/h/d>',
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isGroup, isAdmin }) => {
+}, async (shyam, mek, m, { from, q, reply, isGroup, isAdmin }) => {
     try {
         if (!isGroup) return await reply('❌ This command can only be used in groups!');
         
@@ -189,8 +189,8 @@ malvin({
 
         setTimeout(async () => {
             try {
-                await malvin.groupSettingUpdate(from, 'announcement');
-                await malvin.sendMessage(from, { text: '🔒 Group has been automatically closed!' });
+                await shyam.groupSettingUpdate(from, 'announcement');
+                await shyam.sendMessage(from, { text: '🔒 Group has been automatically closed!' });
             } catch (error) {
                 console.error('Auto-close error:', error);
             }
@@ -204,7 +204,7 @@ malvin({
 
 // ==================== PIN MESSAGE ====================
 
-malvin({
+shyam({
     pattern: 'pin',
     alias: ['pinmessage'],
     desc: 'Pin a replied message',
@@ -212,7 +212,7 @@ malvin({
     react: '📌',
     use: '.pin (reply to a message)',
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isGroup, isAdmin }) => {
+}, async (shyam, mek, m, { from, reply, isGroup, isAdmin }) => {
     try {
         if (!isGroup) return await reply('❌ This command can only be used in groups!');
         
@@ -233,7 +233,7 @@ malvin({
         }
 
         // Pin the message
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             pin: messageId 
         });
 
@@ -253,7 +253,7 @@ malvin({
 });
 
 // ==================== GROUP SETTINGS ====================
-malvin({
+shyam({
     pattern: 'groupsettings',
     alias: ['gsettings'],
     desc: 'Change group settings',
@@ -261,7 +261,7 @@ malvin({
     react: '⚙️',
     use: '.groupsettings <edit/link> <on/off>',
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isGroup, isAdmin }) => {
+}, async (shyam, mek, m, { from, q, reply, isGroup, isAdmin }) => {
     try {
         if (!isGroup) return await reply('❌ This command can only be used in groups!');
         
@@ -278,12 +278,12 @@ malvin({
         let result;
         if (setting === 'edit') {
             result = action === 'on' ? 'locked' : 'unlocked';
-            await malvin.groupSettingUpdate(from, result);
+            await shyam.groupSettingUpdate(from, result);
             await reply(`✅ Group edit settings ${action === 'on' ? 'locked (admins only)' : 'unlocked (all members)'}`);
         } 
         else if (setting === 'link') {
             result = action === 'on' ? 'approval' : 'no_approval';
-            await malvin.groupSettingUpdate(from, result);
+            await shyam.groupSettingUpdate(from, result);
             await reply(`✅ Group link settings ${action === 'on' ? 'require admin approval' : 'open for anyone to join'}`);
         } 
         else {
@@ -297,7 +297,7 @@ malvin({
 });
 
 // ==================== CREATE POLL ====================
-malvin({
+shyam({
     pattern: 'poll',
     alias: ['createpoll'],
     desc: 'Create a poll in group',
@@ -305,7 +305,7 @@ malvin({
     react: '📊',
     use: '.poll <question> | <option1> | <option2> | ...',
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isGroup, isAdmin }) => {
+}, async (shyam, mek, m, { from, q, reply, isGroup, isAdmin }) => {
     try {
         if (!isGroup) return await reply('❌ This command can only be used in groups!');
         
@@ -324,7 +324,7 @@ malvin({
         if (options.length < 2) return await reply('❌ Please provide at least 2 options');
         if (options.length > 5) return await reply('❌ Maximum 5 options allowed');
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             poll: {
                 name: question,
                 values: options,
@@ -341,7 +341,7 @@ malvin({
 });
 
 // ==================== BAN USER ====================
-malvin({
+shyam({
     pattern: 'gcban',
     alias: ['banuser'],
     desc: 'Ban user from group',
@@ -349,7 +349,7 @@ malvin({
     react: '🚫',
     use: '.ban @user or reply to user',
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isGroup, sender, isAdmin }) => {
+}, async (shyam, mek, m, { from, reply, isGroup, sender, isAdmin }) => {
     try {
         if (!isGroup) return await reply('❌ This command can only be used in groups!');
 
@@ -372,13 +372,13 @@ malvin({
         if (!adminStatus.isBotAdmin) return await reply('❌ Bot must be admin to ban users!');
         if (!adminStatus.isSenderAdmin) return await reply('❌ Only admins can ban users!');
 
-        const botId = malvin.user.id.split(':')[0] + '@s.whatsapp.net';
+        const botId = shyam.user.id.split(':')[0] + '@s.whatsapp.net';
         if (usersToBan.some(jid => jid === botId)) {
             return await reply("🤖 I can't ban myself!");
         }
 
         // Remove users from group
-        await malvin.groupParticipantsUpdate(from, usersToBan, "remove");
+        await shyam.groupParticipantsUpdate(from, usersToBan, "remove");
         
         const usernames = usersToBan.map(jid => `@${jid.split('@')[0]}`);
         await reply(`🚫 *Users Banned:*\n${usernames.map(name => `• ${name}`).join('\n')}\n\n👑 *By:* @${sender.split('@')[0]}`);
@@ -390,7 +390,7 @@ malvin({
 });
 
 // ==================== UNBAN USER ====================
-malvin({
+shyam({
     pattern: 'gcunban',
     alias: ['unbanuser'],
     desc: 'Unban user (allow them to rejoin group)',
@@ -398,7 +398,7 @@ malvin({
     react: '✅',
     use: '.unban <phone number>',
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isGroup, isAdmin }) => {
+}, async (shyam, mek, m, { from, q, reply, isGroup, isAdmin }) => {
     try {
         if (!isGroup) return await reply('❌ This command can only be used in groups!');
 

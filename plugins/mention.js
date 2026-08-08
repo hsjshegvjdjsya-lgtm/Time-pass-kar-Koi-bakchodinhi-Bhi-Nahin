@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fs = require('fs');
 const path = require('path');
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
@@ -151,8 +151,8 @@ async function handleMentionDetection(sock, chatId, message) {
 	}
 }
 
-// Mention toggle command using Malvin XD framework
-malvin({
+// Mention toggle command using shyam XD framework
+shyam({
     pattern: "mention",
     alias: ["mentionreply"],
     desc: "Enable/disable mention reply feature",
@@ -182,8 +182,8 @@ malvin({
     }
 });
 
-// Set mention media command using Malvin XD framework
-malvin({
+// Set mention media command using SHYAM XD framework
+shyam({
     pattern: "setmention",
     alias: ["setmentionreply"],
     desc: "Set custom media for mention replies",
@@ -191,7 +191,7 @@ malvin({
     react: "🖼️",
     use: "Reply to a message with .setmention",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isOwner }) => {
+}, async (shyam, mek, m, { from, reply, isOwner }) => {
     try {
         if (!isOwner) {
             return reply("Only Owner or Sudo can use this command.", { quoted: fakevCard });

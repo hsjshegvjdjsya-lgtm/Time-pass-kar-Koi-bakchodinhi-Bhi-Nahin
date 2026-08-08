@@ -1,14 +1,14 @@
 //---------------------------------------------
-//           MALVIN-XD SONG DOWNLOADER
+//           SHYAM-XD SONG DOWNLOADER
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const axios = require('axios');
 const yts = require('yt-search');
 
-malvin({
+shyam({
     pattern: "play",
     alias: ["music"],
     desc: "Download songs from YouTube",
@@ -16,7 +16,7 @@ malvin({
     react: "🎵",
     use: ".play <song name or YouTube link>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`🎵 *SONG DOWNLOADER*\n\nUsage: .play <song name or YouTube link>\n\nExamples:\n.play shape of you\n.play https://youtu.be/ABC123`);
@@ -34,7 +34,7 @@ malvin({
         }
 
         // Show song info
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: { url: video.thumbnail },
             caption: `🎵 *${video.title}*\n⏱ ${video.timestamp}\n\n⬇️ Downloading...`
         }, { quoted: fakevCard });
@@ -63,7 +63,7 @@ malvin({
         // Send audio
         const fileName = `${video.title.replace(/[<>:"\/\\|?*]/g, '')}.mp3`;
         
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             audio: { url: audioUrl },
             mimetype: 'audio/mpeg',
             fileName: fileName

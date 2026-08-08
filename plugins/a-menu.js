@@ -1,4 +1,4 @@
-const { malvin, commands, fakevCard } = require("../malvin");
+const { shyam, commands, fakevCard } = require("../shyam");
 const os = require('os');
 const settings = require('../settings');
 const { channelInfo } = require('../lib/messageConfig');
@@ -19,7 +19,7 @@ const toTinyCaps = (text) => {
 // Function to fetch GitHub repository forks
 const fetchGitHubForks = async () => {
     try {
-        const repo = 'XdKing2/MALVIN-XD';
+        const repo = 'dexsam07/SHYAM-XD';
         const response = await axios.get(`https://api.github.com/repos/${repo}`);
         return response.data.forks_count || 'ɴ/ᴀ';
     } catch (e) {
@@ -504,7 +504,7 @@ const getCategoryMenus = (prefix) => ({
 // Store active listeners to prevent duplicates
 const activeListeners = new Map();
 
-malvin({
+shyam({
     pattern: "menu",
     alias: ["m", "allmenu",],
     desc: "Show all bot commands in organized categories",
@@ -512,7 +512,7 @@ malvin({
     react: "📚",
     use: ".menu",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, prefix, sender }) => {
+}, async (shyam, mek, m, { from, reply, prefix, sender }) => {
     try {
         // Load current settings
         const currentSettings = loadSettings();
@@ -530,9 +530,9 @@ malvin({
         const currentPrefix = getCurrentPrefix();
         
         const mainMenu = `
-\`🤖 ${toTinyCaps(currentSettings.botName || settings.botName || 'malvin-xd')}\`
+\`🤖 ${toTinyCaps(currentSettings.botName || settings.botName || 'shyam-xd')}\`
 ╭─────────➣
-│↠👤 ᴏᴡɴᴇʀ : ${toTinyCaps(currentSettings.botOwner || settings.botOwner || 'ᴍᴀʟᴠɪɴ ᴋɪɴɢ')}
+│↠👤 ᴏᴡɴᴇʀ : ${toTinyCaps(currentSettings.botOwner || settings.botOwner || '𝚂𝙷𝚈𝙰𝙼 ᴋɪɴɢ')}
 │↠⏰ ᴛɪᴍᴇ: ${time}
 │↠📅 ᴅᴀᴛᴇ: ${date}
 │↠🌍 ᴍᴏᴅᴇ: ${toTinyCaps(currentSettings.commandMode || settings.commandMode || 'ᴘᴜʙʟɪᴄ')}
@@ -558,13 +558,13 @@ malvin({
 
 💡 ʀᴇᴘʟʏ ᴡɪᴛʜ ɴᴜᴍʙᴇʀ (1-10) ᴛᴏ sᴇᴇ ᴄᴍᴅs
 
-> ${currentSettings.description || settings.description || 'ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ'}
+> ${currentSettings.description || settings.description || 'ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚜𝚑𝚢𝚊𝚖 ᴛᴇᴄʜ'}
 `;
 
         // Remove any existing listener for this user
         if (activeListeners.has(sender)) {
             const oldListener = activeListeners.get(sender);
-            malvin.ev.off('messages.upsert', oldListener.listener);
+            shyam.ev.off('messages.upsert', oldListener.listener);
             clearTimeout(oldListener.timeout);
             activeListeners.delete(sender);
         }
@@ -575,20 +575,20 @@ malvin({
         
         if (imageUrl) {
             try {
-                sentMsg = await malvin.sendMessage(from, {
+                sentMsg = await shyam.sendMessage(from, {
                     image: { url: imageUrl },
                     caption: mainMenu,
                     ...channelInfo
                 }, { quoted: fakevCard });
             } catch (imageError) {
                 console.error('ᴇʀʀᴏʀ ʟᴏᴀᴅɪɴɢ ɪᴍᴀɢᴇ:', imageError);
-                sentMsg = await malvin.sendMessage(from, { 
+                sentMsg = await shyam.sendMessage(from, { 
                     text: mainMenu,
                     ...channelInfo 
                 }, { quoted: fakevCard });
             }
         } else {
-            sentMsg = await malvin.sendMessage(from, { 
+            sentMsg = await shyam.sendMessage(from, { 
                 text: mainMenu,
                 ...channelInfo 
             }, { quoted: fakevCard });
@@ -598,7 +598,7 @@ malvin({
         const timeout = setTimeout(async () => {
             if (activeListeners.has(sender)) {
                 const listenerInfo = activeListeners.get(sender);
-                malvin.ev.off('messages.upsert', listenerInfo.listener);
+                shyam.ev.off('messages.upsert', listenerInfo.listener);
                 activeListeners.delete(sender);
                 await reply("⏰ *Menu session expired!*\n\nUse .menu again to restart menu category.");
             }
@@ -622,7 +622,7 @@ malvin({
                     if (/^[1-9]|10$/.test(userInput)) {
                         if (categoryMenus[userInput]) {
                             // Send the category menu
-                            await malvin.sendMessage(from, {
+                            await shyam.sendMessage(from, {
                                 text: categoryMenus[userInput],
                                 ...channelInfo
                             }, { quoted: fakevCard });
@@ -630,7 +630,7 @@ malvin({
                             // Send success reaction
                             try {
                                 if (mekInfo?.key?.id) {
-                                    await malvin.sendMessage(from, { react: { text: "✅", key: mekInfo.key } });
+                                    await shyam.sendMessage(from, { react: { text: "✅", key: mekInfo.key } });
                                 }
                             } catch (reactError) {
                                 console.error('Success reaction failed:', reactError);
@@ -643,7 +643,7 @@ malvin({
                     
                     // Handle "0" to show main menu again
                     if (userInput === '0') {
-                        await malvin.sendMessage(from, {
+                        await shyam.sendMessage(from, {
                             text: "🔄 Returning to main menu...",
                             ...channelInfo
                         }, { quoted: fakevCard });
@@ -652,19 +652,19 @@ malvin({
                         setTimeout(async () => {
                             if (imageUrl) {
                                 try {
-                                    await malvin.sendMessage(from, {
+                                    await shyam.sendMessage(from, {
                                         image: { url: imageUrl },
                                         caption: mainMenu,
                                         ...channelInfo
                                     }, { quoted: fakevCard });
                                 } catch (imageError) {
-                                    await malvin.sendMessage(from, { 
+                                    await shyam.sendMessage(from, { 
                                         text: mainMenu,
                                         ...channelInfo 
                                     }, { quoted: fakevCard });
                                 }
                             } else {
-                                await malvin.sendMessage(from, { 
+                                await shyam.sendMessage(from, { 
                                     text: mainMenu,
                                     ...channelInfo 
                                 }, { quoted: fakevCard });
@@ -680,7 +680,7 @@ malvin({
         };
 
         // Register the listener
-        malvin.ev.on('messages.upsert', messageListener);
+        shyam.ev.on('messages.upsert', messageListener);
         
         // Store listener info for cleanup
         activeListeners.set(sender, {
@@ -693,7 +693,7 @@ malvin({
         const audioUrl = currentSettings.MENU_AUDIO_URL || settings.MENU_AUDIO_URL;
         if (audioUrl) {
             try {
-                await malvin.sendMessage(from, {
+                await shyam.sendMessage(from, {
                     audio: { url: audioUrl },
                     mimetype: 'audio/mpeg',
                     ptt: false

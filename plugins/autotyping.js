@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fs = require('fs');
 const path = require('path');
 
@@ -86,8 +86,8 @@ async function showTypingAfterCommand(sock, chatId) {
     return false; // Autotyping is disabled
 }
 
-// Autotyping command using Malvin XD framework
-malvin({
+// Autotyping command using SHYAM XD framework
+shyam({
     pattern: "autotyping",
     alias: ["autotype", "typing"],
     desc: "Enable/disable auto-typing indicator",
@@ -95,7 +95,7 @@ malvin({
     react: "⌨️",
     use: ".autotyping [on/off]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply }) => {
+}, async (shyam, mek, m, { from, q, reply }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) {

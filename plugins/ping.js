@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const os = require('os');
 const settings = require('../settings');
 const { channelInfo } = require('../lib/messageConfig'); 
@@ -20,7 +20,7 @@ function formatTime(seconds) {
     return time.trim();
 }
 
-malvin({
+shyam({
     pattern: "ping",
     alias: ["speed", "status"],
     desc: "Check bot response speed and status",
@@ -28,10 +28,10 @@ malvin({
     react: "🚀",
     use: ".ping",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     try {
         const start = Date.now();
-        await malvin.sendMessage(from, { text: 'Pong!' }, { quoted: mek });
+        await shyam.sendMessage(from, { text: 'Pong!' }, { quoted: mek });
         const end = Date.now();
         const ping = Math.round((end - start) / 2);
 
@@ -49,12 +49,12 @@ malvin({
 ┊ ⏱  ᴜᴘᴛɪᴍᴇ   : ${uptimeFormatted}
 ┊ 🔖 ᴠᴇʀsɪᴏɴ   : ${settings.version}
 ┊ 💾 ᴍᴇᴍᴏʀʏ   : ${usedMem}GB / ${totalMem}GB
-┊ 📦 ᴄᴍᴅs : ${require('../malvin').commands.length}
+┊ 📦 ᴄᴍᴅs : ${require('../shyam').commands.length}
 ╰━━━━━━━━━━━━━━
-> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ 🪀
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ 🪀
 `.trim();
 
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: botInfo,
             ...channelInfo
         }, { 

@@ -1,6 +1,6 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 
 class Wallpaper {
     constructor() {
@@ -72,7 +72,7 @@ class Wallpaper {
     }
 }
 
-malvin({
+shyam({
     pattern: "4kwallpaper",
     alias: ["wallpaper", "4kwall", "hdwall"],
     desc: "Search and download 4K wallpapers",
@@ -80,7 +80,7 @@ malvin({
     react: "🌆",
     use: ".4kwallpaper popular|featured|random|collection|search <query>|dl <url>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         const wallpaper = new Wallpaper();
         const args = q ? q.split(' ') : [];
@@ -106,7 +106,7 @@ malvin({
             );
         }
 
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
         if (['popular', 'featured', 'random', 'collection'].includes(type)) {
             let endpoint;
@@ -129,7 +129,7 @@ malvin({
                 }
             });
 
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `🌆 *${type.toUpperCase()} Wallpapers*\n\n${result.join('\n\n')}\n\n📥 *Download any wallpaper:*\n.4kwallpaper dl [URL]\n\n👤 *Requested by:* @${sender.split('@')[0]}\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ`,
                 mentions: [sender]
             }, { quoted: fakevCard });
@@ -163,7 +163,7 @@ malvin({
                 `${i + 1}. ${item.title}\n🔗 ${item.url}`
             ).join('\n\n');
 
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `🔍 *Search Results for:* ${query}\n\n${result}\n\n📥 *Download wallpaper:*\n.4kwallpaper dl [URL]\n\n👤 *Requested by:* @${sender.split('@')[0]}\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ`,
                 mentions: [sender]
             }, { quoted: fakevCard });
@@ -214,9 +214,9 @@ malvin({
                 });
             }
 
-            msg += `\n👤 *Requested by:* @${sender.split('@')[0]}\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ`;
+            msg += `\n👤 *Requested by:* @${sender.split('@')[0]}\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`;
 
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: msg,
                 mentions: [sender]
             }, { quoted: fakevCard });
@@ -230,11 +230,11 @@ malvin({
             );
         }
 
-        await malvin.sendMessage(from, { react: { text: '✅', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '✅', key: mek.key } });
 
     } catch (error) {
         console.error('4kwallpaper error:', error);
-        await malvin.sendMessage(from, { react: { text: '❌', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '❌', key: mek.key } });
         return reply(`❌ Failed to process wallpaper request: ${error.message}\n\n👤 *Requested by:* @${sender.split('@')[0]}`, { mentions: [sender] });
     }
 });

@@ -2,10 +2,10 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const { writeExifImg, writeExifVid } = require('../lib/exif');
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 
-// Malvin XD ATTP Command
-malvin({
+// shyam XD ATTP Command
+shyam({
     pattern: "attp",
     alias: ["atp", "textsticker", "blinktext"],
     desc: "Create blinking text sticker",
@@ -13,7 +13,7 @@ malvin({
     react: "✨",
     use: ".attp <text>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isGroup }) => {
+}, async (shyam, mek, m, { from, q, reply, isGroup }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         let text = q?.trim();
@@ -34,13 +34,13 @@ malvin({
         }
 
         // Show typing indicator
-        await malvin.sendPresenceUpdate('composing', from);
+        await shyam.sendPresenceUpdate('composing', from);
 
         try {
             console.log(`🎨 Generating ATTP for: "${text}"`);
             const mp4Buffer = await renderBlinkingVideoWithFfmpeg(text);
             const webpPath = await writeExifVid(mp4Buffer, { 
-                packname: 'Malvin XD', 
+                packname: 'Shyam XD', 
                 author: 'ATTP Sticker' 
             });
             const webpBuffer = fs.readFileSync(webpPath);

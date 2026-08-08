@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 
 // APK storage for user sessions
@@ -49,7 +49,7 @@ const aptoide = {
     }
 };
 
-malvin({
+shyam({
     pattern: "apk",
     alias: ["apkdownload", "aptoide"],
     desc: "Download APK files from Aptoide",
@@ -57,7 +57,7 @@ malvin({
     react: "📱",
     use: ".apk <app-name> or .apk <number>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return reply(
@@ -91,7 +91,7 @@ malvin({
             const selectedApp = session.results[index];
             session.downloading = true;
 
-            await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+            await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
             await reply(`📥 Downloading *${selectedApp.name}*...\nPlease wait, this may take a few minutes.`);
 
@@ -99,7 +99,7 @@ malvin({
                 const downloadData = await aptoide.download(selectedApp.id);
 
                 // Send app info first
-                await malvin.sendMessage(from, {
+                await shyam.sendMessage(from, {
                     image: { url: downloadData.img },
                     caption: `📱 *${downloadData.appname}*\n\n` +
                             `👨‍💻 *Developer:* ${downloadData.developer}\n` +
@@ -119,34 +119,34 @@ malvin({
                     }
                 });
 
-                await malvin.sendMessage(from, {
+                await shyam.sendMessage(from, {
                     document: Buffer.from(fileResponse.data),
                     fileName: `${downloadData.appname}.apk`,
                     mimetype: 'application/vnd.android.package-archive',
-                    caption: `✅ *${downloadData.appname}* downloaded successfully!\n\n⚠️ *Note:* Install at your own risk. Always scan APK files before installation.\n\n👤 *Downloaded by:* @${sender.split('@')[0]}\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ`,
+                    caption: `✅ *${downloadData.appname}* downloaded successfully!\n\n⚠️ *Note:* Install at your own risk. Always scan APK files before installation.\n\n👤 *Downloaded by:* @${sender.split('@')[0]}\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`,
                     mentions: [sender]
                 }, { quoted: fakevCard });
 
-                await malvin.sendMessage(from, { react: { text: '✅', key: mek.key } });
+                await shyam.sendMessage(from, { react: { text: '✅', key: mek.key } });
 
             } catch (error) {
                 console.error('APK Download error:', error);
                 await reply(`❌ Failed to download APK: ${error.message}\n\n👤 *Requested by:* @${sender.split('@')[0]}`, { mentions: [sender] });
-                await malvin.sendMessage(from, { react: { text: '❌', key: mek.key } });
+                await shyam.sendMessage(from, { react: { text: '❌', key: mek.key } });
             } finally {
                 session.downloading = false;
             }
 
         } else {
             // Search for APKs
-            await malvin.sendMessage(from, { react: { text: '🔍', key: mek.key } });
+            await shyam.sendMessage(from, { react: { text: '🔍', key: mek.key } });
 
             await reply(`🔍 Searching for *${input}*...`);
 
             const searchResults = await aptoide.search(input);
 
             if (!searchResults || searchResults.length === 0) {
-                await malvin.sendMessage(from, { react: { text: '❌', key: mek.key } });
+                await shyam.sendMessage(from, { react: { text: '❌', key: mek.key } });
                 return reply(`❌ No results found for "*${input}*".\n\nTry different keywords or check spelling.\n\n👤 *Requested by:* @${sender.split('@')[0]}`, { mentions: [sender] });
             }
 
@@ -162,9 +162,9 @@ malvin({
                            `💡 *To download:* Reply with .apk <number>\n` +
                            `*Example:* .apk 1\n\n` +
                            `👤 *Requested by:* @${sender.split('@')[0]}\n\n` +
-                           `> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ`;
+                           `> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`;
 
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: caption,
                 mentions: [sender]
             }, { quoted: fakevCard });
@@ -181,12 +181,12 @@ malvin({
                 apkSessions.delete(sender);
             }, 3600000);
 
-            await malvin.sendMessage(from, { react: { text: '✅', key: mek.key } });
+            await shyam.sendMessage(from, { react: { text: '✅', key: mek.key } });
         }
 
     } catch (error) {
         console.error('APK command error:', error);
-        await malvin.sendMessage(from, { react: { text: '❌', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '❌', key: mek.key } });
         return reply(`❌ An error occurred: ${error.message}\n\n👤 *Requested by:* @${sender.split('@')[0]}`, { mentions: [sender] });
     }
 });

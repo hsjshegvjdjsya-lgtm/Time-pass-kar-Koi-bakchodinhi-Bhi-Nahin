@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
@@ -36,10 +36,10 @@ function getRandomDelay() {
 }
 
 // Add typing indicator
-async function showTyping(malvin, chatId) {
+async function showTyping(shyam, chatId) {
     try {
-        await malvin.presenceSubscribe(chatId);
-        await malvin.sendPresenceUpdate('composing', chatId);
+        await shyam.presenceSubscribe(chatId);
+        await shyam.sendPresenceUpdate('composing', chatId);
         await new Promise(resolve => setTimeout(resolve, getRandomDelay()));
     } catch (error) {
         console.error('Typing indicator error:', error);
@@ -121,10 +121,10 @@ Assistant:`.trim();
             return "You're welcome! 😄";
         }
         else if (lowerMessage.includes('name')) {
-            return "I'm Malvin XD! 🤖 Your friendly chatbot!";
+            return "I'm Shyam XD! 🤖 Your friendly chatbot!";
         }
         else if (lowerMessage.includes('who are you')) {
-            return "I'm Malvin XD, your AI assistant! Created by Malvin King ✨";
+            return "I'm Shyam XD, your AI assistant! Created by Shyam King ✨";
         }
         else if (lowerMessage.includes('help')) {
             return "I'm here to chat and help with questions! What do you need? 🤔";
@@ -142,8 +142,8 @@ Assistant:`.trim();
     }
 }
 
-// Chatbot command using Malvin XD framework
-malvin({
+// Chatbot command using Shyam XD framework
+shyam({
     pattern: "gcbot",
     alias: ["gcbot", "aigc"],
     desc: "Enable/disable chatbot in this group",
@@ -151,7 +151,7 @@ malvin({
     react: "🤖",
     use: ".gcbot [on/off]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isGroup, isAdmin }) => {
+}, async (shyam, mek, m, { from, q, reply, isGroup, isAdmin }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         const data = loadUserGroupData();
@@ -166,7 +166,7 @@ malvin({
         }
 
         if (!q) {
-            await showTyping(malvin, from);
+            await showTyping(shyam, from);
             return reply(
                 `*🤖 CHATBOT SETUP*\n\n*.gcbot on*\nEnable chatbot\n\n*.gcbot off*\nDisable chatbot in this group`,
                 { quoted: fakevCard }
@@ -176,7 +176,7 @@ malvin({
         const action = q.toLowerCase();
         
         if (action === 'on') {
-            await showTyping(malvin, from);
+            await showTyping(shyam, from);
             if (data.chatbot[from]) {
                 return reply("*Chatbot is already enabled for this group*", { quoted: fakevCard });
             }
@@ -187,7 +187,7 @@ malvin({
         }
 
         if (action === 'off') {
-            await showTyping(malvin, from);
+            await showTyping(shyam, from);
             if (!data.chatbot[from]) {
                 return reply("*Chatbot is already disabled for this group*", { quoted: fakevCard });
             }
@@ -197,7 +197,7 @@ malvin({
             return reply("*Chatbot has been disabled for this group*", { quoted: fakevCard });
         }
 
-        await showTyping(malvin, from);
+        await showTyping(shyam, from);
         return reply("*Invalid command. Use .chatbot to see usage*", { quoted: fakevCard });
 
     } catch (error) {
@@ -207,13 +207,13 @@ malvin({
 });
 
 // Function to handle chatbot responses (for use in main bot file)
-async function handleChatbotResponse(malvin, chatId, message, userMessage, senderId) {
+async function handleChatbotResponse(shyam, chatId, message, userMessage, senderId) {
     const data = loadUserGroupData();
     if (!data.chatbot[chatId]) return;
 
     try {
         // Get bot's ID
-        const botNumber = malvin.user.id.split(':')[0] + '@s.whatsapp.net';
+        const botNumber = shyam.user.id.split(':')[0] + '@s.whatsapp.net';
 
         // Check for mentions and replies
         let isBotMentioned = false;
@@ -267,7 +267,7 @@ async function handleChatbotResponse(malvin, chatId, message, userMessage, sende
         chatMemory.messages.set(senderId, messages);
 
         // Show typing indicator
-        await showTyping(malvin, chatId);
+        await showTyping(shyam, chatId);
 
         // Get AI response with context
         const response = await getAIResponse(cleanedMessage, {
@@ -279,7 +279,7 @@ async function handleChatbotResponse(malvin, chatId, message, userMessage, sende
         await new Promise(resolve => setTimeout(resolve, getRandomDelay()));
 
         // Send response as a reply with proper context
-        await malvin.sendMessage(chatId, {
+        await shyam.sendMessage(chatId, {
             text: response
         }, {
             quoted: fakevCard
@@ -287,7 +287,7 @@ async function handleChatbotResponse(malvin, chatId, message, userMessage, sende
 
     } catch (error) {
         console.error('❌ Error in chatbot response:', error.message);
-        await malvin.sendMessage(chatId, { 
+        await shyam.sendMessage(chatId, { 
             text: "Oops! 😅 I got a bit confused there. Could you try asking that again?",
             quoted: fakevCard
         });

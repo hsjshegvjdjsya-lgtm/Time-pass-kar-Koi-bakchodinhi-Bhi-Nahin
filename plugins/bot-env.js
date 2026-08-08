@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { loadSettings, saveSettings, updateSetting } = require('../lib/settingsManager');
 const fs = require('fs');
 const path = require('path');
@@ -7,7 +7,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 
 // ==================== BOT MODE SETTING ====================
-malvin({
+shyam({
     pattern: "mode",
     alias: ["setmode", "botmode"],
     desc: "Set bot mode to private or public",
@@ -15,7 +15,7 @@ malvin({
     react: "🔧",
     use: ".mode <private/public>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) return await reply('❌ Only bot owner can change bot mode!');
@@ -72,7 +72,7 @@ malvin({
 });
 
 // ==================== SET BOT IMAGE ====================
-malvin({
+shyam({
     pattern: "setbotimage",
     alias: ["botdp", "botpic", "botimage"],
     desc: "Set the bot's display image (for menu/profile)",
@@ -80,7 +80,7 @@ malvin({
     react: "🖼️",
     use: ".setbotimage <url> or reply to image",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) return await reply('❌ Only bot owner can change bot image!');
@@ -92,7 +92,7 @@ malvin({
             const quotedMessage = mek.message.extendedTextMessage.contextInfo;
             
             if (quotedMessage.quotedMessage?.imageMessage) {
-                const imageBuffer = await malvin.downloadMediaMessage(quotedMessage, 'buffer', {}, {});
+                const imageBuffer = await shyam.downloadMediaMessage(quotedMessage, 'buffer', {}, {});
                 
                 // Upload to catbox
                 const tempFilePath = path.join(os.tmpdir(), `botimg_${Date.now()}.jpg`);
@@ -142,7 +142,7 @@ malvin({
 });
 
 // ==================== SET BOT NAME ====================
-malvin({
+shyam({
     pattern: "setbotname",
     alias: ["botname", "changebotname"],
     desc: "Set the bot's display name",
@@ -150,7 +150,7 @@ malvin({
     react: "🤖",
     use: ".setbotname <new name>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) return await reply('❌ Only bot owner can change bot name!');
@@ -163,7 +163,7 @@ malvin({
         if (success) {
             // Update bot profile name
             try {
-                await malvin.updateProfileName(q);
+                await shyam.updateProfileName(q);
             } catch (err) {
                 console.log('Profile name update error:', err);
             }
@@ -184,7 +184,7 @@ malvin({
 });
 
 // ==================== SET OWNER NAME ====================
-malvin({
+shyam({
     pattern: "setownername",
     alias: ["ownername", "changeownername"],
     desc: "Set the owner's display name",
@@ -192,7 +192,7 @@ malvin({
     react: "👑",
     use: ".setownername <new name>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) return await reply('❌ Only bot owner can change owner name!');
@@ -219,7 +219,7 @@ malvin({
 });
 
 // ==================== SET BOT AUDIO ====================
-malvin({
+shyam({
     pattern: "setbotaudio",
     alias: ["botaudio", "changeaudio"],
     desc: "Set bot's menu/status audio",
@@ -227,7 +227,7 @@ malvin({
     react: "🎵",
     use: ".setbotaudio <menu/alive> <url>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) return await reply('❌ Only bot owner can change bot audio!');
@@ -270,7 +270,7 @@ malvin({
 });
 
 // ==================== SHOW SETTINGS ====================
-malvin({
+shyam({
     pattern: "env",
     alias: ["config", "env"],
     desc: "Show current bot settings",
@@ -278,7 +278,7 @@ malvin({
     react: "⚙️",
     use: ".env",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) return await reply('❌ Only bot owner can view settings!');
@@ -343,7 +343,7 @@ malvin({
 });
 
 // ==================== RESET SETTINGS ====================
-malvin({
+shyam({
     pattern: "resetsettings",
     alias: ["defaultsettings"],
     desc: "Reset all settings to default",
@@ -351,7 +351,7 @@ malvin({
     react: "🔄",
     use: ".resetsettings",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) return await reply('❌ Only bot owner can reset settings!');

@@ -1,8 +1,8 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 
 // NPM Package Search Command
-malvin({
+shyam({
     pattern: "npm",
     alias: ["npmpkg", "package"],
     desc: "Search for a package on npm.",
@@ -10,7 +10,7 @@ malvin({
     react: "📦",
     use: ".npm <package-name>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return reply('Please provide the name of the npm package you want to search for.\n\nExample: .npm express');
@@ -54,7 +54,7 @@ malvin({
 `;
 
         // Send the message with mentions
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: message,
             mentions: [sender],
             contextInfo: {
@@ -90,7 +90,7 @@ Please try again with a valid package name.
 });
 
 // NPM Package Info with More Details
-malvin({
+shyam({
     pattern: "npminfo",
     alias: ["pkginfo", "packageinfo"],
     desc: "Get detailed information about an npm package",
@@ -98,7 +98,7 @@ malvin({
     react: "📋",
     use: ".npminfo <package-name>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return reply('Please provide the name of the npm package.\n\nExample: .npminfo express');
@@ -148,7 +148,7 @@ malvin({
 *👤 Requested by:* @${sender.split('@')[0]}
 `;
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: message,
             mentions: [sender],
             contextInfo: {

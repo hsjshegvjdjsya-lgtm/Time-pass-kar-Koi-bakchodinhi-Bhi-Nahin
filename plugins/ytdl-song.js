@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 const axios = require('axios');
 const yts = require('yt-search');
@@ -15,7 +15,7 @@ const axiosInstance = axios.create({
 // Store active listeners and audio data
 const activeSessions = new Map();
 
-malvin(
+shyam(
     {
         pattern: 'song',
         alias: ['ytaudio'],
@@ -25,7 +25,7 @@ malvin(
         use: '<YouTube URL or search query>',
         filename: __filename
     },
-    async (malvin, mek, m, { text, from, sender, reply }) => {
+    async (shyam, mek, m, { text, from, sender, reply }) => {
         try {
             if (!text) {
                 return await reply(`🎵 *Usage:* .song <query/url>\n\n*Examples:*\n• .song https://youtu.be/ox4tmEV6-QU\n• .song Alan Walker faded\n• .song shape of you\n\n💡 *Tip:* You can search by song name or paste YouTube URL`);
@@ -34,7 +34,7 @@ malvin(
             // Send initial reaction
             try {
                 if (mek?.key?.id) {
-                    await malvin.sendMessage(from, { react: { text: "⏳", key: mek.key } });
+                    await shyam.sendMessage(from, { react: { text: "⏳", key: mek.key } });
                 }
             } catch (reactError) {
                 console.error('Reaction error:', reactError);
@@ -93,7 +93,7 @@ malvin(
             }
 
             // Update to downloading message
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: '📥 Downloading audio...',
                 edit: processingMsg.key
             });
@@ -204,12 +204,12 @@ malvin(
                 ...channelInfo
             };
 
-            const sentMsg = await malvin.sendMessage(from, songMessage, { quoted: fakevCard });
+            const sentMsg = await shyam.sendMessage(from, songMessage, { quoted: fakevCard });
 
             // Clean up any existing session for this chat
             if (activeSessions.has(from)) {
                 const oldSession = activeSessions.get(from);
-                malvin.ev.off('messages.upsert', oldSession.listener);
+                shyam.ev.off('messages.upsert', oldSession.listener);
                 if (oldSession.timeout) clearTimeout(oldSession.timeout);
                 activeSessions.delete(from);
             }
@@ -218,7 +218,7 @@ malvin(
             const timeout = setTimeout(() => {
                 if (activeSessions.has(from)) {
                     const session = activeSessions.get(from);
-                    malvin.ev.off('messages.upsert', session.listener);
+                    shyam.ev.off('messages.upsert', session.listener);
                     activeSessions.delete(from);
                     reply("⏰ *Download session timed out!*\n\nUse .song again to restart.");
                 }
@@ -250,7 +250,7 @@ malvin(
                         // Handle different download options
                         if (messageType.trim() === "1") {
                             // Send as audio only
-                            await malvin.sendMessage(from, {
+                            await shyam.sendMessage(from, {
                                 audio: audioBuffer,
                                 mimetype: 'audio/mpeg',
                                 fileName: fileName,
@@ -261,7 +261,7 @@ malvin(
 
                         } else if (messageType.trim() === "2") {
                             // Send as document only
-                            await malvin.sendMessage(from, {
+                            await shyam.sendMessage(from, {
                                 document: audioBuffer,
                                 mimetype: 'audio/mpeg',
                                 fileName: fileName,
@@ -271,7 +271,7 @@ malvin(
 
                         } else if (messageType.trim() === "3") {
                             // Send BOTH formats
-                            await malvin.sendMessage(from, {
+                            await shyam.sendMessage(from, {
                                 audio: audioBuffer,
                                 mimetype: 'audio/mpeg',
                                 fileName: fileName,
@@ -280,7 +280,7 @@ malvin(
                                 ...channelInfo
                             }, { quoted: fakevCard });
 
-                            await malvin.sendMessage(from, {
+                            await shyam.sendMessage(from, {
                                 document: audioBuffer,
                                 mimetype: 'audio/mpeg',
                                 fileName: fileName,
@@ -292,7 +292,7 @@ malvin(
                         // Send success reaction
                         try {
                             if (mekInfo?.key?.id) {
-                                await malvin.sendMessage(from, { react: { text: "✅", key: mekInfo.key } });
+                                await shyam.sendMessage(from, { react: { text: "✅", key: mekInfo.key } });
                             }
                         } catch (reactError) {
                             console.error('Success reaction failed:', reactError);
@@ -322,7 +322,7 @@ malvin(
             };
 
             // Register the listener and store session
-            malvin.ev.on('messages.upsert', messageListener);
+            shyam.ev.on('messages.upsert', messageListener);
             activeSessions.set(from, sessionData);
 
         } catch (error) {

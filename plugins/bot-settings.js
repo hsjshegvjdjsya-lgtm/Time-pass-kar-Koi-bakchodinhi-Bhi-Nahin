@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { channelInfo } = require('../lib/messageConfig');
 const { loadSettings, saveSettings, updateSetting } = require('../lib/settingsManager');
 const SETTINGS_IMG = "https://i.ibb.co/zHhMyRT3/malvin-xd.jpg";
@@ -15,7 +15,7 @@ const toTinyCaps = (str) => {
 };
 
 // ==================== SHOW SETTINGS ====================
-malvin({
+shyam({
     pattern: "settings",
     alias: ["seto", "config"],
     desc: "Show bot settings",
@@ -23,7 +23,7 @@ malvin({
     react: "⚙️",
     use: ".settings",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) return await reply('❌ Only bot owner can view settings!');
@@ -89,14 +89,14 @@ malvin({
         
         if (isValidImage) {
             // Send with image
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 image: { url: SETTINGS_IMG },
                 caption: settingsInfo,
                 ...channelInfo
             }, { quoted: fakevCard });
         } else {
             // Send without image if URL is invalid
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: settingsInfo,
                 ...channelInfo
             }, { quoted: fakevCard });

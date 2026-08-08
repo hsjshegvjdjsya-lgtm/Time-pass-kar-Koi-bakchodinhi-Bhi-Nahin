@@ -1,4 +1,4 @@
-const { malvin } = require('../malvin');
+const { shyam } = require('../shyam');
 const moment = require('moment-timezone');
 const os = require('os');
 const { fakevCard } = require('../lib/fakevCard');
@@ -47,20 +47,20 @@ const formatStatusInfo = (pushname, harareTime, harareDate, runtimeHours, runtim
 > ${settings.description}
 `.trim();
 
-malvin({
+shyam({
   pattern: 'alive',
   alias: ['uptime', 'runtime', 'status'],
   desc: 'Check if the bot is active and view system status',
   category: 'info',
   react: '🚀',
   filename: __filename,
-}, async (malvin, mek, m, { reply, from, sender, pushName }) => {
+}, async (shyam, mek, m, { reply, from, sender, pushName }) => {
   try {
     // Load current settings
     const currentSettings = loadSettings();
     
     const pushname = pushName || m.pushName || 'User';
-    const timezone = currentSettings.timezone || 'Africa/Harare';
+    const timezone = currentSettings.timezone || 'Asia/kolkata';
     const harareTime = moment().tz(timezone).format('HH:mm:ss');
     const harareDate = moment().tz(timezone).format('dddd, MMMM Do YYYY');
     const runtimeMilliseconds = Date.now() - botStartTime;
@@ -82,7 +82,7 @@ malvin({
     const imageUrl = currentSettings.imageUrl || 'https://i.ibb.co/zHhMyRT3/malvin-xd.jpg';
     
     // Send image with status info
-    await malvin.sendMessage(from, {
+    await shyam.sendMessage(from, {
       image: { url: imageUrl },
       caption: statusInfo,
       mentions: [sender],
@@ -92,7 +92,7 @@ malvin({
     // Send audio if available in settings
     const audioUrl = currentSettings.ALIVE_AUDIO_URL || currentSettings.MENU_AUDIO_URL;
     if (audioUrl && audioUrl.startsWith('http')) {
-      await malvin.sendMessage(from, {
+      await shyam.sendMessage(from, {
         audio: { url: audioUrl },
         mimetype: 'audio/mp4',
         ptt: false,
@@ -106,7 +106,7 @@ malvin({
     // Fallback text-only response if image fails
     const currentSettings = loadSettings();
     const pushname = m.pushName || 'User';
-    const timezone = currentSettings.timezone || 'Africa/Harare';
+    const timezone = currentSettings.timezone || 'Asia/kolkata';
     const harareTime = moment().tz(timezone).format('HH:mm:ss');
     const runtimeMilliseconds = Date.now() - botStartTime;
     const runtimeSeconds = Math.floor((runtimeMilliseconds / 1000) % 60);

@@ -1,18 +1,18 @@
 var commands = [];
 const { fakevCard } = require('./lib/fakevCard');
 
-function malvin(info, func) {
+function shyam(info, func) {
     var data = info;
     
     // Store original function
     const originalFunction = func;
     
     // Wrap the function with automatic reaction
-    data.function = async (malvin, mek, m, context) => {
+    data.function = async (shyam, mek, m, context) => {
         try {
             // Add automatic reaction if specified
             if (info.react && mek.key) {
-                await malvin.sendMessage(context.from, {
+                await shyam.sendMessage(context.from, {
                     react: { text: info.react, key: mek.key }
                 });
             }
@@ -21,7 +21,7 @@ function malvin(info, func) {
         }
         
         // Execute the original command function
-        return originalFunction(malvin, mek, m, context);
+        return originalFunction(shyam, mek, m, context);
     };
     
     if (!data.dontAddCommandList) data.dontAddCommandList = false;
@@ -39,10 +39,10 @@ const settings = require('./settings');
 const prefix = settings.prefix || '.';
 
 module.exports = {
-    malvin,
-    AddCommand: malvin,
-    Function: malvin,
-    Module: malvin,
+    shyam,
+    AddCommand: shyam,
+    Function: shyam,
+    Module: shyam,
     commands,
     fakevCard,
     prefix

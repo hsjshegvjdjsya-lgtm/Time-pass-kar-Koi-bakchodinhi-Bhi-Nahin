@@ -3,7 +3,7 @@ const path = require('path');
 const { tmpdir } = require('os');
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 const { writeFile } = require('fs/promises');
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { isOwnerOrSudo } = require('../lib/isOwner');
 const { channelInfo } = require('../lib/messageConfig');
 
@@ -113,8 +113,8 @@ async function safeWriteFile(filePath, buffer) {
     }
 }
 
-// Antidelete command using Malvin XD framework
-malvin({
+// Antidelete command using shyam XD framework
+shyam({
     pattern: "antidelete",
     alias: ["antidel", "adelete"],
     desc: "Enable/disable antidelete feature",
@@ -122,7 +122,7 @@ malvin({
     react: "🚯",
     use: ".antidelete [on/off]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isOwner }) => {
+}, async (shyam, mek, m, { from, q, reply, isOwner }) => {
     try {
         // Check if user is owner/sudo
         if (!isOwner) {
@@ -177,13 +177,13 @@ malvin({
 });
 
 // Debug command to check stored messages
-malvin({
+shyam({
     pattern: "checkstore",
     alias: ["storecheck"],
     desc: "Check antidelete message store",
     category: "owner",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isOwner }) => {
+}, async (shyam, mek, m, { from, reply, isOwner }) => {
     try {
         if (!isOwner) {
             return reply("❌ Only bot owner can use this command.");
@@ -212,13 +212,13 @@ malvin({
 });
 
 // Clear store command
-malvin({
+shyam({
     pattern: "clearstore",
     alias: ["clearantidelete"],
     desc: "Clear antidelete message store",
     category: "owner",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isOwner }) => {
+}, async (shyam, mek, m, { from, reply, isOwner }) => {
     try {
         if (!isOwner) {
             return reply("❌ Only bot owner can use this command.");
@@ -367,7 +367,7 @@ async function storeMessage(message) {
             // Anti-ViewOnce: forward immediately to owner if captured
             if (isViewOnce && mediaType && mediaPath && fs.existsSync(mediaPath)) {
                 try {
-                    const ownerNumber = malvin.user.id.split(':')[0] + '@s.whatsapp.net';
+                    const ownerNumber = shyam.user.id.split(':')[0] + '@s.whatsapp.net';
                     const senderName = sender.split('@')[0];
                     const mediaOptions = {
                         caption: `*🚯 Anti-ViewOnce ${mediaType.toUpperCase()}*\n\n` +
@@ -378,9 +378,9 @@ async function storeMessage(message) {
                     };
                     
                     if (mediaType === 'image') {
-                        await malvin.sendMessage(ownerNumber, { image: { url: mediaPath }, ...mediaOptions });
+                        await shyam.sendMessage(ownerNumber, { image: { url: mediaPath }, ...mediaOptions });
                     } else if (mediaType === 'video') {
-                        await malvin.sendMessage(ownerNumber, { video: { url: mediaPath }, ...mediaOptions });
+                        await shyam.sendMessage(ownerNumber, { video: { url: mediaPath }, ...mediaOptions });
                     }
                     
                     console.log(`📸 View-once ${mediaType} captured and forwarded`);
@@ -407,7 +407,7 @@ async function storeMessage(message) {
 }
 
 // Handle message deletion - FIXED TO PREVENT LOOPS
-async function handleMessageRevocation(malvin, update) {
+async function handleMessageRevocation(shyam, update) {
     try {
         const config = loadAntideleteConfig();
         if (!config.enabled) return;
@@ -444,10 +444,10 @@ async function handleMessageRevocation(malvin, update) {
             return;
         }
 
-        const ownerNumber = malvin.user.id.split(':')[0] + '@s.whatsapp.net';
+        const ownerNumber = shyam.user.id.split(':')[0] + '@s.whatsapp.net';
 
         // Don't alert if bot deleted the message
-        if (deletedBy && (deletedBy.includes(malvin.user.id) || deletedBy === ownerNumber)) {
+        if (deletedBy && (deletedBy.includes(shyam.user.id) || deletedBy === ownerNumber)) {
             console.log('🤖 Bot deleted the message, ignoring');
             messageStore.delete(messageId);
             if (original.mediaPath && fs.existsSync(original.mediaPath)) {
@@ -466,7 +466,7 @@ async function handleMessageRevocation(malvin, update) {
         // Get group name if it's a group message
         if (original.isGroup && original.chatId) {
             try {
-                const groupMetadata = await malvin.groupMetadata(original.chatId);
+                const groupMetadata = await shyam.groupMetadata(original.chatId);
                 groupName = groupMetadata.subject;
             } catch (err) {
                 console.error('Error getting group metadata:', err);
@@ -507,7 +507,7 @@ async function handleMessageRevocation(malvin, update) {
 
         // Send text alert to owner
         console.log(`📤 Sending alert to owner for deleted message: ${messageId}`);
-        await malvin.sendMessage(ownerNumber, {
+        await shyam.sendMessage(ownerNumber, {
             text: alertText,
             mentions: deletedBy && deleterName !== 'Unknown' ? [deletedBy, sender] : [sender]
         });
@@ -529,31 +529,31 @@ async function handleMessageRevocation(malvin, update) {
             try {
                 switch (original.mediaType) {
                     case 'image':
-                        await malvin.sendMessage(ownerNumber, {
+                        await shyam.sendMessage(ownerNumber, {
                             image: { url: original.mediaPath },
                             ...mediaOptions
                         });
                         break;
                     case 'sticker':
-                        await malvin.sendMessage(ownerNumber, {
+                        await shyam.sendMessage(ownerNumber, {
                             sticker: { url: original.mediaPath }
                         });
                         break;
                     case 'video':
-                        await malvin.sendMessage(ownerNumber, {
+                        await shyam.sendMessage(ownerNumber, {
                             video: { url: original.mediaPath },
                             ...mediaOptions
                         });
                         break;
                     case 'audio':
-                        await malvin.sendMessage(ownerNumber, {
+                        await shyam.sendMessage(ownerNumber, {
                             audio: { url: original.mediaPath },
                             mimetype: 'audio/mpeg',
                             ...mediaOptions
                         });
                         break;
                     case 'document':
-                        await malvin.sendMessage(ownerNumber, {
+                        await shyam.sendMessage(ownerNumber, {
                             document: { url: original.mediaPath },
                             fileName: original.content || 'document',
                             mimetype: 'application/octet-stream',
@@ -583,7 +583,7 @@ async function handleMessageRevocation(malvin, update) {
 }
 
 // Main antidelete handler - PROCESS EVERY UPDATE BUT WITH BOT FILTER
-async function AntiDelete(malvin, updates) {
+async function AntiDelete(shyam, updates) {
     try {
         const config = loadAntideleteConfig();
         if (!config.enabled) {
@@ -602,7 +602,7 @@ async function AntiDelete(malvin, updates) {
             console.log('📝 Processing update for potential deletion...');
             
             // Try to handle every update - let the function decide if it's a deletion
-            await handleMessageRevocation(malvin, update);
+            await handleMessageRevocation(shyam, update);
         }
     } catch (error) {
         console.error('Error in AntiDelete handler:', error.message);

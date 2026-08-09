@@ -337,7 +337,7 @@ async function downloadSessionData() {
                 console.log(chalk.red('Session ID not found and creds.json missing! Falling back to pairing code...'));
                 return false;
             }
-            const base64Data = global.SESSION_ID.split('starcore~')[1];
+            const base64Data = global.SESSION_ID.split('DEX~')[1];
             if (!base64Data) throw new Error('Invalid SESSION_ID format');
             await fs.promises.writeFile(CREDS_PATH, Buffer.from(base64Data, 'base64'));
             console.log(chalk.green('Session successfully saved!'));

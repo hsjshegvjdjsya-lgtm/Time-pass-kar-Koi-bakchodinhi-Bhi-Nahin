@@ -1,17 +1,17 @@
 //---------------------------------------------
-//           MALVIN-XD TEXT MAKER
+//           shyam-XD TEXT MAKER
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 const mumaker = require('mumaker');
 
 // Fast loading animation for text effects
-async function sendTextEffectLoading(malvin, from, effectName) {
+async function sendTextEffectLoading(shyam, from, effectName) {
     const frames = ['🎨', '✨', '⚡', '🔄', '🌟'];
-    let loadingMsg = await malvin.sendMessage(from, { 
+    let loadingMsg = await shyam.sendMessage(from, { 
         text: `${frames[0]} Creating ${effectName} effect...`
     }, { quoted: fakevCard });
     
@@ -19,7 +19,7 @@ async function sendTextEffectLoading(malvin, from, effectName) {
     const animationInterval = setInterval(async () => {
         frameIndex = (frameIndex + 1) % frames.length;
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `${frames[frameIndex]} Creating ${effectName} effect...`,
                 edit: loadingMsg.key
             });
@@ -35,17 +35,17 @@ async function sendTextEffectLoading(malvin, from, effectName) {
 }
 
 // Reusable text effect function
-async function createMumakerEffect(malvin, mek, m, { from, q, reply, sender }, effectName, effectUrl) {
+async function createMumakerEffect(shyam, mek, m, { from, q, reply, sender }, effectName, effectUrl) {
     try {
         if (!q) {
             return await reply(`🎨 *${effectName.toUpperCase()} EFFECT*\n\n❌ Please provide text.\n\n*Example:* .${effectName} Your Text`);
         }
 
         // Send initial reaction
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
         
         // Start loading animation
-        const loading = await sendTextEffectLoading(malvin, from, effectName);
+        const loading = await sendTextEffectLoading(shyam, from, effectName);
 
         const result = await mumaker.ephoto(effectUrl, q);
 
@@ -65,17 +65,17 @@ async function createMumakerEffect(malvin, mek, m, { from, q, reply, sender }, e
 📝 *Text:* ${q}
 🎯 *Effect:* ${effectName}
 
-> ✨ Powered by Malvin Tech
+> ✨ Powered by shyam Tech
         `.trim();
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: { url: result.image },
             caption: caption,
             ...channelInfo
         }, { quoted: fakevCard });
 
         // Success reaction
-        await malvin.sendMessage(from, { react: { text: "✅", key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: "✅", key: mek.key } });
 
     } catch (e) {
         console.error(`${effectName} error:`, e);
@@ -86,7 +86,7 @@ async function createMumakerEffect(malvin, mek, m, { from, q, reply, sender }, e
 // ========== TEXT MAKER COMMANDS ==========
 
 // Metallic Effect
-malvin({
+shyam({
     pattern: "metallic",
     alias: ["metal"],
     desc: "Create metallic 3D text effect",
@@ -94,13 +94,13 @@ malvin({
     react: "🔩",
     use: ".metallic <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "metallic",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "metallic",
         "https://en.ephoto360.com/impressive-decorative-3d-metal-text-effect-798.html");
 });
 
 // Ice Effect
-malvin({
+shyam({
     pattern: "ice",
     alias: ["iceeffect"],
     desc: "Create ice text effect",
@@ -108,13 +108,13 @@ malvin({
     react: "❄️",
     use: ".ice <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "ice",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "ice",
         "https://en.ephoto360.com/ice-text-effect-online-101.html");
 });
 
 // Snow Effect
-malvin({
+shyam({
     pattern: "snow",
     alias: ["snoweffect"],
     desc: "Create snow 3D text effect",
@@ -122,13 +122,13 @@ malvin({
     react: "🌨️",
     use: ".snow <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "snow",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "snow",
         "https://en.ephoto360.com/create-a-snow-3d-text-effect-free-online-621.html");
 });
 
 // Impressive Paint Effect
-malvin({
+shyam({
     pattern: "impressive",
     alias: ["paint3d"],
     desc: "Create impressive 3D paint text effect",
@@ -136,13 +136,13 @@ malvin({
     react: "🎨",
     use: ".impressive <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "impressive paint",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "impressive paint",
         "https://en.ephoto360.com/create-3d-colorful-paint-text-effect-online-801.html");
 });
 
 // Matrix Effect
-malvin({
+shyam({
     pattern: "matrix",
     alias: ["matrixeffect"],
     desc: "Create matrix text effect",
@@ -150,13 +150,13 @@ malvin({
     react: "💚",
     use: ".matrix <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "matrix",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "matrix",
         "https://en.ephoto360.com/matrix-text-effect-154.html");
 });
 
 // Light Effect
-malvin({
+shyam({
     pattern: "light",
     alias: ["lighteffect"],
     desc: "Create futuristic light text effect",
@@ -164,13 +164,13 @@ malvin({
     react: "💡",
     use: ".light <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "light",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "light",
         "https://en.ephoto360.com/light-text-effect-futuristic-technology-style-648.html");
 });
 
 // Neon Effect
-malvin({
+shyam({
     pattern: "neon",
     alias: ["neoneffect"],
     desc: "Create neon light text effect",
@@ -178,13 +178,13 @@ malvin({
     react: "🌈",
     use: ".neon <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "neon",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "neon",
         "https://en.ephoto360.com/create-colorful-neon-light-text-effects-online-797.html");
 });
 
 // Devil Wings Effect
-malvin({
+shyam({
     pattern: "devil",
     alias: ["devilwings"],
     desc: "Create devil wings neon text effect",
@@ -192,13 +192,13 @@ malvin({
     react: "😈",
     use: ".devil <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "devil wings",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "devil wings",
         "https://en.ephoto360.com/neon-devil-wings-text-effect-online-683.html");
 });
 
 // Purple Effect
-malvin({
+shyam({
     pattern: "purple",
     alias: ["purpleeffect"],
     desc: "Create purple text effect",
@@ -206,13 +206,13 @@ malvin({
     react: "💜",
     use: ".purple <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "purple",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "purple",
         "https://en.ephoto360.com/purple-text-effect-online-100.html");
 });
 
 // Thunder Effect
-malvin({
+shyam({
     pattern: "thunder",
     alias: ["thundereffect"],
     desc: "Create thunder text effect",
@@ -220,13 +220,13 @@ malvin({
     react: "⚡",
     use: ".thunder <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "thunder",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "thunder",
         "https://en.ephoto360.com/thunder-text-effect-online-97.html");
 });
 
 // Leaves Effect
-malvin({
+shyam({
     pattern: "leaves",
     alias: ["leafeffect"],
     desc: "Create green leaves text effect",
@@ -234,13 +234,13 @@ malvin({
     react: "🍃",
     use: ".leaves <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "leaves",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "leaves",
         "https://en.ephoto360.com/green-brush-text-effect-typography-maker-online-153.html");
 });
 
 // 1917 Style Effect
-malvin({
+shyam({
     pattern: "1917",
     alias: ["vintage"],
     desc: "Create 1917 vintage text effect",
@@ -248,13 +248,13 @@ malvin({
     react: "🎞️",
     use: ".1917 <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "1917 style",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "1917 style",
         "https://en.ephoto360.com/1917-style-text-effect-523.html");
 });
 
 // Arena Effect
-malvin({
+shyam({
     pattern: "arena",
     alias: ["arenaeffect"],
     desc: "Create arena of valor cover effect",
@@ -262,13 +262,13 @@ malvin({
     react: "🛡️",
     use: ".arena <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "arena",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "arena",
         "https://en.ephoto360.com/create-cover-arena-of-valor-by-mastering-360.html");
 });
 
 // Hacker Effect
-malvin({
+shyam({
     pattern: "hacker",
     alias: ["hackereffect"],
     desc: "Create hacker avatar text effect",
@@ -276,13 +276,13 @@ malvin({
     react: "💻",
     use: ".hacker <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "hacker",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "hacker",
         "https://en.ephoto360.com/create-anonymous-hacker-avatars-cyan-neon-677.html");
 });
 
 // Sand Effect
-malvin({
+shyam({
     pattern: "sand",
     alias: ["sandeffect"],
     desc: "Create sand writing text effect",
@@ -290,13 +290,13 @@ malvin({
     react: "🏖️",
     use: ".sand <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "sand",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "sand",
         "https://en.ephoto360.com/write-names-and-messages-on-the-sand-online-582.html");
 });
 
 // Blackpink Effect
-malvin({
+shyam({
     pattern: "blackpink",
     alias: ["bp"],
     desc: "Create Blackpink style text effect",
@@ -304,13 +304,13 @@ malvin({
     react: "🖤",
     use: ".blackpink <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "blackpink",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "blackpink",
         "https://en.ephoto360.com/create-a-blackpink-style-logo-with-members-signatures-810.html");
 });
 
 // Glitch Effect
-malvin({
+shyam({
     pattern: "glitch",
     alias: ["glitcheffect"],
     desc: "Create digital glitch text effect",
@@ -318,13 +318,13 @@ malvin({
     react: "📱",
     use: ".glitch <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "glitch",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "glitch",
         "https://en.ephoto360.com/create-digital-glitch-text-effects-online-767.html");
 });
 
 // Fire Effect
-malvin({
+shyam({
     pattern: "fire",
     alias: ["fireeffect"],
     desc: "Create flame lettering text effect",
@@ -332,13 +332,13 @@ malvin({
     react: "🔥",
     use: ".fire <text>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
-    await createMumakerEffect(malvin, mek, m, { from, q, reply }, "fire",
+}, async (shyam, mek, m, { from, q, reply }) => {
+    await createMumakerEffect(shyam, mek, m, { from, q, reply }, "fire",
         "https://en.ephoto360.com/flame-lettering-effect-372.html");
 });
 
 // Text Effects Help Command
-malvin({
+shyam({
     pattern: "textmaker",
     alias: ["textfx", "effects"],
     desc: "Show all available text effects",
@@ -346,7 +346,7 @@ malvin({
     react: "📖",
     use: ".textmaker",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     const effectsList = `
 ╭───═══━ • ━═══───╮
    🎨 *TEXT EFFECTS*
@@ -390,5 +390,5 @@ malvin({
 });
 
 //---------------------------------------------
-//           CODE BY MALVIN KING
+//           CODE BY shyam KING
 //---------------------------------------------

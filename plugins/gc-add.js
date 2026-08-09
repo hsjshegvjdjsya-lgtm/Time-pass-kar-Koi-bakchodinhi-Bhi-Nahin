@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { phoneNumberToJid } = require('@whiskeysockets/baileys');
 
-malvin({
+shyam({
     pattern: "groupadd",
     alias: ["add", "gadd"],
     desc: "Add user to group by mention, reply, or phone number",
@@ -9,7 +9,7 @@ malvin({
     react: "➕",
     use: ".groupadd @user OR .groupadd 263714757857 OR reply to user's message",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -63,7 +63,7 @@ malvin({
         // Add users one by one
         for (const userJid of usersToAdd) {
             try {
-                await malvin.groupParticipantsUpdate(from, [userJid], "add");
+                await shyam.groupParticipantsUpdate(from, [userJid], "add");
                 successUsers.push(userJid);
                 console.log('✅ Successfully added:', userJid);
                 
@@ -93,7 +93,7 @@ malvin({
 
         const allMentions = [...successUsers, ...failedUsers, sender];
         
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: resultMessage,
             mentions: allMentions
         }, {

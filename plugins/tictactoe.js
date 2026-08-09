@@ -1,11 +1,11 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const TicTacToe = require('../lib/tictactoe');
 
 // Store games globally
 const games = {};
 
 // TicTacToe Start Command
-malvin({
+shyam({
     pattern: "tictactoe",
     alias: ["ttt", "xox"],
     desc: "Start a TicTacToe game",
@@ -13,7 +13,7 @@ malvin({
     react: "🎮",
     use: ".tictactoe [room name]",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         // Check if player is already in a game
         if (Object.values(games).find(room => 
@@ -65,7 +65,7 @@ ${arr.slice(6).join('')}
 • Type *surrender* to give up
 `;
 
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 text: str,
                 mentions: [room.game.currentTurn, room.game.playerX, room.game.playerO]
             });
@@ -94,12 +94,12 @@ ${arr.slice(6).join('')}
 });
 
 // TicTacToe Move Handler (for number inputs 1-9)
-malvin({
+shyam({
     pattern: "([1-9])",
     desc: "TicTacToe move handler",
     category: "game",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         // Find player's game
         const room = Object.values(games).find(room => 
@@ -172,13 +172,13 @@ ${!winner && !isTie ? '• Type a number (1-9) to make your move\n• Type *surr
             ...(winner ? [winner] : [room.game.currentTurn])
         ];
 
-        await malvin.sendMessage(room.x, { 
+        await shyam.sendMessage(room.x, { 
             text: str,
             mentions: mentions
         });
 
         if (room.x !== room.o) {
-            await malvin.sendMessage(room.o, { 
+            await shyam.sendMessage(room.o, { 
                 text: str,
                 mentions: mentions
             });
@@ -194,7 +194,7 @@ ${!winner && !isTie ? '• Type a number (1-9) to make your move\n• Type *surr
 });
 
 // Surrender Command
-malvin({
+shyam({
     pattern: "surrender",
     alias: ["giveup", "ff"],
     desc: "Surrender from current game",
@@ -202,7 +202,7 @@ malvin({
     react: "🏳️",
     use: ".surrender",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         // Find player's game
         const room = Object.values(games).find(room => 
@@ -218,7 +218,7 @@ malvin({
         // Set the winner to the opponent of the surrendering player
         const winner = sender === room.game.playerX ? room.game.playerO : room.game.playerX;
         
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: `🏳️ @${sender.split('@')[0]} has surrendered! @${winner.split('@')[0]} wins the game!`,
             mentions: [sender, winner]
         });

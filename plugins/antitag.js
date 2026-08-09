@@ -1,9 +1,9 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { setAntitag, getAntitag, removeAntitag } = require('../lib/index');
 const isAdmin = require('../lib/isAdmin');
 
 // Antitag command handler
-malvin({
+shyam({
     pattern: "antitag",
     alias: ["antimention", "notag"],
     desc: "Prevent mass tagging in groups",
@@ -11,7 +11,7 @@ malvin({
     react: "🚫",
     use: ".antitag [on/off/set delete|kick]",
     filename: __filename,
-}, async (malvin, mek, m, { from, sender, isGroup, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, sender, isGroup, reply, text, isAdmin }) => {
     try {
         // Check if it's a group
         if (!isGroup) {
@@ -19,7 +19,7 @@ malvin({
         }
 
         // Check admin status
-        const adminStatus = await isAdmin(malvin, from, sender);
+        const adminStatus = await isAdmin(shyam, from, sender);
         
         if (!adminStatus.isSenderAdmin) {
             return await reply("🔒 Only admins can use the antitag command.");
@@ -33,7 +33,7 @@ malvin({
         const action = args[0];
 
         if (!action) {
-            const usage = `🚫 *Antitag Setup*\n\n📖 *Usage:*\n• .antitag on\n• .antitag set delete | kick\n• .antitag off\n• .antitag get\n\n💡 *Actions:*\ndelete - Delete tagall messages\nkick - Kick users who tagall\n\n> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🤖 MALVIN XD 🔥*`;
+            const usage = `🚫 *Antitag Setup*\n\n📖 *Usage:*\n• .antitag on\n• .antitag set delete | kick\n• .antitag off\n• .antitag get\n\n💡 *Actions:*\ndelete - Delete tagall messages\nkick - Kick users who tagall\n\n> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🤖 shyam XD 🔥*`;
             return await reply(usage);
         }
 
@@ -71,7 +71,7 @@ malvin({
                     `🚫 *Antitag Configuration:*\n\n` +
                     `📊 Status: ${status ? '🟢 ON' : '🔴 OFF'}\n` +
                     `⚡ Action: ${actionConfig ? actionConfig.action : 'Not set'}\n\n` +
-                    `> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🤖 MALVIN XD 🔥*`
+                    `> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ 🤖 shyam XD 🔥*`
                 );
                 break;
 
@@ -85,7 +85,7 @@ malvin({
 });
 
 // Tag detection function (for integration in main bot)
-async function handleTagDetection(malvin, from, mek, sender) {
+async function handleTagDetection(shyam, from, mek, sender) {
     try {
         const antitagSetting = await getAntitag(from, 'on');
         if (!antitagSetting || !antitagSetting.enabled) return;
@@ -98,7 +98,7 @@ async function handleTagDetection(malvin, from, mek, sender) {
         // Check if it's a group message and has multiple mentions
         if (mentions.length > 0 && mentions.length >= 3) {
             // Get group participants to check if it's tagging most/all members
-            const groupMetadata = await malvin.groupMetadata(from);
+            const groupMetadata = await shyam.groupMetadata(from);
             const participants = groupMetadata.participants || [];
             
             // If mentions are more than 50% of group members, consider it as tagall
@@ -109,7 +109,7 @@ async function handleTagDetection(malvin, from, mek, sender) {
                 
                 if (action === 'delete') {
                     // Delete the message
-                    await malvin.sendMessage(from, {
+                    await shyam.sendMessage(from, {
                         delete: {
                             remoteJid: from,
                             fromMe: false,
@@ -119,14 +119,14 @@ async function handleTagDetection(malvin, from, mek, sender) {
                     });
                     
                     // Send warning
-                    await malvin.sendMessage(from, {
+                    await shyam.sendMessage(from, {
                         text: `⚠️ *Tagall Detected!*\n\nMass tagging is not allowed in this group.`,
                         mentions: [sender]
                     }, { quoted: fakevCard });
                     
                 } else if (action === 'kick') {
                     // First delete the message
-                    await malvin.sendMessage(from, {
+                    await shyam.sendMessage(from, {
                         delete: {
                             remoteJid: from,
                             fromMe: false,
@@ -136,10 +136,10 @@ async function handleTagDetection(malvin, from, mek, sender) {
                     });
 
                     // Then kick the user
-                    await malvin.groupParticipantsUpdate(from, [sender], "remove");
+                    await shyam.groupParticipantsUpdate(from, [sender], "remove");
 
                     // Send notification
-                    await malvin.sendMessage(from, {
+                    await shyam.sendMessage(from, {
                         text: `🚫 *Antitag Detected!*\n\n@${sender.split('@')[0]} has been kicked for mass tagging members.`,
                         mentions: [sender]
                     }, { quoted: fakevCard });

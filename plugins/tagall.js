@@ -1,9 +1,9 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const settings = require('../settings');
 const { channelInfo } = require('../lib/messageConfig');
 const isAdmin = require('../lib/isAdmin');  // Import your existing isAdmin function
 
-malvin({
+shyam({
     pattern: "tagall",
     alias: ["everyone", "mentionall", "alert"],
     desc: "Tag all group members with optional custom message",
@@ -11,7 +11,7 @@ malvin({
     react: "📢",
     use: ".tagall [custom message]",
     filename: __filename,
-}, async (malvin, mek, m, { from, sender, isGroup, reply, text }) => {
+}, async (shyam, mek, m, { from, sender, isGroup, reply, text }) => {
     try {
         // Check if it's a group
         if (!isGroup) {
@@ -19,7 +19,7 @@ malvin({
         }
 
         // Check admin status using your existing function
-        const adminStatus = await isAdmin(malvin, from, sender);
+        const adminStatus = await isAdmin(shyam, from, sender);
         
         if (!adminStatus.isSenderAdmin) {
             return await reply("🔒 Only admins can use the .tagall command.");
@@ -30,7 +30,7 @@ malvin({
         }
 
         // Get group metadata
-        const groupMetadata = await malvin.groupMetadata(from);
+        const groupMetadata = await shyam.groupMetadata(from);
         const participants = groupMetadata.participants;
 
         if (!participants || participants.length === 0) {
@@ -62,7 +62,7 @@ malvin({
         }
 
         // Send message with mentions
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: message,
             mentions: participants.map(p => p.id).concat([sender])
         }, {

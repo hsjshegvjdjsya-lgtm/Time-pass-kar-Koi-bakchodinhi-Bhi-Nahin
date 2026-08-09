@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 
 const compliments = [
     "You're amazing just the way you are! ✨",
@@ -33,8 +33,8 @@ const compliments = [
     "You make the world a better place just by being in it. 🌎"
 ];
 
-// Malvin XD Compliment Command
-malvin({
+// shyam XD Compliment Command
+shyam({
     pattern: "compliment",
     alias: ["praise", "flatter", "nice"],
     desc: "Send a random compliment to someone",
@@ -42,7 +42,7 @@ malvin({
     react: "💝",
     use: ".compliment [mention user or reply to message]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isOwner, isGroup }) => {
+}, async (shyam, mek, m, { from, q, reply, isOwner, isGroup }) => {
     try {
         let userToCompliment;
         let userName;
@@ -79,13 +79,13 @@ malvin({
 
         // Get user's name for personalized message
         try {
-            userName = await malvin.getName(userToCompliment);
+            userName = await shyam.getName(userToCompliment);
         } catch {
             userName = userToCompliment.split('@')[0];
         }
 
         // Don't allow complimenting the bot to avoid loops
-        const botId = malvin.user.id.split(':')[0] + '@s.whatsapp.net';
+        const botId = shyam.user.id.split(':')[0] + '@s.whatsapp.net';
         if (userToCompliment === botId) {
             return reply(
                 "🤖 *BOT COMPLIMENT*\n\n" +
@@ -124,7 +124,7 @@ malvin({
 });
 
 // Quick compliment command
-malvin({
+shyam({
     pattern: "nice",
     alias: ["good", "praise"],
     desc: "Quick compliment",
@@ -132,7 +132,7 @@ malvin({
     react: "😊",
     use: ".nice [mention user]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isOwner, isGroup }) => {
+}, async (shyam, mek, m, { from, q, reply, isOwner, isGroup }) => {
     try {
         let userToCompliment;
         let quickCompliments = [
@@ -173,7 +173,7 @@ malvin({
         // Get user's name
         let userName;
         try {
-            userName = await malvin.getName(userToCompliment);
+            userName = await shyam.getName(userToCompliment);
         } catch {
             userName = userToCompliment.split('@')[0];
         }
@@ -193,7 +193,7 @@ malvin({
 });
 
 // Self-compliment command
-malvin({
+shyam({
     pattern: "imawesome",
     alias: ["awesome", "loveme"],
     desc: "Compliment yourself",
@@ -201,7 +201,7 @@ malvin({
     react: "💖",
     use: ".imawesome",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     try {
         const selfCompliments = [
             "You're absolutely fantastic! 🌟",
@@ -221,7 +221,7 @@ malvin({
         
         let userName;
         try {
-            userName = await malvin.getName(senderId);
+            userName = await shyam.getName(senderId);
         } catch {
             userName = "You";
         }

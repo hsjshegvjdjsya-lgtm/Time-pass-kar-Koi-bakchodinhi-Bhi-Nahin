@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fetch = require('node-fetch');
 
-malvin({
+shyam({
     pattern: "stupid",
     alias: ["im-stupid", "dog"],
     desc: "Generate 'its so stupid' meme with custom text",
@@ -9,7 +9,7 @@ malvin({
     react: "🐶",
     use: ".stupid [text] or .stupid [text] @user",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         let targetJid;
         const ctx = mek.message?.extendedTextMessage?.contextInfo;
@@ -29,7 +29,7 @@ malvin({
         // Get profile picture
         let avatarUrl;
         try {
-            avatarUrl = await malvin.profilePictureUrl(targetJid, 'image');
+            avatarUrl = await shyam.profilePictureUrl(targetJid, 'image');
         } catch {
             avatarUrl = 'https://telegra.ph/file/24fa902ead26340f3df2c.png';
         }
@@ -42,7 +42,7 @@ malvin({
 
         const imageBuffer = await response.buffer();
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: imageBuffer,
             caption: `*@${targetJid.split('@')[0]}*`,
             mentions: [targetJid]

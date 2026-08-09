@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fs = require('fs');
 const path = require('path');
 
@@ -32,7 +32,7 @@ function incrementMessageCount(groupId, userId) {
     saveMessageCounts(messageCounts);
 }
 
-malvin({
+shyam({
     pattern: "top",
     alias: ["topmembers", "leaderboard"],
     desc: "Show top active members in the group",
@@ -40,7 +40,7 @@ malvin({
     react: "🏆",
     use: ".top",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command is only available in group chats.');
@@ -68,7 +68,7 @@ malvin({
         message += `\n📊 *Total tracked messages:* ${Object.values(groupCounts).reduce((a, b) => a + b, 0)}`;
         message += `\n👥 *Group members tracked:* ${Object.keys(groupCounts).length}`;
         
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: message, 
             mentions: sortedMembers.map(([userId]) => userId) 
         }, {

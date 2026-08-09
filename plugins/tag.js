@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 const fs = require('fs');
 const path = require('path');
@@ -17,7 +17,7 @@ async function downloadMediaMessage(message, mediaType) {
     return filePath;
 }
 
-malvin({
+shyam({
     pattern: "tag",
     alias: ["everyone", "mentionall", "alert"],
     desc: "Tag all group members with optional message",
@@ -25,7 +25,7 @@ malvin({
     react: "📢",
     use: ".tag [message] or reply to a message",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -42,7 +42,7 @@ malvin({
             const stickerPath = './assets/sticktag.webp';
             if (fs.existsSync(stickerPath)) {
                 const stickerBuffer = fs.readFileSync(stickerPath);
-                await malvin.sendMessage(from, { sticker: stickerBuffer }, {
+                await shyam.sendMessage(from, { sticker: stickerBuffer }, {
                     quoted: fakevCard
                 });
             } else {
@@ -51,7 +51,7 @@ malvin({
             return;
         }
 
-        const groupMetadata = await malvin.groupMetadata(from);
+        const groupMetadata = await shyam.groupMetadata(from);
         const participants = groupMetadata.participants;
         const mentionedJidList = participants.map(p => p.id);
 
@@ -112,13 +112,13 @@ malvin({
             }
 
             if (Object.keys(messageContent).length > 0) {
-                await malvin.sendMessage(from, messageContent);
+                await shyam.sendMessage(from, messageContent);
             } else {
                 await reply('❌ Unsupported message type for tagging.');
             }
         } else {
             // Simple text tag
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: text || "📢 Tagged by admin",
                 mentions: mentionedJidList
             });

@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 
-malvin({
+shyam({
     pattern: "getpp",
     alias: ["getprofile", "profilepic"],
     desc: "Get user's profile picture (Owner only)",
@@ -9,7 +9,7 @@ malvin({
     react: "🖼️",
     use: ".getpp @user or reply to user's message",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         // Check if user is owner (using your framework's isOwner function)
         const isOwner = mek.key.fromMe || (await require('../lib/isOwnerOrSudo')(sender));
@@ -37,13 +37,13 @@ malvin({
             // Get user's profile picture
             let profilePic;
             try {
-                profilePic = await malvin.profilePictureUrl(userToAnalyze, 'image');
+                profilePic = await shyam.profilePictureUrl(userToAnalyze, 'image');
             } catch {
                 profilePic = 'https://i.ibb.co/rRg9wTZV/malvin-xd.jpg'; // Default image
             }
 
             // Send the profile picture to the chat
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 image: { url: profilePic },
                 caption: `\n\n _💙 hey 👋 Success in getting profile of: @${userToAnalyze.split('@')[0]} ✅._`,
                 mentions: [userToAnalyze]

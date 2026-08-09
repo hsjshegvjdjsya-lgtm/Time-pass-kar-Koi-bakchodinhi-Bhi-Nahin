@@ -1,9 +1,9 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fetch = require('node-fetch');
 const axios = require('axios');
 
 // ========== FLIRT COMMAND ==========
-malvin({
+shyam({
     pattern: "flirt",
     alias: ["pickup", "romance"],
     desc: "Get random flirty pickup lines",
@@ -11,7 +11,7 @@ malvin({
     react: "😘",
     use: ".flirt",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const shizokeys = 'shizo';
         const res = await fetch(`https://shizoapi.onrender.com/api/texts/flirt?apikey=${shizokeys}`);
@@ -32,7 +32,7 @@ malvin({
 });
 
 // ========== FACT COMMAND ==========
-malvin({
+shyam({
     pattern: "fact",
     alias: ["randomfact", "didyouknow"],
     desc: "Get random interesting facts",
@@ -40,7 +40,7 @@ malvin({
     react: "📚",
     use: ".fact",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const response = await axios.get('https://uselessfacts.jsph.pl/random.json?language=en');
         const fact = response.data.text;

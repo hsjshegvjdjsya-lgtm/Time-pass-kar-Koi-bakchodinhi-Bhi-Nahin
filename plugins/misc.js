@@ -1,9 +1,9 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 const { uploadImage } = require('../lib/uploadImage');
 
-async function getQuotedOrOwnImageUrl(malvin, mek) {
+async function getQuotedOrOwnImageUrl(shyam, mek) {
     // 1) Quoted image (highest priority)
     const quoted = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
     if (quoted?.imageMessage) {
@@ -35,7 +35,7 @@ async function getQuotedOrOwnImageUrl(malvin, mek) {
     }
 
     try {
-        const url = await malvin.profilePictureUrl(targetJid, 'image');
+        const url = await shyam.profilePictureUrl(targetJid, 'image');
         return url;
     } catch {
         return 'https://i.imgur.com/2wzGhpF.png';
@@ -62,7 +62,7 @@ const simpleEffects = [
 
 // Create simple effect commands
 simpleEffects.forEach(effect => {
-    malvin({
+    shyam({
         pattern: effect.pattern,
         alias: effect.alias,
         desc: effect.desc,
@@ -70,12 +70,12 @@ simpleEffects.forEach(effect => {
         react: effect.react,
         use: `.${effect.pattern}`,
         filename: __filename,
-    }, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+    }, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
         try {
-            const avatarUrl = await getQuotedOrOwnImageUrl(malvin, mek);
+            const avatarUrl = await getQuotedOrOwnImageUrl(shyam, mek);
             const url = `https://api.some-random-api.com/canvas/${effect.pattern === 'comrade' || effect.pattern === 'gay' || effect.pattern === 'glass' || effect.pattern === 'jail' || effect.pattern === 'passed' || effect.pattern === 'triggered' ? 'overlay' : 'misc'}/${effect.pattern}?avatar=${encodeURIComponent(avatarUrl)}`;
             const response = await axios.get(url, { responseType: 'arraybuffer' });
-            await malvin.sendMessage(from, { image: Buffer.from(response.data) }, {
+            await shyam.sendMessage(from, { image: Buffer.from(response.data) }, {
                 quoted: fakevCard
             });
         } catch (error) {
@@ -86,7 +86,7 @@ simpleEffects.forEach(effect => {
 });
 
 // Its-so-stupid command
-malvin({
+shyam({
     pattern: "its-so-stupid",
     alias: ["stupid", "dog"],
     desc: "Its so stupid meme with text",
@@ -94,15 +94,15 @@ malvin({
     react: "🐶",
     use: ".its-so-stupid <text>",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!text) {
             return await reply('Usage: .its-so-stupid <text>');
         }
-        const avatarUrl = await getQuotedOrOwnImageUrl(malvin, mek);
+        const avatarUrl = await getQuotedOrOwnImageUrl(shyam, mek);
         const url = `https://api.some-random-api.com/canvas/misc/its-so-stupid?dog=${encodeURIComponent(text)}&avatar=${encodeURIComponent(avatarUrl)}`;
         const response = await axios.get(url, { responseType: 'arraybuffer' });
-        await malvin.sendMessage(from, { image: Buffer.from(response.data) }, {
+        await shyam.sendMessage(from, { image: Buffer.from(response.data) }, {
             quoted: fakevCard
         });
     } catch (error) {
@@ -112,7 +112,7 @@ malvin({
 });
 
 // Namecard command
-malvin({
+shyam({
     pattern: "namecard",
     alias: ["profilecard"],
     desc: "Create a namecard with user info",
@@ -120,18 +120,18 @@ malvin({
     react: "🪪",
     use: ".namecard username|birthday|description",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const [username, birthday, description] = text.split('|').map(s => (s || '').trim());
         if (!username || !birthday) {
-            return await reply('Usage: .namecard username|birthday|description(optional)\nExample: .namecard Malvin|2000|Developer');
+            return await reply('Usage: .namecard username|birthday|description(optional)\nExample: .namecard shyam|2000|Developer');
         }
-        const avatarUrl = await getQuotedOrOwnImageUrl(malvin, mek);
+        const avatarUrl = await getQuotedOrOwnImageUrl(shyam, mek);
         const params = new URLSearchParams({ username, birthday, avatar: avatarUrl });
         if (description) params.append('description', description);
         const url = `https://api.some-random-api.com/canvas/misc/namecard?${params.toString()}`;
         const response = await axios.get(url, { responseType: 'arraybuffer' });
-        await malvin.sendMessage(from, { image: Buffer.from(response.data) }, {
+        await shyam.sendMessage(from, { image: Buffer.from(response.data) }, {
             quoted: fakevCard
         });
     } catch (error) {
@@ -141,7 +141,7 @@ malvin({
 });
 
 // Oogway commands
-malvin({
+shyam({
     pattern: "oogway",
     alias: ["oogwayquote"],
     desc: "Master Oogway with your quote",
@@ -149,15 +149,15 @@ malvin({
     react: "🐢",
     use: ".oogway <quote>",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!text) {
             return await reply('Usage: .oogway <quote>\nExample: .oogway "Be happy"');
         }
-        const avatarUrl = await getQuotedOrOwnImageUrl(malvin, mek);
+        const avatarUrl = await getQuotedOrOwnImageUrl(shyam, mek);
         const url = `https://api.some-random-api.com/canvas/misc/oogway?quote=${encodeURIComponent(text)}&avatar=${encodeURIComponent(avatarUrl)}`;
         const response = await axios.get(url, { responseType: 'arraybuffer' });
-        await malvin.sendMessage(from, { image: Buffer.from(response.data) }, {
+        await shyam.sendMessage(from, { image: Buffer.from(response.data) }, {
             quoted: fakevCard
         });
     } catch (error) {
@@ -166,7 +166,7 @@ malvin({
     }
 });
 
-malvin({
+shyam({
     pattern: "oogway2",
     alias: ["oogway2quote"],
     desc: "Master Oogway v2 with your quote",
@@ -174,15 +174,15 @@ malvin({
     react: "🐢",
     use: ".oogway2 <quote>",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!text) {
             return await reply('Usage: .oogway2 <quote>\nExample: .oogway2 "Be happy"');
         }
-        const avatarUrl = await getQuotedOrOwnImageUrl(malvin, mek);
+        const avatarUrl = await getQuotedOrOwnImageUrl(shyam, mek);
         const url = `https://api.some-random-api.com/canvas/misc/oogway2?quote=${encodeURIComponent(text)}&avatar=${encodeURIComponent(avatarUrl)}`;
         const response = await axios.get(url, { responseType: 'arraybuffer' });
-        await malvin.sendMessage(from, { image: Buffer.from(response.data) }, {
+        await shyam.sendMessage(from, { image: Buffer.from(response.data) }, {
             quoted: fakevCard
         });
     } catch (error) {
@@ -192,7 +192,7 @@ malvin({
 });
 
 // Tweet command
-malvin({
+shyam({
     pattern: "tweet",
     alias: ["twitter"],
     desc: "Create fake Twitter tweet",
@@ -200,18 +200,18 @@ malvin({
     react: "🐦",
     use: ".tweet displayname|username|comment|theme",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const [displayname, username, comment, theme] = text.split('|').map(s => (s || '').trim());
         if (!displayname || !username || !comment) {
-            return await reply('Usage: .tweet displayname|username|comment|theme(optional)\nExample: .tweet Malvin|malvinxd|Hello world!|dark');
+            return await reply('Usage: .tweet displayname|username|comment|theme(optional)\nExample: .tweet shyam|shyamxd|Hello world!|dark');
         }
-        const avatarUrl = await getQuotedOrOwnImageUrl(malvin, mek);
+        const avatarUrl = await getQuotedOrOwnImageUrl(shyam, mek);
         const params = new URLSearchParams({ displayname, username, comment, avatar: avatarUrl });
         if (theme) params.append('theme', theme);
         const url = `https://api.some-random-api.com/canvas/misc/tweet?${params.toString()}`;
         const response = await axios.get(url, { responseType: 'arraybuffer' });
-        await malvin.sendMessage(from, { image: Buffer.from(response.data) }, {
+        await shyam.sendMessage(from, { image: Buffer.from(response.data) }, {
             quoted: fakevCard
         });
     } catch (error) {
@@ -221,7 +221,7 @@ malvin({
 });
 
 // YouTube comment command
-malvin({
+shyam({
     pattern: "youtube-comment",
     alias: ["ytcomment", "youtube"],
     desc: "Create fake YouTube comment",
@@ -229,17 +229,17 @@ malvin({
     react: "📺",
     use: ".youtube-comment username|comment",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const [username, comment] = text.split('|').map(s => (s || '').trim());
         if (!username || !comment) {
-            return await reply('Usage: .youtube-comment username|comment\nExample: .youtube-comment Malvin|Great video!');
+            return await reply('Usage: .youtube-comment username|comment\nExample: .youtube-comment shyam|Great video!');
         }
-        const avatarUrl = await getQuotedOrOwnImageUrl(malvin, mek);
+        const avatarUrl = await getQuotedOrOwnImageUrl(shyam, mek);
         const params = new URLSearchParams({ username, comment, avatar: avatarUrl });
         const url = `https://api.some-random-api.com/canvas/misc/youtube-comment?${params.toString()}`;
         const response = await axios.get(url, { responseType: 'arraybuffer' });
-        await malvin.sendMessage(from, { image: Buffer.from(response.data) }, {
+        await shyam.sendMessage(from, { image: Buffer.from(response.data) }, {
             quoted: fakevCard
         });
     } catch (error) {

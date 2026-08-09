@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
@@ -9,7 +9,7 @@ const settings = require('../settings');
 
 const delay = time => new Promise(res => setTimeout(res, time));
 
-malvin({
+shyam({
     pattern: "tg",
     alias: ["telegram", "tstickers"],
     desc: "Download Telegram sticker pack",
@@ -17,7 +17,7 @@ malvin({
     react: "📦",
     use: ".tg https://t.me/addstickers/PackName",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const args = text.split(' ').slice(1);
         
@@ -126,7 +126,7 @@ malvin({
                     // Create metadata
                     const metadata = {
                         'sticker-pack-id': crypto.randomBytes(32).toString('hex'),
-                        'sticker-pack-name': settings.packname || 'Malvin XD',
+                        'sticker-pack-name': settings.packname || 'shyam XD',
                         'emojis': sticker.emoji ? [sticker.emoji] : ['🤖']
                     };
 
@@ -143,7 +143,7 @@ malvin({
                     const finalBuffer = await img.save(null);
 
                     // Send sticker
-                    await malvin.sendMessage(from, { 
+                    await shyam.sendMessage(from, { 
                         sticker: finalBuffer 
                     });
 

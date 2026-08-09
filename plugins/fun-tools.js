@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 const fetch = require('node-fetch');
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Utility function for image effects
-async function getQuotedOrOwnImageUrl(malvin, mek) {
+async function getQuotedOrOwnImageUrl(shyam, mek) {
     const quoted = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
     if (quoted?.imageMessage) {
         const stream = await downloadContentFromMessage(quoted.imageMessage, 'image');
@@ -37,7 +37,7 @@ async function getQuotedOrOwnImageUrl(malvin, mek) {
     }
 
     try {
-        const url = await malvin.profilePictureUrl(targetJid, 'image');
+        const url = await shyam.profilePictureUrl(targetJid, 'image');
         return url;
     } catch {
         return 'https://i.imgur.com/2wzGhpF.png';
@@ -45,7 +45,7 @@ async function getQuotedOrOwnImageUrl(malvin, mek) {
 }
 
 // ========== SIMP CARD COMMAND ==========
-malvin({
+shyam({
     pattern: "simp",
     alias: ["simpcard"],
     desc: "Generate simp card for user",
@@ -53,7 +53,7 @@ malvin({
     react: "😍",
     use: ".simp [@user or reply]",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         let targetJid;
         const ctx = mek.message?.extendedTextMessage?.contextInfo;
@@ -67,7 +67,7 @@ malvin({
 
         let avatarUrl;
         try {
-            avatarUrl = await malvin.profilePictureUrl(targetJid, 'image');
+            avatarUrl = await shyam.profilePictureUrl(targetJid, 'image');
         } catch {
             avatarUrl = 'https://telegra.ph/file/24fa902ead26340f3df2c.png';
         }
@@ -78,7 +78,7 @@ malvin({
         if (!response.ok) throw new Error(`API error: ${response.status}`);
 
         const imageBuffer = await response.buffer();
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: imageBuffer,
             caption: '*your religion is simping*'
         }, {
@@ -92,7 +92,7 @@ malvin({
 });
 
 // ========== STICKER TO IMAGE COMMAND ==========
-malvin({
+shyam({
     pattern: "simage",
     alias: ["stickertoimage", "toimage"],
     desc: "Convert sticker to image",
@@ -100,7 +100,7 @@ malvin({
     react: "🖼️",
     use: ".simage (reply to sticker)",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const quoted = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         if (!quoted?.stickerMessage) {
@@ -121,7 +121,7 @@ malvin({
         await sharp(stickerFilePath).png().toFile(outputImagePath);
 
         const imageBuffer = await fs.promises.readFile(outputImagePath);
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             image: imageBuffer,
             caption: '✨ Here\'s your image!' 
         }, {
@@ -143,7 +143,7 @@ malvin({
 });
 
 // ========== SHIP COMMAND ==========
-malvin({
+shyam({
     pattern: "ship",
     alias: ["couple", "match"],
     desc: "Ship two random group members",
@@ -151,13 +151,13 @@ malvin({
     react: "💖",
     use: ".ship",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command only works in groups!');
         }
 
-        const groupMetadata = await malvin.groupMetadata(from);
+        const groupMetadata = await shyam.groupMetadata(from);
         const participants = groupMetadata.participants.map(v => v.id);
         
         if (participants.length < 2) {
@@ -171,7 +171,7 @@ malvin({
             secondUser = participants[Math.floor(Math.random() * participants.length)];
         } while (secondUser === firstUser);
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: `@${firstUser.split('@')[0]} ❤️ @${secondUser.split('@')[0]}\nCongratulations 💖🍻`,
             mentions: [firstUser, secondUser]
         }, {
@@ -185,7 +185,7 @@ malvin({
 });
 
 // ========== SHAYARI COMMAND ==========
-malvin({
+shyam({
     pattern: "shayari",
     alias: ["poem", "shayri"],
     desc: "Get random shayari",
@@ -193,7 +193,7 @@ malvin({
     react: "🪄",
     use: ".shayari",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const response = await fetch('https://shizoapi.onrender.com/api/texts/shayari?apikey=shizo');
         const data = await response.json();
@@ -205,7 +205,7 @@ malvin({
             { buttonId: '.roseday', buttonText: { displayText: '🌹 RoseDay' }, type: 1 }
         ];
 
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: data.result,
             buttons: buttons,
             headerType: 1
@@ -220,7 +220,7 @@ malvin({
 });
 
 // ========== ROSEDAY COMMAND ==========
-malvin({
+shyam({
     pattern: "roseday",
     alias: ["rose", "rosedayquote"],
     desc: "Get roseday quotes",
@@ -228,7 +228,7 @@ malvin({
     react: "🌹",
     use: ".roseday",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const res = await fetch(`https://api.princetechn.com/api/fun/roseday?apikey=prince`);
         if (!res.ok) throw new Error('API error');
@@ -243,7 +243,7 @@ malvin({
 });
 
 // ========== QUOTE COMMAND ==========
-malvin({
+shyam({
     pattern: "quote",
     alias: ["quotes", "inspire"],
     desc: "Get inspirational quotes",
@@ -251,7 +251,7 @@ malvin({
     react: "💫",
     use: ".quote",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const res = await fetch(`https://shizoapi.onrender.com/api/texts/quotes?apikey=shizo`);
         if (!res.ok) throw new Error('API error');
@@ -266,7 +266,7 @@ malvin({
 });
 
 // ========== JOKE COMMAND ==========
-malvin({
+shyam({
     pattern: "joke",
     alias: ["dadjoke", "funny"],
     desc: "Get random dad jokes",
@@ -274,7 +274,7 @@ malvin({
     react: "😄",
     use: ".joke",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const response = await axios.get('https://icanhazdadjoke.com/', {
             headers: { Accept: 'application/json' }
@@ -288,7 +288,7 @@ malvin({
 });
 
 // ========== MEME COMMAND ==========
-malvin({
+shyam({
     pattern: "meme",
     alias: ["memes", "cheems"],
     desc: "Get random memes",
@@ -296,7 +296,7 @@ malvin({
     react: "🎭",
     use: ".meme",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const response = await fetch('https://shizoapi.onrender.com/api/memes/cheems?apikey=shizo');
         const contentType = response.headers.get('content-type');
@@ -309,7 +309,7 @@ malvin({
                 { buttonId: '.joke', buttonText: { displayText: '😄 Joke' }, type: 1 }
             ];
 
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 image: imageBuffer,
                 caption: "> Here's your cheems meme! 🐕",
                 buttons: buttons,

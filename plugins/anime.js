@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 const { exec } = require('child_process');
 const fs = require('fs');
@@ -19,7 +19,7 @@ async function convertMediaToSticker(mediaBuffer, isAnimated) {
     // ... (keep your existing conversion code)
 }
 
-async function sendAnimu(malvin, from, type) {
+async function sendAnimu(shyam, from, type) {
     try {
         const endpoint = `${ANIMU_BASE}/${type}`;
         const res = await axios.get(endpoint);
@@ -41,7 +41,7 @@ async function sendAnimu(malvin, from, type) {
                     });
                     const mediaBuf = Buffer.from(resp.data);
                     const stickerBuf = await convertMediaToSticker(mediaBuf, isGifLink);
-                    await malvin.sendMessage(from, { sticker: stickerBuf }, { quoted: fakevCard });
+                    await shyam.sendMessage(from, { sticker: stickerBuf }, { quoted: fakevCard });
                     return;
                 } catch (error) {
                     console.error('Error converting media to sticker:', error);
@@ -50,25 +50,25 @@ async function sendAnimu(malvin, from, type) {
 
             // Fallback to image
             try {
-                await malvin.sendMessage(from, { image: { url: link }, caption: `🎌 Anime: ${type}` }, { quoted: fakevCard });
+                await shyam.sendMessage(from, { image: { url: link }, caption: `🎌 Anime: ${type}` }, { quoted: fakevCard });
                 return;
             } catch {}
         }
         
         if (data.quote) {
-            await malvin.sendMessage(from, { text: `💫 *Anime Quote:*\n\n"${data.quote}"` }, { quoted: fakevCard });
+            await shyam.sendMessage(from, { text: `💫 *Anime Quote:*\n\n"${data.quote}"` }, { quoted: fakevCard });
             return;
         }
 
-        await malvin.sendMessage(from, { text: '❌ Failed to fetch animu content.' }, { quoted: fakevCard });
+        await shyam.sendMessage(from, { text: '❌ Failed to fetch animu content.' }, { quoted: fakevCard });
     } catch (error) {
         console.error('Error in sendAnimu:', error);
-        await malvin.sendMessage(from, { text: '❌ Error fetching anime content.' }, { quoted: fakevCard });
+        await shyam.sendMessage(from, { text: '❌ Error fetching anime content.' }, { quoted: fakevCard });
     }
 }
 
 // Main anime command
-malvin({
+shyam({
     pattern: "animu",
     alias: ["anime"],
     desc: "Get anime GIFs, images, and quotes",
@@ -76,7 +76,7 @@ malvin({
     react: "🎌",
     use: ".animu [type]",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, text }) => {
+}, async (shyam, mek, m, { from, reply, text }) => {
     try {
         const subArg = text ? text.trim().toLowerCase() : '';
         const sub = normalizeType(subArg);
@@ -91,7 +91,7 @@ malvin({
             return await reply(`❌ Unsupported type. Available: ${supported.join(', ')}`);
         }
 
-        await sendAnimu(malvin, from, sub);
+        await sendAnimu(shyam, from, sub);
 
     } catch (error) {
         console.error('Error in animu command:', error);
@@ -102,13 +102,13 @@ malvin({
 // Individual commands
 const animeTypes = ['hug', 'kiss', 'pat', 'poke', 'cry', 'wink', 'nom', 'facepalm', 'quote'];
 animeTypes.forEach(type => {
-    malvin({
+    shyam({
         pattern: type,
         desc: `Get anime ${type} content`,
         category: "fun",
         react: "🎌",
         filename: __filename,
-    }, async (malvin, mek, m, { from, reply }) => {
-        await sendAnimu(malvin, from, normalizeType(type));
+    }, async (shyam, mek, m, { from, reply }) => {
+        await sendAnimu(shyam, from, normalizeType(type));
     });
 });

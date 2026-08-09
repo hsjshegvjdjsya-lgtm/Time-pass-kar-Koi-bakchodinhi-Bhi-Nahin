@@ -1,6 +1,6 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 
-malvin({
+shyam({
     pattern: "staff",
     alias: ["admins", "adminlist"],
     desc: "Show group admins list",
@@ -8,21 +8,21 @@ malvin({
     react: "👑",
     use: ".staff",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
         }
 
         // Get group metadata
-        const groupMetadata = await malvin.groupMetadata(from);
+        const groupMetadata = await shyam.groupMetadata(from);
         
         // Get group profile picture
         let pp;
         try {
-            pp = await malvin.profilePictureUrl(from, 'image');
+            pp = await shyam.profilePictureUrl(from, 'image');
         } catch {
-            pp = 'https://i.ibb.co/VWt5CXzX/malvin-xd.jp';
+            pp = 'https://i.ibb.co/VWt5CXzX/shyam-xd.jp';
         }
 
         // Get admins from participants
@@ -51,7 +51,7 @@ malvin({
 `.trim();
 
         // Send the message with image and mentions
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: { url: pp },
             caption: staffText,
             mentions: [...groupAdmins.map(v => v.id), owner]

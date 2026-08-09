@@ -1,8 +1,8 @@
 const fetch = require('node-fetch');
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 
-// Malvin XD Dare Command
-malvin({
+// shyam XD Dare Command
+shyam({
     pattern: "dare",
     alias: ["challenge", "truthordare"],
     desc: "Get a random dare challenge",
@@ -10,7 +10,7 @@ malvin({
     react: "😈",
     use: ".dare",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isOwner, isGroup }) => {
+}, async (shyam, mek, m, { from, reply, isOwner, isGroup }) => {
     try {
         // Show loading message
         const loadingMsg = await reply("🎯 *Finding a dare challenge...*", { quoted: fakevCard });
@@ -31,7 +31,7 @@ malvin({
         const dareMessage = json.result;
 
         // Update the loading message with the dare
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: `😈 *DARE CHALLENGE* 😈\n\n${dareMessage}\n\n*Good luck!* 🎯`,
             edit: loadingMsg.key
         });
@@ -43,7 +43,7 @@ malvin({
         
         // Try to update the loading message with error
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: "❌ *DARE FAILED*\n\nCouldn't get a dare challenge right now.\n\n*Possible reasons:*\n• API is down\n• Network issues\n• Try again later!",
                 edit: loadingMsg?.key
             });
@@ -54,7 +54,7 @@ malvin({
 });
 
 // Truth command using same API
-malvin({
+shyam({
     pattern: "truth",
     alias: ["question", "truthq"],
     desc: "Get a random truth question",
@@ -62,7 +62,7 @@ malvin({
     react: "🤔",
     use: ".truth",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isOwner, isGroup }) => {
+}, async (shyam, mek, m, { from, reply, isOwner, isGroup }) => {
     try {
         // Show loading message
         const loadingMsg = await reply("🤔 *Finding a truth question...*", { quoted: fakevCard });
@@ -83,7 +83,7 @@ malvin({
         const truthMessage = json.result;
 
         // Update the loading message with the truth
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: `🤔 *TRUTH QUESTION* 🤔\n\n${truthMessage}\n\n*Be honest!* 💯`,
             edit: loadingMsg.key
         });
@@ -94,7 +94,7 @@ malvin({
         console.error('Truth command error:', error);
         
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: "❌ *TRUTH FAILED*\n\nCouldn't get a truth question right now.\n\nTry again later!",
                 edit: loadingMsg?.key
             });
@@ -105,7 +105,7 @@ malvin({
 });
 
 // Truth or Dare game command
-malvin({
+shyam({
     pattern: "tod",
     alias: ["truthordare", "game"],
     desc: "Random truth or dare challenge",
@@ -113,7 +113,7 @@ malvin({
     react: "🎮",
     use: ".tod",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isOwner, isGroup }) => {
+}, async (shyam, mek, m, { from, reply, isOwner, isGroup }) => {
     try {
         // Randomly choose between truth and dare
         const isTruth = Math.random() > 0.5;
@@ -130,7 +130,7 @@ malvin({
             const json = await res.json();
             const challenge = json.result;
 
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `🎮 *TRUTH OR DARE*\n\n🤔 *TRUTH:*\n${challenge}\n\n*Answer honestly!* 💯`,
                 edit: loadingMsg.key
             });
@@ -147,7 +147,7 @@ malvin({
             const json = await res.json();
             const challenge = json.result;
 
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `🎮 *TRUTH OR DARE*\n\n😈 *DARE:*\n${challenge}\n\n*Good luck!* 🎯`,
                 edit: loadingMsg.key
             });
@@ -159,7 +159,7 @@ malvin({
         console.error('TOD command error:', error);
         
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: "❌ *GAME FAILED*\n\nCouldn't start Truth or Dare right now.\n\nTry again later! 🎮",
                 edit: loadingMsg?.key
             });
@@ -170,7 +170,7 @@ malvin({
 });
 
 // Would You Rather command (using same API structure)
-malvin({
+shyam({
     pattern: "wyr",
     alias: ["rather", "choose"],
     desc: "Get a 'Would You Rather' question",
@@ -178,7 +178,7 @@ malvin({
     react: "🤷‍♂️",
     use: ".wyr",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isOwner, isGroup }) => {
+}, async (shyam, mek, m, { from, reply, isOwner, isGroup }) => {
     try {
         // Since the API might not have WYR, we'll create some fallback ones
         const wyrQuestions = [

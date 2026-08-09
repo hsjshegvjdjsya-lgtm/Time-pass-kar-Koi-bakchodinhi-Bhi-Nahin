@@ -1,10 +1,10 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fetch = require('node-fetch');
 const fs = require('fs');
 const { exec } = require('child_process');
 const path = require('path');
 
-malvin({
+shyam({
     pattern: "emojimix",
     alias: ["mixemoji", "emojicombine"],
     desc: "Mix two emojis together",
@@ -12,7 +12,7 @@ malvin({
     react: "🎴",
     use: ".emojimix 😎+🥰",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!text) {
             return await reply('🎴 Example: .emojimix 😎+🥰');
@@ -75,7 +75,7 @@ malvin({
         const stickerBuffer = fs.readFileSync(outputFile);
 
         // Send the sticker
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             sticker: stickerBuffer 
         }, {
             quoted: fakevCard

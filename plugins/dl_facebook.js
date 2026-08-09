@@ -1,19 +1,19 @@
 //---------------------------------------------
-//           MALVIN-XD FACEBOOK DOWNLOADER
+//           shyam-XD FACEBOOK DOWNLOADER
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
 // Fast loading animation for Facebook download
-async function sendFbLoading(malvin, from, action = "Processing") {
+async function sendFbLoading(shyam, from, action = "Processing") {
     const frames = ['📱', '📥', '⚡', '🔄', '✨'];
-    let loadingMsg = await malvin.sendMessage(from, { 
+    let loadingMsg = await shyam.sendMessage(from, { 
         text: `${frames[0]} ${action}...`
     }, { quoted: fakevCard });
     
@@ -21,7 +21,7 @@ async function sendFbLoading(malvin, from, action = "Processing") {
     const animationInterval = setInterval(async () => {
         frameIndex = (frameIndex + 1) % frames.length;
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `${frames[frameIndex]} ${action}...`,
                 edit: loadingMsg.key
             });
@@ -128,7 +128,7 @@ async function downloadFacebookVideo(videoUrl) {
 }
 
 // Main Facebook command
-malvin({
+shyam({
     pattern: "facebook",
     alias: ["fb", "fbdl", "fbvideo"],
     desc: "Download Facebook videos",
@@ -136,7 +136,7 @@ malvin({
     react: "📱",
     use: ".facebook <url>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`📱 *FACEBOOK DOWNLOADER*\n\n❌ Please provide a Facebook video URL.\n\n*Usage:*\n.facebook https://facebook.com/...\n.fb https://fb.watch/...\n\n*Supported URLs:*\n• Facebook posts\n• Facebook Watch\n• Facebook Reels\n• Facebook stories\n\n💡 *Tip:* Make sure the video is public!`);
@@ -148,10 +148,10 @@ malvin({
         }
 
         // Send initial reaction
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
         // Start processing animation
-        const processingAnimation = await sendFbLoading(malvin, from, "Processing Facebook URL...");
+        const processingAnimation = await sendFbLoading(shyam, from, "Processing Facebook URL...");
 
         // Resolve URL (handle short links)
         const resolvedUrl = await resolveFacebookUrl(q);
@@ -160,7 +160,7 @@ malvin({
         processingAnimation.stop();
 
         // Start API fetching animation
-        const apiAnimation = await sendFbLoading(malvin, from, "Fetching video data...");
+        const apiAnimation = await sendFbLoading(shyam, from, "Fetching video data...");
 
         let videoData = null;
         let apiUsed = null;
@@ -217,13 +217,13 @@ malvin({
 ⏳ *Downloading video...*
         `.trim();
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: videoInfo,
             ...channelInfo
         }, { quoted: fakevCard });
 
         // Start download animation
-        const downloadAnimation = await sendFbLoading(malvin, from, "Downloading video...");
+        const downloadAnimation = await sendFbLoading(shyam, from, "Downloading video...");
 
         let tempFilePath;
         try {
@@ -243,10 +243,10 @@ malvin({
 💾 *Size:* ${fileSize}MB
 🎬 *Quality:* HD Available
 
-> ✨ Powered by Malvin Tech
+> ✨ Powered by shyam Tech
             `.trim();
 
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 video: { url: tempFilePath },
                 mimetype: "video/mp4",
                 caption: successCaption,
@@ -254,7 +254,7 @@ malvin({
             }, { quoted: fakevCard });
 
             // Success reaction
-            await malvin.sendMessage(from, { react: { text: "✅", key: mek.key } });
+            await shyam.sendMessage(from, { react: { text: "✅", key: mek.key } });
 
         } catch (downloadError) {
             downloadAnimation.stop();
@@ -277,7 +277,7 @@ malvin({
 });
 
 // Facebook help command
-malvin({
+shyam({
     pattern: "fbhelp",
     alias: ["facebookhelp"],
     desc: "Show Facebook download help",
@@ -285,7 +285,7 @@ malvin({
     react: "📖",
     use: ".fbhelp",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     const helpText = `
 ╭───═══━ • ━═══───╮
    📱 *FACEBOOK DOWNLOADER*
@@ -313,12 +313,12 @@ malvin({
 📱 Mobile and desktop links
 🔄 Multiple API fallbacks
 
-> 🚀 Powered by Malvin Tech
+> 🚀 Powered by shyam Tech
     `.trim();
 
     await reply(helpText);
 });
 
 //---------------------------------------------
-//           CODE BY MALVIN KING
+//           CODE BY shyam KING
 //---------------------------------------------

@@ -1,8 +1,8 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 const settings = require('../settings');
 
-malvin({
+shyam({
     pattern: "gif",
     alias: ["giphy", "searchgif"],
     desc: "Search and send GIFs",
@@ -10,7 +10,7 @@ malvin({
     react: "🎬",
     use: ".gif <search term>",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!text) {
             return await reply('🎬 Please provide a search term for the GIF!\n\nExample: .gif hello');
@@ -40,7 +40,7 @@ malvin({
                       gifData?.images?.downsized_medium?.url;
 
         if (gifUrl) {
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 video: { url: gifUrl }, 
                 caption: `🎬 *GIF for:* ${text}`,
                 gifPlayback: true

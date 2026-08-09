@@ -1,8 +1,8 @@
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const store = require('../lib/lightweight_store');
 
-// Malvin XD Delete Command
-malvin({
+// shyam XD Delete Command
+shyam({
     pattern: "delete",
     alias: ["del", "remove", "purge"],
     desc: "Delete user's recent messages (Admin Only)",
@@ -10,7 +10,7 @@ malvin({
     react: "🗑️",
     use: ".delete [count] [mention user or reply to message]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isOwner, isAdmin, isGroup }) => {
+}, async (shyam, mek, m, { from, q, reply, isOwner, isAdmin, isGroup }) => {
     try {
         // Only works in groups
         if (!isGroup) {
@@ -76,7 +76,7 @@ malvin({
         }
 
         // Prevent deleting bot's messages to avoid loops
-        const botId = malvin.user.id.split(':')[0] + '@s.whatsapp.net';
+        const botId = shyam.user.id.split(':')[0] + '@s.whatsapp.net';
         if (targetUser === botId) {
             return reply("❌ Cannot delete bot's messages.", { quoted: fakevCard });
         }
@@ -84,7 +84,7 @@ malvin({
         // Get user name for display
         let userName;
         try {
-            userName = await malvin.getName(targetUser);
+            userName = await shyam.getName(targetUser);
         } catch {
             userName = targetUser.split('@')[0];
         }
@@ -113,7 +113,7 @@ malvin({
             } else {
                 // If not found in store, try to delete directly
                 try {
-                    await malvin.sendMessage(from, {
+                    await shyam.sendMessage(from, {
                         delete: {
                             remoteJid: from,
                             fromMe: false,
@@ -142,7 +142,7 @@ malvin({
         }
 
         if (toDelete.length === 0) {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `❌ No recent messages found from ${userName}.`,
                 edit: loadingMsg.key
             });
@@ -150,7 +150,7 @@ malvin({
         }
 
         // Update loading message with progress
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: `🗑️ *Deleting ${toDelete.length} message(s) from ${userName}...*`,
             edit: loadingMsg.key
         });
@@ -162,7 +162,7 @@ malvin({
         for (const message of toDelete) {
             try {
                 const msgParticipant = message.key.participant || targetUser;
-                await malvin.sendMessage(from, {
+                await shyam.sendMessage(from, {
                     delete: {
                         remoteJid: from,
                         fromMe: false,
@@ -200,7 +200,7 @@ malvin({
                         `The messages may be too old or already deleted.`;
         }
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: resultText,
             mentions: [targetUser],
             edit: loadingMsg.key
@@ -212,7 +212,7 @@ malvin({
         console.error('Delete command error:', error);
         
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: "❌ *DELETION FAILED*\n\nAn error occurred while trying to delete messages.\nPlease try again later.",
                 edit: loadingMsg?.key
             });
@@ -223,7 +223,7 @@ malvin({
 });
 
 // Quick delete command for single message
-malvin({
+shyam({
     pattern: "del",
     alias: ["rm", "remove"],
     desc: "Quick delete (reply to message)",
@@ -231,7 +231,7 @@ malvin({
     react: "🚮",
     use: ".del [reply to message]",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isOwner, isAdmin, isGroup }) => {
+}, async (shyam, mek, m, { from, reply, isOwner, isAdmin, isGroup }) => {
     try {
         if (!isGroup) {
             return reply("❌ This command only works in groups!", { quoted: fakevCard });
@@ -267,14 +267,14 @@ malvin({
         // Get user name
         let userName;
         try {
-            userName = await malvin.getName(targetUser);
+            userName = await shyam.getName(targetUser);
         } catch {
             userName = targetUser.split('@')[0];
         }
 
         // Try to delete the message
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 delete: {
                     remoteJid: from,
                     fromMe: false,

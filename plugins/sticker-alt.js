@@ -1,9 +1,9 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 const { exec } = require('child_process');
 const fs = require('fs');
 
-malvin({
+shyam({
     pattern: "sticker",
     alias: ["s", "stickerize"],
     desc: "Convert media to sticker (simple version)",
@@ -11,7 +11,7 @@ malvin({
     react: "🤖",
     use: ".sticker (reply to image/video)",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const quoted = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         if (!quoted) {
@@ -51,7 +51,7 @@ malvin({
             });
         });
 
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             sticker: fs.readFileSync(tempOutput) 
         }, {
             quoted: fakevCard

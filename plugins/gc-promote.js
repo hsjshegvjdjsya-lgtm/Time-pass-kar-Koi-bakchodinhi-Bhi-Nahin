@@ -1,6 +1,6 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 
-malvin({
+shyam({
     pattern: "promote",
     alias: ["makeadmin", "addadmin"],
     desc: "Promote user to admin role",
@@ -8,7 +8,7 @@ malvin({
     react: "⬆️",
     use: ".promote @user or reply to user's message",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('This command can only be used in groups!');
@@ -42,12 +42,12 @@ malvin({
         }
 
         // Try to promote with the detected user
-        await malvin.groupParticipantsUpdate(from, userToPromote, "promote");
+        await shyam.groupParticipantsUpdate(from, userToPromote, "promote");
         
         const usernames = userToPromote.map(jid => `@${jid.split('@')[0]}`);
         const promotionMessage = `*『 GROUP PROMOTION 』*\n\n👥 *Promoted User:*\n• ${usernames[0]}\n\n👑 *Promoted By:* @${sender.split('@')[0]}\n\n📅 *Date:* ${new Date().toLocaleString()}`;
         
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: promotionMessage,
             mentions: [...userToPromote, sender]
         }, {

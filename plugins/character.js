@@ -1,8 +1,8 @@
 const axios = require('axios');
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 
-// Malvin XD Character Analysis Command
-malvin({
+// shyam XD Character Analysis Command
+shyam({
     pattern: "character",
     alias: ["char", "analyze", "personality"],
     desc: "Analyze user's character traits",
@@ -10,7 +10,7 @@ malvin({
     react: "🔮",
     use: ".character [mention user or reply to message]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isOwner, isGroup }) => {
+}, async (shyam, mek, m, { from, q, reply, isOwner, isGroup }) => {
     try {
         let userToAnalyze;
         let userName;
@@ -34,7 +34,7 @@ malvin({
 
         // Get user's name
         try {
-            userName = await malvin.getName(userToAnalyze);
+            userName = await shyam.getName(userToAnalyze);
         } catch {
             userName = userToAnalyze.split('@')[0];
         }
@@ -106,7 +106,7 @@ malvin({
 
         // Try to get profile picture, but don't fail if it doesn't work
         try {
-            const profilePic = await malvin.profilePictureUrl(userToAnalyze, 'image');
+            const profilePic = await shyam.profilePictureUrl(userToAnalyze, 'image');
             console.log(`📸 Profile picture found for ${userName}`);
             
             // Send with profile picture
@@ -167,7 +167,7 @@ function getPersonalitySummary(type, rating) {
 }
 
 // Simple character command without profile pictures
-malvin({
+shyam({
     pattern: "mychar",
     alias: ["mycharacter", "myanalysis"],
     desc: "Quick analysis of your own character",
@@ -175,13 +175,13 @@ malvin({
     react: "🌟",
     use: ".mychar",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     try {
         const userToAnalyze = mek.key.participant || from;
         let userName;
         
         try {
-            userName = await malvin.getName(userToAnalyze);
+            userName = await shyam.getName(userToAnalyze);
         } catch {
             userName = "You";
         }
@@ -230,7 +230,7 @@ malvin({
 });
 
 // Ultra simple character test command
-malvin({
+shyam({
     pattern: "chartest",
     alias: ["testchar"],
     desc: "Simple character test",
@@ -238,7 +238,7 @@ malvin({
     react: "🎭",
     use: ".chartest",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     try {
         const results = [
             "🎭 *Personality: The Hero* - Brave and determined!",

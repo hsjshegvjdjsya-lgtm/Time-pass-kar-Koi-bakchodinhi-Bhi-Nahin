@@ -1,10 +1,10 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fs = require('fs');
 const path = require('path');
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 
 // Set Group Description
-malvin({
+shyam({
     pattern: "setgdesc",
     alias: ["setgroupdesc", "setdescription"],
     desc: "Set group description",
@@ -12,7 +12,7 @@ malvin({
     react: "📝",
     use: ".setgdesc <description>",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -33,7 +33,7 @@ malvin({
             return await reply('📝 Usage: .setgdesc <description>');
         }
 
-        await malvin.groupUpdateDescription(from, desc);
+        await shyam.groupUpdateDescription(from, desc);
         await reply('✅ Group description updated successfully!');
         
     } catch (error) {
@@ -43,7 +43,7 @@ malvin({
 });
 
 // Set Group Name
-malvin({
+shyam({
     pattern: "setgname",
     alias: ["setgroupname", "setname"],
     desc: "Set group name",
@@ -51,7 +51,7 @@ malvin({
     react: "🏷️",
     use: ".setgname <new name>",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -72,7 +72,7 @@ malvin({
             return await reply('🏷️ Usage: .setgname <new name>');
         }
 
-        await malvin.groupUpdateSubject(from, name);
+        await shyam.groupUpdateSubject(from, name);
         await reply('✅ Group name updated successfully!');
         
     } catch (error) {
@@ -82,7 +82,7 @@ malvin({
 });
 
 // Set Group Profile Picture
-malvin({
+shyam({
     pattern: "setgpp",
     alias: ["setgrouppp", "setgrouppic"],
     desc: "Set group profile picture",
@@ -90,7 +90,7 @@ malvin({
     react: "🖼️",
     use: ".setgpp (reply to image/sticker)",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -127,7 +127,7 @@ malvin({
         const imgPath = path.join(tmpDir, `gpp_${Date.now()}.jpg`);
         fs.writeFileSync(imgPath, buffer);
 
-        await malvin.updateProfilePicture(from, { url: imgPath });
+        await shyam.updateProfilePicture(from, { url: imgPath });
         
         // Clean up temporary file
         try { 

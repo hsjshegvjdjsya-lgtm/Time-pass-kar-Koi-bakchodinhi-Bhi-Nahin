@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { downloadMediaMessage } = require('@whiskeysockets/baileys');
 const { exec } = require('child_process');
 const fs = require('fs');
@@ -7,7 +7,7 @@ const settings = require('../settings');
 const webp = require('node-webpmux');
 const crypto = require('crypto');
 
-malvin({
+shyam({
     pattern: "crop",
     alias: ["stickercrop", "cropsticker"],
     desc: "Crop media to square sticker",
@@ -15,7 +15,7 @@ malvin({
     react: "✂️",
     use: ".crop (reply to image/video/sticker)",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         let targetMessage = mek;
 
@@ -40,7 +40,7 @@ malvin({
 
         const mediaBuffer = await downloadMediaMessage(targetMessage, 'buffer', {}, { 
             logger: undefined, 
-            reuploadRequest: malvin.updateMediaMessage 
+            reuploadRequest: shyam.updateMediaMessage 
         });
 
         if (!mediaBuffer) {
@@ -122,7 +122,7 @@ malvin({
         // Create metadata
         const json = {
             'sticker-pack-id': crypto.randomBytes(32).toString('hex'),
-            'sticker-pack-name': settings.packname || 'Malvin XD',
+            'sticker-pack-name': settings.packname || 'shyam XD',
             'emojis': ['✂️']
         };
 
@@ -139,7 +139,7 @@ malvin({
         const finalBuffer = await img.save(null);
 
         // Send the sticker
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             sticker: finalBuffer
         }, {
             quoted: fakevCard
@@ -196,7 +196,7 @@ async function stickercropFromBuffer(inputBuffer, isAnimated) {
     await img.load(webpBuffer);
     const json = {
         'sticker-pack-id': crypto.randomBytes(32).toString('hex'),
-        'sticker-pack-name': settings.packname || 'Malvin XD',
+        'sticker-pack-name': settings.packname || 'shyam XD',
         'emojis': ['✂️']
     };
     const exifAttr = Buffer.from([0x49, 0x49, 0x2A, 0x00, 0x08, 0x00, 0x00, 0x00, 0x01, 0x00, 0x41, 0x57, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x16, 0x00, 0x00, 0x00]);

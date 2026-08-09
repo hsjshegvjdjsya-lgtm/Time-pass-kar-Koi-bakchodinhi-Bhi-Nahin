@@ -1,17 +1,17 @@
 //---------------------------------------------
-//           MALVIN-XD TRANSLATOR
+//           shyam-XD TRANSLATOR
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 const fetch = require('node-fetch');
 
 // Fast loading animation for translation
-async function sendTranslateLoading(malvin, from, targetLang) {
+async function sendTranslateLoading(shyam, from, targetLang) {
     const frames = ['🌐', '🔍', '📝', '🔄', '✨'];
-    let loadingMsg = await malvin.sendMessage(from, { 
+    let loadingMsg = await shyam.sendMessage(from, { 
         text: `${frames[0]} Translating to ${targetLang}...`
     }, { quoted: fakevCard });
     
@@ -19,7 +19,7 @@ async function sendTranslateLoading(malvin, from, targetLang) {
     const animationInterval = setInterval(async () => {
         frameIndex = (frameIndex + 1) % frames.length;
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `${frames[frameIndex]} Translating to ${targetLang}...`,
                 edit: loadingMsg.key
             });
@@ -114,7 +114,7 @@ async function translateText(text, targetLang) {
 }
 
 // Main translate command
-malvin({
+shyam({
     pattern: "translate",
     alias: ["trt", "tr"],
     desc: "Translate text to any language",
@@ -122,7 +122,7 @@ malvin({
     react: "🌐",
     use: ".translate <text> <lang> or reply .translate <lang>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         let textToTranslate = '';
         let targetLang = '';
@@ -158,10 +158,10 @@ malvin({
         }
 
         // Send initial reaction
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
         
         // Start loading animation
-        const loading = await sendTranslateLoading(malvin, from, languageCodes[targetLang]);
+        const loading = await sendTranslateLoading(shyam, from, languageCodes[targetLang]);
 
         // Perform translation
         const translatedText = await translateText(textToTranslate, targetLang);
@@ -187,16 +187,16 @@ malvin({
 │ ${languageCodes[targetLang]} (${targetLang})
 ╰─────
 
-> ✨ Powered by Malvin Tech
+> ✨ Powered by shyam Tech
         `.trim();
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: translationResult,
             ...channelInfo
         }, { quoted: fakevCard });
 
         // Success reaction
-        await malvin.sendMessage(from, { react: { text: "✅", key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: "✅", key: mek.key } });
 
     } catch (error) {
         console.error('❌ Translation error:', error);
@@ -205,7 +205,7 @@ malvin({
 });
 
 // Language codes command
-malvin({
+shyam({
     pattern: "langcodes",
     alias: ["languages", "langs"],
     desc: "Show all available language codes",
@@ -213,7 +213,7 @@ malvin({
     react: "🌍",
     use: ".langcodes",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     const popularLanguages = `
 ╭───═══━ • ━═══───╮
    🌍 *LANGUAGE CODES*
@@ -257,7 +257,7 @@ malvin({
 });
 
 // Auto-detect language command
-malvin({
+shyam({
     pattern: "detectlang",
     alias: ["detect", "langdetect"],
     desc: "Detect the language of text",
@@ -265,7 +265,7 @@ malvin({
     react: "🔍",
     use: ".detectlang <text> or reply .detectlang",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply }) => {
+}, async (shyam, mek, m, { from, q, reply }) => {
     try {
         let textToDetect = '';
 
@@ -299,10 +299,10 @@ malvin({
 🌍 *Language:* ${languageCodes[detectedLang] || detectedLang}
 🔤 *Code:* ${detectedLang}
 
-> ✨ Powered by Malvin Tech
+> ✨ Powered by shyam Tech
             `.trim();
 
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: detectionResult,
                 ...channelInfo
             }, { quoted: fakevCard });
@@ -317,5 +317,5 @@ malvin({
 });
 
 //---------------------------------------------
-//           CODE BY MALVIN KING
+//           CODE BY shyam KING
 //---------------------------------------------

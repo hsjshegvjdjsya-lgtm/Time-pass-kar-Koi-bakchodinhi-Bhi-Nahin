@@ -1,6 +1,6 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 
-malvin({
+shyam({
     pattern: "mute",
     alias: ["mutechat", "silence"],
     desc: "Mute group chat (with optional duration)",
@@ -8,7 +8,7 @@ malvin({
     react: "🔇",
     use: ".mute [duration in minutes]",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -31,7 +31,7 @@ malvin({
         }
 
         // Mute the group
-        await malvin.groupSettingUpdate(from, 'announcement');
+        await shyam.groupSettingUpdate(from, 'announcement');
         
         if (durationInMinutes > 0) {
             const durationInMilliseconds = durationInMinutes * 60 * 1000;
@@ -40,8 +40,8 @@ malvin({
             // Set timeout to automatically unmute after duration
             setTimeout(async () => {
                 try {
-                    await malvin.groupSettingUpdate(from, 'not_announcement');
-                    await malvin.sendMessage(from, { 
+                    await shyam.groupSettingUpdate(from, 'not_announcement');
+                    await shyam.sendMessage(from, { 
                         text: '🔊 Group has been automatically unmuted!' 
                     });
                 } catch (unmuteError) {

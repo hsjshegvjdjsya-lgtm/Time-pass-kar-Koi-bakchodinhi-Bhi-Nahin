@@ -1,8 +1,8 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fetch = require('node-fetch');
 
 // ========== GOODNIGHT COMMAND ==========
-malvin({
+shyam({
     pattern: "goodnight",
     alias: ["gn", "night"],
     desc: "Send romantic goodnight messages",
@@ -10,7 +10,7 @@ malvin({
     react: "🌙",
     use: ".goodnight",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const shizokeys = 'shizo';
         const res = await fetch(`https://shizoapi.onrender.com/api/texts/lovenight?apikey=${shizokeys}`);
@@ -63,7 +63,7 @@ const insults = [
     "You bring people together... to talk about how annoying you are."
 ];
 
-malvin({
+shyam({
     pattern: "insult",
     alias: ["roast", "burn"],
     desc: "Roast someone with funny insults",
@@ -71,7 +71,7 @@ malvin({
     react: "🔥",
     use: ".insult @user or reply to user",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         let targetJid;
         
@@ -92,7 +92,7 @@ malvin({
 
         const insult = insults[Math.floor(Math.random() * insults.length)];
 
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: `🔥 @${targetJid.split('@')[0]}, ${insult}`,
             mentions: [targetJid]
         }, {

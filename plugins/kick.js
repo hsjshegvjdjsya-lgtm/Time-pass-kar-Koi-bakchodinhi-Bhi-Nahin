@@ -1,6 +1,6 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 
-malvin({
+shyam({
     pattern: "kick",
     alias: ["remove", "ban"],
     desc: "Remove user from group",
@@ -8,7 +8,7 @@ malvin({
     react: "🚪",
     use: ".kick @user or reply to user's message",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -47,7 +47,7 @@ malvin({
         }
 
         // Get bot's ID
-        const botId = malvin.user.id.split(':')[0] + '@s.whatsapp.net';
+        const botId = shyam.user.id.split(':')[0] + '@s.whatsapp.net';
 
         // Check if any of the users to kick is the bot itself
         if (usersToKick.some(jid => jid === botId || jid.replace('@lid', '@s.whatsapp.net') === botId)) {
@@ -56,7 +56,7 @@ malvin({
 
         // Check if trying to kick other admins (non-owners)
         if (!isOwner) {
-            const groupMetadata = await malvin.groupMetadata(from);
+            const groupMetadata = await shyam.groupMetadata(from);
             const participants = groupMetadata.participants || [];
             
             const adminUsers = usersToKick.filter(userJid => {
@@ -69,12 +69,12 @@ malvin({
             }
         }
 
-        await malvin.groupParticipantsUpdate(from, usersToKick, "remove");
+        await shyam.groupParticipantsUpdate(from, usersToKick, "remove");
         
         const usernames = usersToKick.map(jid => `@${jid.split('@')[0]}`);
         const kickMessage = `🚪 *User${usersToKick.length > 1 ? 's' : ''} Kicked:*\n${usernames.map(name => `• ${name}`).join('\n')}\n\n👑 *By:* @${sender.split('@')[0]}`;
         
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: kickMessage,
             mentions: [...usersToKick, sender]
         }, {

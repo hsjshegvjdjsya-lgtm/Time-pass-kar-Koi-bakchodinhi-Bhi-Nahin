@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 const fs = require('fs');
 const path = require('path');
@@ -17,7 +17,7 @@ async function downloadMediaMessage(message, mediaType) {
     return filePath;
 }
 
-malvin({
+shyam({
     pattern: "hidetag",
     alias: ["taghidden", "stealthtag"],
     desc: "Tag all non-admin members (hidden tag)",
@@ -25,7 +25,7 @@ malvin({
     react: "👻",
     use: ".hidetag [message] or reply to a message",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -41,7 +41,7 @@ malvin({
             return await reply('❌ Error: Only group admins can use this command.');
         }
 
-        const groupMetadata = await malvin.groupMetadata(from);
+        const groupMetadata = await shyam.groupMetadata(from);
         const participants = groupMetadata.participants || [];
         const nonAdmins = participants.filter(p => !p.admin).map(p => p.id);
 
@@ -99,13 +99,13 @@ malvin({
             }
 
             if (Object.keys(content).length > 0) {
-                await malvin.sendMessage(from, content);
+                await shyam.sendMessage(from, content);
             } else {
                 await reply('❌ Unsupported message type for hidetag.');
             }
         } else {
             // Simple text hidetag
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 text: text || '👻 Tagged members (excluding admins)', 
                 mentions: nonAdmins 
             });

@@ -1,6 +1,6 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 
-malvin({
+shyam({
     pattern: "demote",
     alias: ["remadmin", "removeadmin"],
     desc: "Demote user from admin role",
@@ -8,7 +8,7 @@ malvin({
     react: "⬇️",
     use: ".demote @user or reply to user's message",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('This command can only be used in groups!');
@@ -42,12 +42,12 @@ malvin({
         }
 
         // Try to demote with the detected user
-        await malvin.groupParticipantsUpdate(from, userToDemote, "demote");
+        await shyam.groupParticipantsUpdate(from, userToDemote, "demote");
         
         const usernames = userToDemote.map(jid => `@${jid.split('@')[0]}`);
         const demotionMessage = `*『 GROUP DEMOTION 』*\n\n👤 *Demoted User:*\n• ${usernames[0]}\n\n👑 *Demoted By:* @${sender.split('@')[0]}\n\n📅 *Date:* ${new Date().toLocaleString()}`;
         
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: demotionMessage,
             mentions: [...userToDemote, sender]
         }, {

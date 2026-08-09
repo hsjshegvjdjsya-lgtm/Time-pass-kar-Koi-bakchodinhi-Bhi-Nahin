@@ -1,6 +1,6 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 
-malvin({
+shyam({
     pattern: "unmute",
     alias: ["unmutechat", "enablechat"],
     desc: "Unmute group chat",
@@ -8,7 +8,7 @@ malvin({
     react: "🔊",
     use: ".unmute",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -24,7 +24,7 @@ malvin({
             return await reply('❌ Error: Only group admins can use the unmute command.');
         }
 
-        await malvin.groupSettingUpdate(from, 'not_announcement'); // Unmute the group
+        await shyam.groupSettingUpdate(from, 'not_announcement'); // Unmute the group
         await reply('🔊 Group has been unmuted! Members can now send messages.');
         
     } catch (error) {

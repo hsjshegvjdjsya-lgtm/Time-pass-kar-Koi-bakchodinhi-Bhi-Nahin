@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 
 const ANTICALL_PATH = './data/anticall.json';
 
@@ -45,8 +45,8 @@ function writeState(enabled) {
     }
 }
 
-// Malvin XD command
-malvin({
+// shyam XD command
+shyam({
     pattern: "anticall",
     alias: ["antcall", "blockcall"],
     desc: "Enable/disable anti-call feature",
@@ -54,7 +54,7 @@ malvin({
     react: "📵",
     use: ".anticall [on/off/status]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isOwner, isGroup }) => {
+}, async (shyam, mek, m, { from, q, reply, isOwner, isGroup }) => {
     try {
         // Only bot owner can use this command
         if (!isOwner) {

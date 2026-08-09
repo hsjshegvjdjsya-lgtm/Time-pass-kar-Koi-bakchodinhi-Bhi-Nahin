@@ -1,8 +1,8 @@
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { setAntilink, getAntilink, removeAntilink } = require('../lib/index');
 
-// Malvin XD Antilink Command
-malvin({
+// shyam XD Antilink Command
+shyam({
     pattern: "antilink",
     alias: ["antilnk", "nolink"],
     desc: "Manage anti-link protection in groups",
@@ -10,7 +10,7 @@ malvin({
     react: "🔗",
     use: ".antilink [on/off/set/get]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, isOwner, isAdmin, isGroup }) => {
+}, async (shyam, mek, m, { from, q, reply, isOwner, isAdmin, isGroup }) => {
     try {
         // Only group admins can use this command
         if (!isGroup) {

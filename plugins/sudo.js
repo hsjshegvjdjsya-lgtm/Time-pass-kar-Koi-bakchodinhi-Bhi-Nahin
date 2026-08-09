@@ -1,9 +1,9 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const settings = require('../settings');
 const { addSudo, removeSudo, getSudoList } = require('../lib/index');
 
 // ========== SUDO LIST COMMAND ==========
-malvin({
+shyam({
     pattern: "sudolist",
     alias: ["listsudo", "sudols"],
     desc: "List all sudo users",
@@ -11,7 +11,7 @@ malvin({
     react: "📋",
     use: ".sudolist",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const list = await getSudoList();
         if (list.length === 0) {
@@ -20,7 +20,7 @@ malvin({
         
         const sudoList = list.map((j, i) => `${i + 1}. @${j.split('@')[0]}`).join('\n');
         
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: `👑 *Sudo Users:*\n\n${sudoList}\n\n📊 Total: ${list.length} user(s)`,
             mentions: list
         }, {
@@ -34,7 +34,7 @@ malvin({
 });
 
 // ========== ADD SUDO COMMAND ==========
-malvin({
+shyam({
     pattern: "addsudo",
     alias: ["sudoadd", "makesudo"],
     desc: "Add user to sudo (Owner only)",
@@ -42,7 +42,7 @@ malvin({
     react: "➕",
     use: ".addsudo @user or .addsudo 263714757857 or reply to user",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         // Check if user is owner using the same method as promote/demote
         const isOwner = mek.key.fromMe || (await require('../lib/isOwnerOrSudo')(sender));
@@ -82,7 +82,7 @@ malvin({
         // Check if already sudo
         const sudoList = await getSudoList();
         if (sudoList.includes(targetJid)) {
-            return await malvin.sendMessage(from, {
+            return await shyam.sendMessage(from, {
                 text: `❌ @${targetJid.split('@')[0]} is already a sudo user!`,
                 mentions: [targetJid]
             }, {
@@ -92,7 +92,7 @@ malvin({
 
         const ok = await addSudo(targetJid);
         if (ok) {
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 text: `✅ *Sudo User Added*\n\n👤 User: @${targetJid.split('@')[0]}\n👑 Added by: @${sender.split('@')[0]}\n📅 Date: ${new Date().toLocaleString()}`,
                 mentions: [targetJid, sender]
             }, {
@@ -109,7 +109,7 @@ malvin({
 });
 
 // ========== REMOVE SUDO COMMAND ==========
-malvin({
+shyam({
     pattern: "delsudo",
     alias: ["removesudo", "rmsudo"],
     desc: "Remove user from sudo (Owner only)",
@@ -117,7 +117,7 @@ malvin({
     react: "➖",
     use: ".delsudo @user or .delsudo 263714757857 or reply to user",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         // Check if user is owner using the same method as promote/demote
         const isOwner = mek.key.fromMe || (await require('../lib/isOwnerOrSudo')(sender));
@@ -172,7 +172,7 @@ malvin({
         // Check if user is actually sudo
         const sudoList = await getSudoList();
         if (!sudoList.includes(targetJid)) {
-            return await malvin.sendMessage(from, {
+            return await shyam.sendMessage(from, {
                 text: `❌ @${targetJid.split('@')[0]} is not a sudo user!`,
                 mentions: [targetJid]
             }, {
@@ -182,7 +182,7 @@ malvin({
 
         const ok = await removeSudo(targetJid);
         if (ok) {
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 text: `✅ *Sudo User Removed*\n\n👤 User: @${targetJid.split('@')[0]}\n👑 Removed by: @${sender.split('@')[0]}\n📅 Date: ${new Date().toLocaleString()}`,
                 mentions: [targetJid, sender]
             }, {
@@ -199,7 +199,7 @@ malvin({
 });
 
 // ========== SUDO HELP COMMAND ==========
-malvin({
+shyam({
     pattern: "sudohelp",
     alias: ["helpsudo"],
     desc: "Show sudo commands help",
@@ -207,7 +207,7 @@ malvin({
     react: "❓",
     use: ".sudohelp",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         const helpText = `👑 *Sudo Management Commands*\n\n` +
             `➕ *Add Sudo:*\n` +

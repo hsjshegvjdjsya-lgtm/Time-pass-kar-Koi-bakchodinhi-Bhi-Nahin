@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fs = require('fs');
 const path = require('path');
 
@@ -16,7 +16,7 @@ function initializeWarningsFile() {
     }
 }
 
-malvin({
+shyam({
     pattern: "warn",
     alias: ["warning"],
     desc: "Warn user in group (auto-kick after 3 warnings)",
@@ -24,7 +24,7 @@ malvin({
     react: "⚠️",
     use: ".warn @user or reply to user's message",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         // Initialize files first
         initializeWarningsFile();
@@ -83,7 +83,7 @@ malvin({
                 `👑 *Warned By:* @${sender.split('@')[0]}\n\n` +
                 `📅 *Date:* ${new Date().toLocaleString()}`;
 
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 text: warningMessage,
                 mentions: [userToWarn, sender]
             }, {
@@ -92,14 +92,14 @@ malvin({
 
             // Auto-kick after 3 warnings
             if (warnings[from][userToWarn] >= 3) {
-                await malvin.groupParticipantsUpdate(from, [userToWarn], "remove");
+                await shyam.groupParticipantsUpdate(from, [userToWarn], "remove");
                 delete warnings[from][userToWarn];
                 fs.writeFileSync(warningsPath, JSON.stringify(warnings, null, 2));
                 
                 const kickMessage = `*『 AUTO-KICK 』*\n\n` +
                     `@${userToWarn.split('@')[0]} has been removed from the group after receiving 3 warnings! ⚠️`;
 
-                await malvin.sendMessage(from, { 
+                await shyam.sendMessage(from, { 
                     text: kickMessage,
                     mentions: [userToWarn]
                 }, {

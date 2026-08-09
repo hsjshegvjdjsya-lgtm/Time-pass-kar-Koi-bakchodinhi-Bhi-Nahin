@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fs = require('fs');
 const path = require('path');
 
@@ -12,7 +12,7 @@ function loadWarnings() {
     return JSON.parse(data);
 }
 
-malvin({
+shyam({
     pattern: "warnings",
     alias: ["checkwarn", "warncount"],
     desc: "Check user's warning count",
@@ -20,7 +20,7 @@ malvin({
     react: "📊",
     use: ".warnings @user",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -50,7 +50,7 @@ malvin({
             `📊 *Status:* ${warningCount === 0 ? 'No warnings' : warningCount === 3 ? 'MAX - Will be kicked on next warn' : `${3 - warningCount} warnings until kick`}\n\n` +
             `ℹ️ *Note:* Users are automatically kicked after 3 warnings.`;
 
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: warningMessage,
             mentions: [userToCheck]
         }, {

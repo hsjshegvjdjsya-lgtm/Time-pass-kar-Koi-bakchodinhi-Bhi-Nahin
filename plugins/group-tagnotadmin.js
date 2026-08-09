@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const isAdmin = require('../lib/isAdmin');
 
-malvin({
+shyam({
     pattern: "tagnotadmin",
     alias: ["tagmembers", "tagusers", "tagnonadmin"],
     desc: "Tag all non-admin members in the group",
@@ -9,7 +9,7 @@ malvin({
     react: "🔊",
     use: ".tagnotadmin",
     filename: __filename,
-}, async (malvin, mek, m, { from, sender, isGroup, reply }) => {
+}, async (shyam, mek, m, { from, sender, isGroup, reply }) => {
     try {
         // Check if it's a group
         if (!isGroup) {
@@ -17,7 +17,7 @@ malvin({
         }
 
         // Check admin status using your existing function
-        const adminStatus = await isAdmin(malvin, from, sender);
+        const adminStatus = await isAdmin(shyam, from, sender);
 
         // Check if bot is admin first
         if (!adminStatus.isBotAdmin) {
@@ -30,7 +30,7 @@ malvin({
         }
 
         // Get group metadata
-        const groupMetadata = await malvin.groupMetadata(from);
+        const groupMetadata = await shyam.groupMetadata(from);
         const participants = groupMetadata.participants || [];
 
         // Filter non-admin members (those without admin role)
@@ -55,7 +55,7 @@ malvin({
         message += `\n🔢 Total members: ${participants.length}`;
 
         // Send message with mentions
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: message,
             mentions: nonAdmins.map(p => p.id)
         }, {

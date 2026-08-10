@@ -1,10 +1,10 @@
 //---------------------------------------------
-//           MALVIN-XD INSTAGRAM DOWNLOADER
+//           shyam-XD INSTAGRAM DOWNLOADER
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 const { igdl } = require("ruhend-scraper");
 
@@ -12,9 +12,9 @@ const { igdl } = require("ruhend-scraper");
 const processedMessages = new Set();
 
 // Ultra-fast loading animation (400ms)
-async function sendIgLoading(malvin, from, action = "Processing") {
+async function sendIgLoading(shyam, from, action = "Processing") {
     const frames = ['📷', '⬇️', '⚡', '✨'];
-    let loadingMsg = await malvin.sendMessage(from, { 
+    let loadingMsg = await shyam.sendMessage(from, { 
         text: `${frames[0]} ${action}`
     }, { quoted: fakevCard });
     
@@ -22,7 +22,7 @@ async function sendIgLoading(malvin, from, action = "Processing") {
     const animationInterval = setInterval(async () => {
         frameIndex = (frameIndex + 1) % frames.length;
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `${frames[frameIndex]} ${action}`,
                 edit: loadingMsg.key
             });
@@ -55,7 +55,7 @@ function extractUniqueMedia(mediaData) {
 }
 
 // Main Instagram command
-malvin({
+shyam({
     pattern: "instagram",
     alias: ["ig", "igdl", "insta"],
     desc: "Download Instagram posts, reels, and stories",
@@ -63,7 +63,7 @@ malvin({
     react: "📷",
     use: ".instagram <url>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         // Check if message has already been processed
         if (processedMessages.has(mek.key.id)) {
@@ -99,10 +99,10 @@ malvin({
         }
 
         // Send initial reaction
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
         // Start ultra-fast loading animation
-        const loadingAnimation = await sendIgLoading(malvin, from, "Fetching Instagram data");
+        const loadingAnimation = await sendIgLoading(shyam, from, "Fetching Instagram data");
 
         const downloadData = await igdl(q);
         
@@ -135,10 +135,10 @@ malvin({
 ✅ *Found ${mediaToDownload.length} media item(s)*
 📦 *Processing downloads...*
 
-> ⚡ Powered by Malvin Tech
+> ⚡ Powered by shyam Tech
         `.trim();
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: mediaInfo,
             ...channelInfo
         }, { quoted: fakevCard });
@@ -158,17 +158,17 @@ malvin({
                               q.includes('/reel/') || 
                               q.includes('/tv/');
 
-                const caption = `📷 *Instagram Download* ${i + 1}/${mediaToDownload.length}\n\n> ✨ Powered by Malvin Tech`;
+                const caption = `📷 *Instagram Download* ${i + 1}/${mediaToDownload.length}\n\n> ✨ Powered by shyam Tech`;
 
                 if (isVideo) {
-                    await malvin.sendMessage(from, {
+                    await shyam.sendMessage(from, {
                         video: { url: mediaUrl },
                         mimetype: "video/mp4",
                         caption: caption,
                         ...channelInfo
                     }, { quoted: fakevCard });
                 } else {
-                    await malvin.sendMessage(from, {
+                    await shyam.sendMessage(from, {
                         image: { url: mediaUrl },
                         caption: caption,
                         ...channelInfo
@@ -202,13 +202,13 @@ malvin({
 🎉 *Enjoy your media!*
             `.trim();
 
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: summary,
                 ...channelInfo
             }, { quoted: fakevCard });
 
             // Success reaction
-            await malvin.sendMessage(from, { react: { text: "✅", key: mek.key } });
+            await shyam.sendMessage(from, { react: { text: "✅", key: mek.key } });
         } else {
             await reply(`❌ *All downloads failed!*\n\nPlease try again with a different Instagram URL.`);
         }
@@ -220,7 +220,7 @@ malvin({
 });
 
 // Instagram help command
-malvin({
+shyam({
     pattern: "ighelp",
     alias: ["instagramhelp"],
     desc: "Show Instagram download help",
@@ -228,7 +228,7 @@ malvin({
     react: "📖",
     use: ".ighelp",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     const helpText = `
 ╭───═══━ • ━═══───╮
    📷 *INSTAGRAM DOWNLOADER*
@@ -256,12 +256,12 @@ malvin({
 🔄 Multiple media supported
 ⚡ Fast downloads
 
-> 🚀 Powered by Malvin Tech
+> 🚀 Powered by shyam Tech
     `.trim();
 
     await reply(helpText);
 });
 
 //---------------------------------------------
-//           CODE BY MALVIN KING
+//           CODE BY shyam KING
 //---------------------------------------------

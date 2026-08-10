@@ -1,19 +1,19 @@
 //---------------------------------------------
-//           MALVIN-XD ANIME FIGURE
+//           𝐒𝐇𝐘𝐀𝐌-𝐗𝐌𝐃-XD ANIME FIGURE
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { 𝐒𝐇𝐘𝐀𝐌-𝐗𝐌𝐃, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 const axios = require('axios');
 const FormData = require('form-data');
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 
 // Ultra-fast loading animation (400ms)
-async function sendFigureLoading(malvin, from, action = "Processing") {
+async function sendFigureLoading(shyam, from, action = "Processing") {
     const frames = ['🎨', '✨', '⚡', '🔄'];
-    let loadingMsg = await malvin.sendMessage(from, { 
+    let loadingMsg = await shyam.sendMessage(from, { 
         text: `${frames[0]} ${action}`
     }, { quoted: fakevCard });
     
@@ -21,7 +21,7 @@ async function sendFigureLoading(malvin, from, action = "Processing") {
     const animationInterval = setInterval(async () => {
         frameIndex = (frameIndex + 1) % frames.length;
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `${frames[frameIndex]} ${action}`,
                 edit: loadingMsg.key
             });
@@ -37,7 +37,7 @@ async function sendFigureLoading(malvin, from, action = "Processing") {
 }
 
 // Main tofigure command
-malvin({
+shyam({
     pattern: "tofigure",
     alias: ["animefigure", "figure"],
     desc: "Convert image to anime figure style",
@@ -45,7 +45,7 @@ malvin({
     react: "🎨",
     use: ".tofigure (reply to image)",
     filename: __filename
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         // Check if message has image
         const quotedMsg = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
@@ -65,10 +65,10 @@ malvin({
         }
 
         // Send initial reaction
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
         // Start ultra-fast loading animation
-        const loadingAnimation = await sendFigureLoading(malvin, from, "Converting to anime figure");
+        const loadingAnimation = await sendFigureLoading(shyam, from, "Converting to anime figure");
 
         // Download image
         let buffer;
@@ -126,17 +126,17 @@ malvin({
 ✅ *Conversion Successful!*
 ✨ Your image has been transformed into anime style!
 
-> 🚀 Powered by Malvin Tech
+> 🚀 Powered by shyam Tech
         `.trim();
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: { url: figureUrl },
             caption: resultCaption,
             ...channelInfo
         }, { quoted: fakevCard });
 
         // Success reaction
-        await malvin.sendMessage(from, { react: { text: "✅", key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: "✅", key: mek.key } });
 
     } catch (error) {
         console.error('❌ Anime figure error:', error);
@@ -147,5 +147,5 @@ malvin({
 
 
 //---------------------------------------------
-//           CODE BY MALVIN KING
+//           CODE BY shyam KING
 //---------------------------------------------

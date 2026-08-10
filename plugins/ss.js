@@ -1,13 +1,13 @@
 //---------------------------------------------
-//           MALVIN-XD SCREENSHOT
+//           shyam-XD SCREENSHOT
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const fetch = require('node-fetch');
 
-malvin({
+shyam({
     pattern: "ss",
     alias: ["ssweb", "screenshot"],
     desc: "Take screenshot of any website",
@@ -15,7 +15,7 @@ malvin({
     react: "📸",
     use: ".ss <url>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`📸 *SCREENSHOT TOOL*\n\nUsage: .ss <url>\n\nExamples:\n.ss https://google.com\n.ss https://github.com\n.ss https://instagram.com`);
@@ -40,9 +40,9 @@ malvin({
         const imageBuffer = await response.buffer();
 
         // Send the screenshot
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: imageBuffer,
-            caption: `📸 ${q}\n\nPowered by Malvin Tech`
+            caption: `📸 ${q}\n\nPowered by shyam Tech`
         }, {
             quoted: fakevCard
         });

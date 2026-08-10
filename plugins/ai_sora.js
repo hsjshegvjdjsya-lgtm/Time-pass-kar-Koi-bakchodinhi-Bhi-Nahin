@@ -1,13 +1,13 @@
 //---------------------------------------------
-//           MALVIN-XD SORA AI VIDEO
+//           shyam-XD SORA AI VIDEO
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const axios = require('axios');
 
-malvin({
+shyam({
     pattern: "sora",
     alias: ["soraai", "txt2video"],
     desc: "Generate AI videos using Sora",
@@ -15,7 +15,7 @@ malvin({
     react: "🎬",
     use: ".sora <prompt>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         const prompt = q;
 
@@ -34,7 +34,7 @@ malvin({
             return await reply('❌ No video generated. Try different prompt.');
         }
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             video: { url: videoUrl },
             mimetype: 'video/mp4',
             caption: `🎬 ${prompt}`

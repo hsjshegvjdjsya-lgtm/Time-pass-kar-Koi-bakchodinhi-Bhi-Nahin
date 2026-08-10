@@ -1,13 +1,13 @@
 //---------------------------------------------
-//           MALVIN-XD SPOTIFY DOWNLOADER
+//           shyam-XD SPOTIFY DOWNLOADER
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const axios = require('axios');
 
-malvin({
+shyam({
     pattern: "spotify",
     alias: ["spotifydl", "spoti"],
     desc: "Download songs from Spotify",
@@ -15,7 +15,7 @@ malvin({
     react: "🎵",
     use: ".spotify <song/artist>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`🎵 *SPOTIFY DOWNLOADER*\n\n❌ Please provide a song name or artist.\n\n*Usage:*\n.spotify <song/artist>\n\n*Examples:*\n.spotify Shape of You\n.spotify Ed Sheeran\n.spotify Blinding Lights The Weeknd`);
@@ -52,7 +52,7 @@ malvin({
 
         // Send song info with thumbnail if available
         if (r.thumbnails) {
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 image: { url: r.thumbnails }, 
                 caption: songInfo 
             }, { quoted: fakevCard });
@@ -63,7 +63,7 @@ malvin({
         // Send audio file
         const fileName = `${(r.title || r.name || 'spotify_track').replace(/[\\/:*?"<>|]/g, '_')}.mp3`;
         
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             audio: { url: audioUrl },
             mimetype: 'audio/mpeg',
             fileName: fileName
@@ -79,7 +79,7 @@ malvin({
 });
 
 // Spotify help command
-malvin({
+shyam({
     pattern: "spotifyhelp",
     alias: ["spotihelp"],
     desc: "Show Spotify download help",
@@ -87,7 +87,7 @@ malvin({
     react: "📖",
     use: ".spotifyhelp",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     const helpText = `
 🎵 *SPOTIFY DOWNLOADER*
 
@@ -115,5 +115,5 @@ Works with song titles, artists, or keywords.
 });
 
 //---------------------------------------------
-//           CODE BY MALVIN KING
+//           CODE BY shyam KING
 //---------------------------------------------

@@ -1,9 +1,9 @@
 
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 
 // Microsoft Copilot Command
-malvin({
+shyam({
     pattern: "copilot",
     alias: ["msai", "microsoftai", "bingai"],
     desc: "Chat with Microsoft Copilot AI",
@@ -11,7 +11,7 @@ malvin({
     react: "🤖",
     use: ".copilot <your question>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return reply('Please provide a question for Microsoft Copilot.\n\nExample: .copilot explain quantum computing in simple terms');
@@ -19,12 +19,12 @@ malvin({
 
         await reply('_🤖 Consulting with Microsoft Copilot... Please wait._');
 
-        const response = await axios.get(`https://malvin-api.vercel.app/ai/copilot?text=${encodeURIComponent(q)}`);
+        const response = await axios.get(`https://shyam-api.vercel.app/ai/copilot?text=${encodeURIComponent(q)}`);
         
         if (response.data && response.data.result) {
             const answer = response.data.result;
             
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `🤖 *Microsoft Copilot Response:*\n\n${answer}\n\n👤 *Asked by:* @${sender.split('@')[0]}`,
                 mentions: [sender],
                 contextInfo: {
@@ -52,7 +52,7 @@ malvin({
 });
 
 // Microsoft Copilot Deep Thinking Command
-malvin({
+shyam({
     pattern: "think",
     alias: ["deepthink", "copilotthink", "deepai"],
     desc: "Deep thinking mode with Microsoft Copilot",
@@ -60,7 +60,7 @@ malvin({
     react: "🧠",
     use: ".think <your complex question>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return reply('Please provide a complex question for deep thinking mode.\n\nExample: .think analyze the ethical implications of artificial intelligence in healthcare');
@@ -68,12 +68,12 @@ malvin({
 
         await reply('_🧠 Microsoft Copilot is thinking deeply... This may take a moment._');
 
-        const response = await axios.get(`https://malvin-api.vercel.app/ai/copilot-think?text=${encodeURIComponent(q)}`);
+        const response = await axios.get(`https://shyam-api.vercel.app/ai/copilot-think?text=${encodeURIComponent(q)}`);
         
         if (response.data && response.data.result) {
             const answer = response.data.result;
             
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `🧠 *Microsoft Copilot - Deep Thinking:*\n\n${answer}\n\n💭 *Deep analysis completed*\n👤 *Requested by:* @${sender.split('@')[0]}`,
                 mentions: [sender],
                 contextInfo: {
@@ -101,7 +101,7 @@ malvin({
 });
 
 // Microsoft Copilot GPT-5 Command
-malvin({
+shyam({
     pattern: "gpt5",
     alias: ["gpt5", "copilotgpt5", "msgpt5"],
     desc: "Advanced GPT-5 mode with Microsoft Copilot",
@@ -109,7 +109,7 @@ malvin({
     react: "🚀",
     use: ".gpt5 <your advanced question>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return reply('Please provide an advanced question for GPT-5 mode.\n\nExample: .gpt5 explain the potential applications of quantum machine learning in drug discovery');
@@ -117,12 +117,12 @@ malvin({
 
         await reply('_🚀 Engaging GPT-5 advanced mode... Please wait._');
 
-        const response = await axios.get(`https://malvin-api.vercel.app/ai/gpt-5?text=${encodeURIComponent(q)}`);
+        const response = await axios.get(`https://shyam-api.vercel.app/ai/gpt-5?text=${encodeURIComponent(q)}`);
         
         if (response.data && response.data.result) {
             const answer = response.data.result;
             
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `🚀 *Microsoft Copilot - GPT-5 Advanced:*\n\n${answer}\n\n⚡ *Powered by GPT-5 Technology*\n👤 *Requested by:* @${sender.split('@')[0]}`,
                 mentions: [sender],
                 contextInfo: {
@@ -150,7 +150,7 @@ malvin({
 });
 
 
-malvin({
+shyam({
     pattern: "gpt",
     alias: ["ai", "chatgpt"],
     desc: "Get AI response from ChatGPT",
@@ -158,19 +158,19 @@ malvin({
     react: "🤖",
     use: ".gpt <your question>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply }) => {
+}, async (shyam, mek, m, { from, q, reply }) => {
     try {
         if (!q) {
             return reply("Please provide a question after .gpt\n\nExample: .gpt write a basic html code");
         }
 
-        // Use Malvin API for GPT
-        const response = await axios.get(`https://malvin-api.vercel.app/ai/openai?text=${encodeURIComponent(q)}`);
+        // Use shyam API for GPT
+        const response = await axios.get(`https://shyam-api.vercel.app/ai/openai?text=${encodeURIComponent(q)}`);
         
         if (response.data && response.data.result) {
             const answer = response.data.result;
             
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `🤖 *ChatGPT Response:*\n\n${answer}`,
                 contextInfo: {
                     mentionedJid: [m.sender],
@@ -188,7 +188,7 @@ malvin({
     }
 });
 
-malvin({
+shyam({
     pattern: "gemini",
     alias: ["googleai"],
     desc: "Get AI response from Gemini",
@@ -196,19 +196,19 @@ malvin({
     react: "🤖", 
     use: ".gemini <your question>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply }) => {
+}, async (shyam, mek, m, { from, q, reply }) => {
     try {
         if (!q) {
             return reply("Please provide a question after .gemini");
         }
 
-        // Use Malvin API for Gemini (Venice)
-        const response = await axios.get(`https://malvin-api.vercel.app/ai/venice?text=${encodeURIComponent(q)}`);
+        // Use shyam API for Gemini (Venice)
+        const response = await axios.get(`https://shyam-api.vercel.app/ai/venice?text=${encodeURIComponent(q)}`);
         
         if (response.data && response.data.result) {
             const answer = response.data.result;
             
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `🤖 *Gemini Response:*\n\n${answer}`,
                 contextInfo: {
                     mentionedJid: [m.sender],
@@ -226,7 +226,7 @@ malvin({
     }
 });
 
-malvin({
+shyam({
     pattern: "venice",
     alias: ["veniceai"],
     desc: "Get AI response from Venice AI",
@@ -234,19 +234,19 @@ malvin({
     react: "🤖",
     use: ".venice <your question>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply }) => {
+}, async (shyam, mek, m, { from, q, reply }) => {
     try {
         if (!q) {
             return reply("Please provide a question after .venice");
         }
 
-        // Use Malvin API for Venice AI
-        const response = await axios.get(`https://malvin-api.vercel.app/ai/venice?text=${encodeURIComponent(q)}`);
+        // Use shyam API for Venice AI
+        const response = await axios.get(`https://shyam-api.vercel.app/ai/venice?text=${encodeURIComponent(q)}`);
         
         if (response.data && response.data.result) {
             const answer = response.data.result;
             
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `🤖 *Venice AI Response:*\n\n${answer}`,
                 contextInfo: {
                     mentionedJid: [m.sender],

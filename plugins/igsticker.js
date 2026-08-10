@@ -1,10 +1,10 @@
 //---------------------------------------------
-//           MALVIN-XD INSTAGRAM STICKER
+//           shyam-XD INSTAGRAM STICKER
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 const { igdl } = require('ruhend-scraper');
 const axios = require('axios');
@@ -18,9 +18,9 @@ const crypto = require('crypto');
 const processedMessages = new Set();
 
 // Ultra-fast loading animation (400ms)
-async function sendStickerLoading(malvin, from, action = "Processing") {
+async function sendStickerLoading(shyam, from, action = "Processing") {
     const frames = ['📸', '🔄', '⚡', '✨'];
-    let loadingMsg = await malvin.sendMessage(from, { 
+    let loadingMsg = await shyam.sendMessage(from, { 
         text: `${frames[0]} ${action}`
     }, { quoted: fakevCard });
     
@@ -28,7 +28,7 @@ async function sendStickerLoading(malvin, from, action = "Processing") {
     const animationInterval = setInterval(async () => {
         frameIndex = (frameIndex + 1) % frames.length;
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `${frames[frameIndex]} ${action}`,
                 edit: loadingMsg.key
             });
@@ -76,7 +76,7 @@ async function convertToSticker(buffer, isVideo = false) {
 
     const json = {
         'sticker-pack-id': crypto.randomBytes(32).toString('hex'),
-        'sticker-pack-name': 'Malvin XD',
+        'sticker-pack-name': 'shyam XD',
         'emojis': ['📸']
     };
     
@@ -112,7 +112,7 @@ async function fetchBuffer(url) {
 }
 
 // Main Instagram sticker command
-malvin({
+shyam({
     pattern: "igs",
     alias: ["igsticker", "instasticker"],
     desc: "Convert Instagram media to stickers",
@@ -120,7 +120,7 @@ malvin({
     react: "📸",
     use: ".igs <url>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         // Check if message already processed
         if (processedMessages.has(mek.key.id)) return;
@@ -137,10 +137,10 @@ malvin({
         }
 
         // Send initial reaction
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
         // Start ultra-fast loading
-        const loadingAnimation = await sendStickerLoading(malvin, from, "Fetching Instagram media");
+        const loadingAnimation = await sendStickerLoading(shyam, from, "Fetching Instagram media");
 
         const downloadData = await igdl(q);
         
@@ -167,10 +167,10 @@ malvin({
 ✅ *Found ${mediaItems.length} media item(s)*
 ⚡ *Converting to stickers...*
 
-> ✨ Powered by Malvin Tech
+> ✨ Powered by shyam Tech
         `.trim();
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             text: processInfo,
             ...channelInfo
         }, { quoted: fakevCard });
@@ -191,7 +191,7 @@ malvin({
                 const stickerBuffer = await convertToSticker(mediaBuffer, isVideo);
 
                 // Send sticker
-                await malvin.sendMessage(from, {
+                await shyam.sendMessage(from, {
                     sticker: stickerBuffer
                 }, { quoted: fakevCard });
 
@@ -220,13 +220,13 @@ malvin({
 🎉 *Enjoy your stickers!*
             `.trim();
 
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: summary,
                 ...channelInfo
             }, { quoted: fakevCard });
 
             // Success reaction
-            await malvin.sendMessage(from, { react: { text: "✅", key: mek.key } });
+            await shyam.sendMessage(from, { react: { text: "✅", key: mek.key } });
         } else {
             await reply(`❌ *All sticker conversions failed!*\n\nPlease try again with a different Instagram URL.`);
         }
@@ -238,7 +238,7 @@ malvin({
 });
 
 // Instagram sticker help
-malvin({
+shyam({
     pattern: "igshelp",
     alias: ["igstickerhelp"],
     desc: "Show Instagram sticker help",
@@ -246,7 +246,7 @@ malvin({
     react: "📖",
     use: ".igshelp",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     const helpText = `
 ╭───═══━ • ━═══───╮
    📸 *INSTAGRAM STICKER*
@@ -271,12 +271,12 @@ malvin({
 • .igs https://instagram.com/p/ABC123/
 • .igs https://instagram.com/reel/XYZ789/
 
-> 🚀 Powered by Malvin Tech
+> 🚀 Powered by shyam Tech
     `.trim();
 
     await reply(helpText);
 });
 
 //---------------------------------------------
-//           CODE BY MALVIN KING
+//           CODE BY SHYAM KING
 //---------------------------------------------

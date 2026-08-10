@@ -1,15 +1,15 @@
 //---------------------------------------------
-//           MALVIN-XD STICKER TAKE
+//           shyam-XD STICKER TAKE
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { downloadMediaMessage } = require('@whiskeysockets/baileys');
 const webp = require('node-webpmux');
 const crypto = require('crypto');
 
-malvin({
+shyam({
     pattern: "take",
     alias: ["claim", "steal"],
     desc: "Take sticker and add to your pack",
@@ -17,7 +17,7 @@ malvin({
     react: "🎯",
     use: ".take <packname> (reply to sticker)",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         // Check if message is a reply to a sticker
         const quotedMessage = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
@@ -26,7 +26,7 @@ malvin({
         }
 
         // Get the packname from args or use default
-        const packname = q || 'Malvin XD';
+        const packname = q || 'shyam XD';
 
         // Download the sticker
         const stickerBuffer = await downloadMediaMessage(
@@ -39,7 +39,7 @@ malvin({
             {},
             {
                 logger: console,
-                reuploadRequest: malvin.updateMediaMessage
+                reuploadRequest: shyam.updateMediaMessage
             }
         );
 
@@ -74,7 +74,7 @@ malvin({
         await reply(`✅ *Sticker Taken!*\n\n📦 Pack: ${packname}\n🎯 Added to your sticker collection`);
 
         // Send the sticker
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             sticker: finalBuffer
         }, {
             quoted: fakevCard
@@ -87,7 +87,7 @@ malvin({
 });
 
 // Take help command
-malvin({
+shyam({
     pattern: "takehelp",
     alias: ["claimhelp"],
     desc: "Show sticker take help",
@@ -95,7 +95,7 @@ malvin({
     react: "📖",
     use: ".takehelp",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     const helpText = `
 🎯 *STICKER TAKE COMMAND*
 
@@ -122,5 +122,5 @@ This adds the sticker to your personal collection with your chosen pack name.
 });
 
 //---------------------------------------------
-//           CODE BY MALVIN KING
+//           CODE BY shyam KING
 //---------------------------------------------

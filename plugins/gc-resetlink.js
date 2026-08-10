@@ -1,6 +1,6 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 
-malvin({
+shyam({
     pattern: "resetlink",
     alias: ["newlink", "revoke", "resetinvite"],
     desc: "Reset group invite link",
@@ -8,7 +8,7 @@ malvin({
     react: "🔗",
     use: ".resetlink",
     filename: __filename,
-}, async (malvin, mek, m, { from, isGroup, sender, reply, isAdmin }) => {
+}, async (shyam, mek, m, { from, isGroup, sender, reply, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -25,7 +25,7 @@ malvin({
         }
 
         // Reset the group link
-        const newCode = await malvin.groupRevokeInvite(from);
+        const newCode = await shyam.groupRevokeInvite(from);
         
         // Send the new link
         await reply(`✅ *Group link has been successfully reset!*\n\n📌 *New invite link:*\nhttps://chat.whatsapp.com/${newCode}\n\n👑 *Reset by:* @${sender.split('@')[0]}`);
@@ -44,7 +44,7 @@ malvin({
 });
 
 // Command to list all pending group join requests & etc
-malvin({
+shyam({
     pattern: "requestlist",
     alias: ["joinrequests", "pendingrequests"],
     desc: "Shows pending group join requests",
@@ -52,7 +52,7 @@ malvin({
     react: "📋",
     use: ".requestlist",
     filename: __filename,
-}, async (malvin, mek, m, { from, isGroup, sender, reply, isAdmin }) => {
+}, async (shyam, mek, m, { from, isGroup, sender, reply, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -68,7 +68,7 @@ malvin({
             return await reply('❌ Error: Only group admins can view join requests.');
         }
 
-        const requests = await malvin.groupRequestParticipantsList(from);
+        const requests = await shyam.groupRequestParticipantsList(from);
         
         if (requests.length === 0) {
             return await reply('ℹ️ No pending join requests.');
@@ -90,7 +90,7 @@ malvin({
 });
 
 // Command to accept all pending join requests
-malvin({
+shyam({
     pattern: "acceptall",
     alias: ["approveall", "acceptrequests"],
     desc: "Accepts all pending group join requests",
@@ -98,7 +98,7 @@ malvin({
     react: "✅",
     use: ".acceptall",
     filename: __filename,
-}, async (malvin, mek, m, { from, isGroup, sender, reply, isAdmin }) => {
+}, async (shyam, mek, m, { from, isGroup, sender, reply, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -114,14 +114,14 @@ malvin({
             return await reply('❌ Error: Only group admins can accept join requests.');
         }
 
-        const requests = await malvin.groupRequestParticipantsList(from);
+        const requests = await shyam.groupRequestParticipantsList(from);
         
         if (requests.length === 0) {
             return await reply('ℹ️ No pending join requests to accept.');
         }
 
         const jids = requests.map(u => u.jid);
-        await malvin.groupRequestParticipantsUpdate(from, jids, "approve");
+        await shyam.groupRequestParticipantsUpdate(from, jids, "approve");
         
         await reply(`✅ Successfully accepted ${requests.length} join request${requests.length > 1 ? 's' : ''}!\n\n👑 *Approved by:* @${sender.split('@')[0]}`, { 
             mentions: [sender] 
@@ -134,7 +134,7 @@ malvin({
 });
 
 // Command to reject all pending join requests
-malvin({
+shyam({
     pattern: "rejectall",
     alias: ["denyall", "rejectrequests"],
     desc: "Rejects all pending group join requests",
@@ -142,7 +142,7 @@ malvin({
     react: "❌",
     use: ".rejectall",
     filename: __filename,
-}, async (malvin, mek, m, { from, isGroup, sender, reply, isAdmin }) => {
+}, async (shyam, mek, m, { from, isGroup, sender, reply, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
@@ -158,14 +158,14 @@ malvin({
             return await reply('❌ Error: Only group admins can reject join requests.');
         }
 
-        const requests = await malvin.groupRequestParticipantsList(from);
+        const requests = await shyam.groupRequestParticipantsList(from);
         
         if (requests.length === 0) {
             return await reply('ℹ️ No pending join requests to reject.');
         }
 
         const jids = requests.map(u => u.jid);
-        await malvin.groupRequestParticipantsUpdate(from, jids, "reject");
+        await shyam.groupRequestParticipantsUpdate(from, jids, "reject");
         
         await reply(`✅ Successfully rejected ${requests.length} join request${requests.length > 1 ? 's' : ''}!\n\n👑 *Rejected by:* @${sender.split('@')[0]}`, { 
             mentions: [sender] 

@@ -1,10 +1,10 @@
 //---------------------------------------------
-//           MALVIN-XD VIDEO DOWNLOADER
+//           shyam-XD VIDEO DOWNLOADER
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 const axios = require('axios');
 const yts = require('yt-search');
@@ -23,9 +23,9 @@ const AXIOS_DEFAULTS = {
 };
 
 // Fast loading animation for video download
-async function sendVideoLoading(malvin, from, action = "Processing") {
+async function sendVideoLoading(shyam, from, action = "Processing") {
     const frames = ['🎬', '📥', '⚡', '🔄', '✨'];
-    let loadingMsg = await malvin.sendMessage(from, { 
+    let loadingMsg = await shyam.sendMessage(from, { 
         text: `${frames[0]} ${action}...`
     }, { quoted: fakevCard });
     
@@ -33,7 +33,7 @@ async function sendVideoLoading(malvin, from, action = "Processing") {
     const animationInterval = setInterval(async () => {
         frameIndex = (frameIndex + 1) % frames.length;
         try {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 text: `${frames[frameIndex]} ${action}...`,
                 edit: loadingMsg.key
             });
@@ -89,7 +89,7 @@ async function getDavidCyrilVideoByUrl(youtubeUrl) {
 }
 
 // Main video command
-malvin({
+shyam({
     pattern: "video",
     alias: ["ytvideo", "vid", "ytmp4"],
     desc: "Download YouTube videos in HD quality",
@@ -97,21 +97,21 @@ malvin({
     react: "🎬",
     use: ".video <query/url>",
     filename: __filename
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`🎬 *VIDEO DOWNLOADER*\n\n❌ Please provide a YouTube URL or search query.\n\n*Usage:*\n• .video https://youtu.be/ABC123\n• .video funny cat videos\n• .video music tutorial\n\n💡 *Tip:* You can search by keywords or paste YouTube URL`);
         }
 
         // Send initial reaction
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
         let videoUrl, videoInfo;
         const isYtUrl = q.match(/(youtube\.com|youtu\.be)/i);
 
         // Start search/process animation
         const searchAnimation = await sendVideoLoading(
-            malvin, 
+            shyam, 
             from, 
             isYtUrl ? "Processing YouTube URL..." : "Searching for videos..."
         );
@@ -189,14 +189,14 @@ _⏳ *Downloading video...*_
         `.trim();
 
         // Send video info with thumbnail
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: { url: videoInfo?.thumbnail || 'https://files.catbox.moe/ceeo6k.jpg' },
             caption: videoInfoMsg,
             ...channelInfo
         }, { quoted: fakevCard });
 
         // Start download animation
-        const downloadAnimation = await sendVideoLoading(malvin, from, "Downloading video...");
+        const downloadAnimation = await sendVideoLoading(shyam, from, "Downloading video...");
 
         // Try multiple download APIs
         let videoData = null;
@@ -234,10 +234,10 @@ _⏳ *Downloading video...*_
 📁 *Format:* MP4 (HD)
 🚀 *Ready to watch!*
 
-> ✨ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ
+> ✨ ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ
         `.trim();
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             video: { url: videoData.download },
             mimetype: 'video/mp4',
             fileName: `${(videoData.title || videoInfo?.title || 'video').replace(/[<>:"\/\\|?*]+/g, '_').slice(0, 60)}.mp4`,
@@ -246,7 +246,7 @@ _⏳ *Downloading video...*_
         }, { quoted: fakevCard });
 
         // Success reaction
-        await malvin.sendMessage(from, { react: { text: "✅", key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: "✅", key: mek.key } });
 
     } catch (error) {
         console.error('❌ Video download error:', error);
@@ -255,7 +255,7 @@ _⏳ *Downloading video...*_
 });
 
 // Video help command
-malvin({
+shyam({
     pattern: "videohelp",
     alias: ["vidhelp", "ythelp"],
     desc: "Show video download help",
@@ -263,7 +263,7 @@ malvin({
     react: "📖",
     use: ".videohelp",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     const helpText = `
 ╭───═══━ • ━═══───╮
    🎬 *VIDEO DOWNLOADER*
@@ -296,5 +296,5 @@ malvin({
 });
 
 //---------------------------------------------
-//           CODE BY MALVIN KING
+//           CODE BY shyam KING
 //---------------------------------------------

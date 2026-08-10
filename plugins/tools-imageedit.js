@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { downloadContentFromMessage } = require("@whiskeysockets/baileys");
 const axios = require("axios");
 const FormData = require("form-data");
@@ -7,7 +7,7 @@ const os = require("os");
 const path = require("path");
 
 // Common function for image processing
-async function processImageEffect(malvin, mek, from, apiEndpoint, effectName, reply) {
+async function processImageEffect(shyam, mek, from, apiEndpoint, effectName, reply) {
     try {
         const quotedMsg = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         const target = quotedMsg || mek.message;
@@ -63,11 +63,11 @@ async function processImageEffect(malvin, mek, from, apiEndpoint, effectName, re
 
         const effectBuffer = Buffer.from(response.data, "binary");
 
-        await malvin.sendMessage(
+        await shyam.sendMessage(
             from,
             {
                 image: effectBuffer,
-                caption: `🎨 *${effectName.toUpperCase()} Effect Applied*\n\n> © Powered by Malvin King`
+                caption: `🎨 *${effectName.toUpperCase()} Effect Applied*\n\n> © Powered by shyam King`
             },
             { quoted: fakevCard }
         );
@@ -86,7 +86,7 @@ async function processImageEffect(malvin, mek, from, apiEndpoint, effectName, re
 }
 
 // ==================== WANTED EFFECT ====================
-malvin({
+shyam({
     pattern: "wanted",
     alias: ["wantedposter"],
     desc: "Create wanted poster effect",
@@ -94,12 +94,12 @@ malvin({
     react: "📸",
     use: ".wanted (reply to image)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processImageEffect(malvin, mek, from, "wanted", "wanted", reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processImageEffect(shyam, mek, from, "wanted", "wanted", reply);
 });
 
 // ==================== NOKIA EFFECT ====================
-malvin({
+shyam({
     pattern: "nokia",
     alias: ["nokiaframe"],
     desc: "Add Nokia phone frame",
@@ -107,12 +107,12 @@ malvin({
     react: "📱",
     use: ".nokia (reply to image)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processImageEffect(malvin, mek, from, "nokia", "nokia", reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processImageEffect(shyam, mek, from, "nokia", "nokia", reply);
 });
 
 // ==================== JOKE OVERHEAD EFFECT ====================
-malvin({
+shyam({
     pattern: "imgjoke",
     alias: ["jokeoverhead"],
     desc: "Add joke overhead effect", 
@@ -120,12 +120,12 @@ malvin({
     react: "😂",
     use: ".imgjoke (reply to image)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processImageEffect(malvin, mek, from, "jokeoverhead", "joke overhead", reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processImageEffect(shyam, mek, from, "jokeoverhead", "joke overhead", reply);
 });
 
 // ==================== JAIL EFFECT ====================
-malvin({
+shyam({
     pattern: "jail",
     alias: ["jailbars"],
     desc: "Add jail bars effect",
@@ -133,12 +133,12 @@ malvin({
     react: "🚔", 
     use: ".jail (reply to image)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processImageEffect(malvin, mek, from, "jail", "jail", reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processImageEffect(shyam, mek, from, "jail", "jail", reply);
 });
 
 // ==================== INVERT EFFECT ====================
-malvin({
+shyam({
     pattern: "invert",
     alias: ["invertcolors"],
     desc: "Invert image colors",
@@ -146,12 +146,12 @@ malvin({
     react: "🔄",
     use: ".invert (reply to image)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processImageEffect(malvin, mek, from, "invert", "invert", reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processImageEffect(shyam, mek, from, "invert", "invert", reply);
 });
 
 // ==================== GREYSCALE EFFECT ====================
-malvin({
+shyam({
     pattern: "grey",
     alias: ["greyscale", "grayscale"],
     desc: "Convert to greyscale", 
@@ -159,12 +159,12 @@ malvin({
     react: "⚫",
     use: ".grey (reply to image)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processImageEffect(malvin, mek, from, "greyscale", "greyscale", reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processImageEffect(shyam, mek, from, "greyscale", "greyscale", reply);
 });
 
 // ==================== BLUR EFFECT ====================
-malvin({
+shyam({
     pattern: "blurimg",
     alias: ["imageblur"],
     desc: "Apply blur effect to image",
@@ -172,12 +172,12 @@ malvin({
     react: "🔍",
     use: ".blurimg (reply to image)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processImageEffect(malvin, mek, from, "blur", "blur", reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processImageEffect(shyam, mek, from, "blur", "blur", reply);
 });
 
 // ==================== AD EFFECT ====================
-malvin({
+shyam({
     pattern: "ad",
     alias: ["adframe", "advertisement"],
     desc: "Add advertisement frame",
@@ -185,6 +185,6 @@ malvin({
     react: "📺",
     use: ".ad (reply to image)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processImageEffect(malvin, mek, from, "ad", "advertisement", reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processImageEffect(shyam, mek, from, "ad", "advertisement", reply);
 });

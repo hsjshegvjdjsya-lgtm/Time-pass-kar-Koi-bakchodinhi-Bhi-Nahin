@@ -1,10 +1,10 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { addWelcome, delWelcome, isWelcomeOn } = require('../lib/index');
 const { channelInfo } = require('../lib/messageConfig');
 const fetch = require('node-fetch');
 
-// Welcome command using Malvin XD framework
-malvin({
+// Welcome command using shyam XD framework
+shyam({
     pattern: "welcome",
     alias: ["welcomesetup"],
     desc: "Configure welcome messages for this group",

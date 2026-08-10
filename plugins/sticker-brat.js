@@ -1,10 +1,10 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const { execSync } = require('child_process');
 
-malvin({
+shyam({
     pattern: "bratvid",
     alias: ["bratvideo", "brattext"],
     desc: "Create Brat style video text sticker",
@@ -12,7 +12,7 @@ malvin({
     react: "🚀",
     use: ".bratvid <text>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`🚀 *Brat Style Video Text*\n\nUsage: .bratvid <your text>\nExample: .bratvid Hello World`);
@@ -23,7 +23,7 @@ malvin({
         }
 
         // Send processing reaction
-        await malvin.sendMessage(from, { react: { text: '🚀', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '🚀', key: mek.key } });
 
         const words = q.split(" ");
         const tempDir = path.join(process.cwd(), 'cache');
@@ -76,7 +76,7 @@ malvin({
 
         // Send as sticker
         const stickerBuffer = fs.readFileSync(outputStickerPath);
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             sticker: stickerBuffer,
             caption: `🚀 *Brat Style Text*\n\n📝 *Text:* ${q}\n👤 *By:* @${sender.split('@')[0]}`,
             mentions: [sender]

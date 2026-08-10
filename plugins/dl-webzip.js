@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 
-malvin({
+shyam({
     pattern: "webzip",
     alias: ["sitezip", "web", "archive", "websitezip"],
     desc: "Archive website to ZIP file",
@@ -9,7 +9,7 @@ malvin({
     react: "📦",
     use: ".webzip <url>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`📦 *Website Archiver*\n\nUsage: .webzip <url>\nExample: .webzip https://example.com`);
@@ -21,7 +21,7 @@ malvin({
         }
 
         // Send processing reaction
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
 
         const apiUrl = `https://api.giftedtech.web.id/api/tools/web2zip?apikey=gifted&url=${encodeURIComponent(q)}`;
         const response = await axios.get(apiUrl, { 
@@ -57,9 +57,9 @@ malvin({
                        `📂 *Files Archived:* ${copiedFilesAmount}\n` +
                        `💾 *Archive Size:* ${(zipBuffer.length / 1024 / 1024).toFixed(2)} MB\n\n` +
                        `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                       `> © Powered by Malvin King`;
+                       `> © Powered by shyam King`;
 
-        await malvin.sendMessage(
+        await shyam.sendMessage(
             from,
             {
                 document: zipBuffer,
@@ -73,13 +73,13 @@ malvin({
             }
         );
 
-        await malvin.sendMessage(from, { react: { text: '✅', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '✅', key: mek.key } });
 
     } catch (error) {
         console.error('Webzip error:', error);
         
         // Remove loading reaction
-        await malvin.sendMessage(from, { react: { text: '❌', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '❌', key: mek.key } });
         
         if (error.code === 'ECONNABORTED') {
             await reply('❌ Request timeout. The website is taking too long to archive. Try a smaller site.');

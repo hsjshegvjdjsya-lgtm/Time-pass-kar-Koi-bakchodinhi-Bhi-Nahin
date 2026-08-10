@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 
-malvin({
+shyam({
     pattern: "wastalk",
     alias: ["chanstalk", "wstalk", "channelstalk"],
     desc: "Get WhatsApp channel information",
@@ -9,7 +9,7 @@ malvin({
     react: "📢",
     use: ".wastalk <channel-url>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`📢 *WhatsApp Channel Stalk*\n\nUsage: .wastalk <channel-url>\nExample: .wastalk https://whatsapp.com/channel/...`);
@@ -46,9 +46,9 @@ malvin({
                        `🆔 *Channel ID:* ${newsletterJid || 'N/A'}\n\n` +
                        `🔗 *Link:* ${link}\n\n` +
                        `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                       `> © Powered by Malvin King`;
+                       `> © Powered by shyam King`;
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: Buffer.from(imageRes.data),
             caption: caption,
             mentions: [sender]
@@ -74,7 +74,7 @@ malvin({
 });
 
 // ==================== TIKTOK STALK ====================
-malvin({
+shyam({
     pattern: "tiktokstalk",
     alias: ["tstalk", "ttstalk"],
     desc: "Fetch TikTok user profile details",
@@ -82,7 +82,7 @@ malvin({
     react: "📱",
     use: ".tiktokstalk <username>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`📱 *TikTok Stalk*\n\nUsage: .tiktokstalk <username>\nExample: .tiktokstalk mrbeast`);
@@ -114,9 +114,9 @@ malvin({
                           `🔒 *Private Account:* ${user.privateAccount ? "Yes 🔒" : "No 🌍"}\n\n` +
                           `🔗 *Profile URL:* https://www.tiktok.com/@${user.uniqueId}\n\n` +
                           `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                          `> © Powered by Malvin King`;
+                          `> © Powered by shyam King`;
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: { url: user.avatarLarger },
             caption: profileInfo,
             mentions: [sender]
@@ -138,7 +138,7 @@ malvin({
 });
 
 // ==================== TWITTER/X STALK ====================
-malvin({
+shyam({
     pattern: "xstalk",
     alias: ["twitterstalk", "twtstalk"],
     desc: "Get details about a Twitter/X user",
@@ -146,14 +146,14 @@ malvin({
     react: "🔍",
     use: ".xstalk <username>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`🔍 *Twitter/X Stalk*\n\nUsage: .xstalk <username>\nExample: .xstalk elonmusk`);
         }
 
         // Send loading reaction
-        await malvin.sendMessage(from, { react: { text: "⏳", key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: "⏳", key: mek.key } });
 
         const apiUrl = `https://delirius-apiofc.vercel.app/tools/xstalk?username=${encodeURIComponent(q)}`;
         const { data } = await axios.get(apiUrl);
@@ -175,9 +175,9 @@ malvin({
                        `📅 *Joined:* ${user.created}\n` +
                        `🔗 *Profile:* ${user.url}\n\n` +
                        `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                       `> © Powered by Malvin King`;
+                       `> © Powered by shyam King`;
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: { url: user.avatar },
             caption: caption,
             mentions: [sender]
@@ -199,7 +199,7 @@ malvin({
 });
 
 // ==================== YOUTUBE STALK ====================
-malvin({
+shyam({
     pattern: "ytstalk",
     alias: ["youtubestalk", "ytsearch"],
     desc: "Get YouTube channel information and latest videos",
@@ -207,10 +207,10 @@ malvin({
     react: "📺",
     use: ".ytstalk <username>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
-            return await reply(`📺 *YouTube Stalk*\n\nUsage: .ytstalk <username>\nExample: .ytstalk malvintech2`);
+            return await reply(`📺 *YouTube Stalk*\n\nUsage: .ytstalk <username>\nExample: .ytstalk shyamtech2`);
         }
 
         const response = await axios.get(`https://api.siputzx.my.id/api/stalk/youtube?username=${encodeURIComponent(q)}`);
@@ -243,9 +243,9 @@ malvin({
                          latest_videos.slice(0, 3).map((video, index) => 
                              `${index + 1}. *${video.title}*\n   ▶️ *Views:* ${video.viewCount}\n   ⏱️ *Duration:* ${video.duration}\n   📅 *Published:* ${video.publishedTime}`
                          ).join('\n\n') + `\n\n👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                         `> © Powered by Malvin King`;
+                         `> © Powered by shyam King`;
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: { url: avatarUrl },
             caption: ytMessage,
             mentions: [sender]
@@ -266,7 +266,7 @@ malvin({
     }
 });
 
-malvin({
+shyam({
     pattern: "githubstalk",
     alias: ["gstalk", "gitstalk", "gits"],
     desc: "Fetch detailed GitHub user profile",
@@ -274,10 +274,10 @@ malvin({
     react: "🖥️",
     use: ".githubstalk <username>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
-            return await reply(`🖥️ *GitHub Stalk*\n\nUsage: .githubstalk <username>\nExample: .githubstalk XdKing2`);
+            return await reply(`🖥️ *GitHub Stalk*\n\nUsage: .githubstalk <username>\nExample: .githubstalk dexsam07`);
         }
 
         const username = q.trim();
@@ -296,9 +296,9 @@ malvin({
                       `📅 *Account Created:* ${new Date(data.created_at).toDateString()}\n` +
                       `✍️ *Public Gists:* ${data.public_gists}\n\n` +
                       `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                      `> © Powered by Malvin King`;
+                      `> © Powered by shyam King`;
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: { url: data.avatar_url },
             caption: userInfo,
             mentions: [sender]

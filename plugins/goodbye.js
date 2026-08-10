@@ -1,10 +1,10 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { addGoodbye, delGoodBye, isGoodByeOn } = require('../lib/index');
 const { channelInfo } = require('../lib/messageConfig');
 const fetch = require('node-fetch');
 
-// Goodbye command using Malvin XD framework
-malvin({
+// Goodbye command using shyam XD framework
+shyam({
     pattern: "goodbye",
     alias: ["goodbyesetup"],
     desc: "Configure goodbye messages for this group",

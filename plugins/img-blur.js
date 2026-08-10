@@ -1,10 +1,10 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { downloadMediaMessage } = require('@whiskeysockets/baileys');
 const axios = require('axios');
 const sharp = require('sharp');
 const { channelInfo } = require('../lib/messageConfig');
 
-malvin({
+shyam({
     pattern: "blur",
     alias: ["blurimage"],
     desc: "Blur an image",
@@ -12,7 +12,7 @@ malvin({
     react: "🖼️",
     use: ".blur (reply to an image or send with caption)",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply }) => {
+}, async (shyam, mek, m, { from, q, reply }) => {
     try {
         // Get the image to blur
         let imageBuffer;
@@ -64,7 +64,7 @@ malvin({
             .toBuffer();
 
         // Send the blurred image
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: blurredImage,
             caption: '*[ ✔ ] Image Blurred Successfully*',
             ...channelInfo 

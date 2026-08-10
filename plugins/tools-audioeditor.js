@@ -1,8 +1,8 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const audioEditor = require('../lib/audioeditor');
 
 // Common function for audio processing
-async function processAudioEffect(malvin, mek, from, effectName, effectFunction, reply) {
+async function processAudioEffect(shyam, mek, from, effectName, effectFunction, reply) {
     try {
         const quotedMsg = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         
@@ -11,11 +11,11 @@ async function processAudioEffect(malvin, mek, from, effectName, effectFunction,
         }
 
         // Send processing reaction
-        await malvin.sendMessage(from, { react: { text: '⏳', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '⏳', key: mek.key } });
         
         // Download the media
         const mediaType = quotedMsg.audioMessage ? 'audioMessage' : 'videoMessage';
-        const mediaBuffer = await malvin.downloadMediaMessage(
+        const mediaBuffer = await shyam.downloadMediaMessage(
             { message: { [mediaType]: quotedMsg[mediaType] } },
             'buffer',
             {},
@@ -25,25 +25,25 @@ async function processAudioEffect(malvin, mek, from, effectName, effectFunction,
         const ext = mediaType === 'videoMessage' ? 'mp4' : 'mp3';
         const audio = await effectFunction(mediaBuffer, ext);
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             audio: audio,
             mimetype: 'audio/mpeg',
-            caption: `🎵 *${effectName} Effect Applied*\n\n> © Powered by Malvin King`
+            caption: `🎵 *${effectName} Effect Applied*\n\n> © Powered by shyam King`
         }, { 
             quoted: fakevCard 
         });
 
-        await malvin.sendMessage(from, { react: { text: '✅', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '✅', key: mek.key } });
 
     } catch (error) {
         console.error(`${effectName} effect error:`, error);
-        await malvin.sendMessage(from, { react: { text: '❌', key: mek.key } });
+        await shyam.sendMessage(from, { react: { text: '❌', key: mek.key } });
         await reply(`❌ Failed to apply ${effectName} effect. Please try again with a different audio file.`);
     }
 }
 
 // ==================== DEEP EFFECT ====================
-malvin({
+shyam({
     pattern: "deep",
     alias: ["deepvoice", "deeper"],
     desc: "Make audio sound deeper",
@@ -51,12 +51,12 @@ malvin({
     react: "🗣️",
     use: ".deep (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Deep Voice", audioEditor.deep, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Deep Voice", audioEditor.deep, reply);
 });
 
 // ==================== SMOOTH EFFECT ====================
-malvin({
+shyam({
     pattern: "smooth",
     alias: ["smoothaudio"],
     desc: "Smooth out audio",
@@ -64,12 +64,12 @@ malvin({
     react: "🌀",
     use: ".smooth (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Smooth", audioEditor.smooth, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Smooth", audioEditor.smooth, reply);
 });
 
 // ==================== FAT EFFECT ====================
-malvin({
+shyam({
     pattern: "fat",
     alias: ["bassy", "bassboost"],
     desc: "Make audio sound fat/bassy",
@@ -77,12 +77,12 @@ malvin({
     react: "🍔",
     use: ".fat (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Fat/Bassy", audioEditor.fat, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Fat/Bassy", audioEditor.fat, reply);
 });
 
 // ==================== TUPAI EFFECT ====================
-malvin({
+shyam({
     pattern: "tupai",
     alias: ["squirrel"],
     desc: "Special tupai effect",
@@ -90,12 +90,12 @@ malvin({
     react: "🐿️",
     use: ".tupai (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Tupai", audioEditor.tupai, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Tupai", audioEditor.tupai, reply);
 });
 
 // ==================== BLOWN EFFECT ====================
-malvin({
+shyam({
     pattern: "blown",
     alias: ["blownout", "distorted"],
     desc: "Make audio sound blown out",
@@ -103,12 +103,12 @@ malvin({
     react: "💥",
     use: ".blown (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Blown Out", audioEditor.blown, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Blown Out", audioEditor.blown, reply);
 });
 
 // ==================== RADIO EFFECT ====================
-malvin({
+shyam({
     pattern: "radio",
     alias: ["oldradio", "vintage"],
     desc: "Make audio sound like old radio",
@@ -116,12 +116,12 @@ malvin({
     react: "📻",
     use: ".radio (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Old Radio", audioEditor.radio, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Old Radio", audioEditor.radio, reply);
 });
 
 // ==================== ROBOT EFFECT ====================
-malvin({
+shyam({
     pattern: "robot",
     alias: ["robotic", "cyborg"],
     desc: "Make audio sound robotic",
@@ -129,12 +129,12 @@ malvin({
     react: "🤖",
     use: ".robot (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Robotic", audioEditor.robot, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Robotic", audioEditor.robot, reply);
 });
 
 // ==================== CHIPMUNK EFFECT ====================
-malvin({
+shyam({
     pattern: "chipmunk",
     alias: ["highpitch", "squeaky"],
     desc: "Make audio sound high-pitched",
@@ -142,12 +142,12 @@ malvin({
     react: "🐿️",
     use: ".chipmunk (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Chipmunk", audioEditor.chipmunk, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Chipmunk", audioEditor.chipmunk, reply);
 });
 
 // ==================== NIGHTCORE EFFECT ====================
-malvin({
+shyam({
     pattern: "nightcore",
     alias: ["nightcorefx"],
     desc: "Apply nightcore effect",
@@ -155,12 +155,12 @@ malvin({
     react: "🎶",
     use: ".nightcore (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Nightcore", audioEditor.nightcore, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Nightcore", audioEditor.nightcore, reply);
 });
 
 // ==================== EARRAPE EFFECT ====================
-malvin({
+shyam({
     pattern: "earrape",
     alias: ["maxvolume", "loud"],
     desc: "Max volume (use with caution)",
@@ -168,12 +168,12 @@ malvin({
     react: "📢",
     use: ".earrape (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Earrape", audioEditor.earrape, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Earrape", audioEditor.earrape, reply);
 });
 
 // ==================== BASS EFFECT ====================
-malvin({
+shyam({
     pattern: "bass",
     alias: ["bassboost", "heavybass"],
     desc: "Add heavy bass boost to audio",
@@ -181,12 +181,12 @@ malvin({
     react: "🔊",
     use: ".bass (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Bass Boost", audioEditor.bass, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Bass Boost", audioEditor.bass, reply);
 });
 
 // ==================== REVERSE EFFECT ====================
-malvin({
+shyam({
     pattern: "reverse",
     alias: ["reversed", "backwards"],
     desc: "Reverse audio",
@@ -194,12 +194,12 @@ malvin({
     react: "⏪",
     use: ".reverse (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Reverse", audioEditor.reverse, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Reverse", audioEditor.reverse, reply);
 });
 
 // ==================== SLOW EFFECT ====================
-malvin({
+shyam({
     pattern: "slow",
     alias: ["slowmo", "slowed"],
     desc: "Slow down audio",
@@ -207,12 +207,12 @@ malvin({
     react: "🐌",
     use: ".slow (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Slow Motion", audioEditor.slow, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Slow Motion", audioEditor.slow, reply);
 });
 
 // ==================== FAST EFFECT ====================
-malvin({
+shyam({
     pattern: "fast",
     alias: ["speedup", "fastforward"],
     desc: "Speed up audio",
@@ -220,12 +220,12 @@ malvin({
     react: "⚡",
     use: ".fast (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Fast", audioEditor.fast, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Fast", audioEditor.fast, reply);
 });
 
 // ==================== BABY EFFECT ====================
-malvin({
+shyam({
     pattern: "baby",
     alias: ["babyvoice", "child"],
     desc: "Make audio sound like a baby",
@@ -233,12 +233,12 @@ malvin({
     react: "👶",
     use: ".baby (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Baby Voice", audioEditor.baby, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Baby Voice", audioEditor.baby, reply);
 });
 
 // ==================== DEMON EFFECT ====================
-malvin({
+shyam({
     pattern: "demon",
     alias: ["demonic", "evil"],
     desc: "Make audio sound demonic",
@@ -246,6 +246,6 @@ malvin({
     react: "👹",
     use: ".demon (reply to audio)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
-    await processAudioEffect(malvin, mek, from, "Demon", audioEditor.demon, reply);
+}, async (shyam, mek, m, { from, reply }) => {
+    await processAudioEffect(shyam, mek, from, "Demon", audioEditor.demon, reply);
 });

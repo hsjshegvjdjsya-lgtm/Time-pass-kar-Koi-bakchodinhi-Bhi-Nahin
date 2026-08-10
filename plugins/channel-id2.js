@@ -1,6 +1,6 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 
-malvin({
+shyam({
     pattern: "newsletter2",
     alias: ["cjid2", "id2"],
     desc: "Get WhatsApp Channel info from link",
@@ -8,7 +8,7 @@ malvin({
     react: "📡",
     use: ".newsletter <channel-link>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`📡 *WhatsApp Channel Info*\n\nUsage: .newsletter <channel-link>\nExample: .newsletter https://whatsapp.com/channel/xxxxxxxxxx`);
@@ -24,7 +24,7 @@ malvin({
         let metadata;
 
         try {
-            metadata = await malvin.newsletterMetadata("invite", inviteId);
+            metadata = await shyam.newsletterMetadata("invite", inviteId);
         } catch (error) {
             console.error('Newsletter metadata error:', error);
             return await reply('❌ Failed to fetch channel info. The channel may be private, deleted, or the link is invalid.');
@@ -51,11 +51,11 @@ malvin({
                         `📅 *Created:* ${creationDate}\n` +
                         `🔗 *Invite ID:* ${inviteId}\n\n` +
                         `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                        `> © Powered by Malvin King`;
+                        `> © Powered by shyam King`;
 
         // Send with image if available
         if (metadata.preview) {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 image: { url: `https://pps.whatsapp.net${metadata.preview}` },
                 caption: infoText,
                 mentions: [sender]

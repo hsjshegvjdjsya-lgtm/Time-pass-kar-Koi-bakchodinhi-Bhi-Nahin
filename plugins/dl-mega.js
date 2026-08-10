@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { File } = require("megajs");
 const mime = require("mime-types");
 
@@ -12,7 +12,7 @@ function formatBytes(bytes) {
 }
 
 // ==================== MEGA DOWNLOADER ====================
-malvin({
+shyam({
     pattern: "mega",
     alias: ["megadl", "megadownload"],
     desc: "Download files from Mega.nz",
@@ -20,7 +20,7 @@ malvin({
     react: "📥",
     use: ".mega <mega-url>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`📥 *Mega Downloader*\n\nUsage: .mega <mega-url>\nExample: .mega https://mega.nz/file/XXXX#KEY`);
@@ -61,7 +61,7 @@ malvin({
         // Download file
         const buffer = await file.downloadBuffer();
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             document: buffer,
             fileName: file.name,
             mimetype: mimeType,
@@ -69,7 +69,7 @@ malvin({
                     `📄 *Name:* ${file.name}\n` +
                     `💾 *Size:* ${fileSize}\n` +
                     `👤 *Downloaded by:* @${sender.split('@')[0]}\n` +
-                    `> © Powered by Malvin King`,
+                    `> © Powered by shyam King`,
             mentions: [sender]
         }, { 
             quoted: fakevCard 

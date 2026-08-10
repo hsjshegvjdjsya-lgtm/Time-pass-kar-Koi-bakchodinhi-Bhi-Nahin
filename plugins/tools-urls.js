@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 
-malvin({
+shyam({
     pattern: "abellashort",
     alias: ['shortabella', 'abellaurl', 'urlshort'],
     desc: "Shorten URLs using Abella shortener service",
@@ -9,7 +9,7 @@ malvin({
     react: "🔗",
     use: ".abellashort <url>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply }) => {
+}, async (shyam, mek, m, { from, q, reply }) => {
     try {
         if (!q) {
             return await reply(`🔗 *URL Shortener*\n\nUsage: .abellashort <url>\nExample: .abellashort https://google.com`);

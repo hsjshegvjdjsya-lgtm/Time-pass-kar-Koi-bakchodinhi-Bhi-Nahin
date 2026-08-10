@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 
-malvin({
+shyam({
     pattern: "newsletter",
     alias: ["cjid", "id", "channelinfo", "chaninfo"],
     desc: "Get WhatsApp Channel info from link",
@@ -9,7 +9,7 @@ malvin({
     react: "📡",
     use: ".newsletter <channel-link>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`📡 *WhatsApp Channel Info*\n\nUsage: .newsletter <channel-link>\nExample: .newsletter https://whatsapp.com/channel/0029Vb5yGMgBKfi6JAAYiZ1U`);
@@ -25,7 +25,7 @@ malvin({
 
         // METHOD 1: Get Channel ID using direct Baileys API (for the ID)
         try {
-            const metadata = await malvin.newsletterMetadata("invite", inviteId);
+            const metadata = await shyam.newsletterMetadata("invite", inviteId);
             if (metadata?.id) {
                 channelId = metadata.id;
                 console.log('✅ Got Channel ID from direct API:', channelId);
@@ -58,10 +58,10 @@ malvin({
                             `📝 *Description:* ${description || 'No description'}\n` +
                             `🔗 *Invite ID:* ${inviteId}\n\n` +
                             `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                            `> © Powered by Malvin King`;
+                            `> © Powered by shyam King`;
 
             if (image) {
-                await malvin.sendMessage(from, {
+                await shyam.sendMessage(from, {
                     image: { url: image },
                     caption: infoText,
                     mentions: [sender]
@@ -79,7 +79,7 @@ malvin({
                             `📝 *Description:* No description\n` +
                             `🔗 *Invite ID:* ${inviteId}\n\n` +
                             `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                            `> © Powered by Malvin King`;
+                            `> © Powered by shyam King`;
             
             await reply(infoText);
         }
@@ -94,10 +94,10 @@ malvin({
                             `📝 *Description:* ${description || 'No description'}\n` +
                             `🔗 *Invite ID:* ${inviteId}\n\n` +
                             `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                            `> © Powered by Malvin King`;
+                            `> © Powered by shyam King`;
 
             if (image) {
-                await malvin.sendMessage(from, {
+                await shyam.sendMessage(from, {
                     image: { url: image },
                     caption: infoText,
                     mentions: [sender]

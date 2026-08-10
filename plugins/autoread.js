@@ -1,4 +1,4 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fs = require('fs');
 const path = require('path');
 
@@ -59,7 +59,7 @@ function isBotMentionedInMessage(message, botNumber) {
         }
         
         // Check for bot name mentions (optional, can be customized)
-        const botNames = [global.botname?.toLowerCase(), 'bot', 'malvin', 'malvin xd'];
+        const botNames = [global.botname?.toLowerCase(), 'bot', 'shyam', 'shyam xd'];
         const words = textContent.toLowerCase().split(/\s+/);
         if (botNames.some(name => words.includes(name))) {
             return true;
@@ -95,7 +95,7 @@ async function handleAutoread(sock, message) {
 }
 
 // Autoread command 
-malvin({
+shyam({
     pattern: "autoread",
     alias: ["autoread", "readauto"],
     desc: "Enable/disable auto-read messages feature",
@@ -103,7 +103,7 @@ malvin({
     react: "📖",
     use: ".autoread [on/off]",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply }) => {
+}, async (shyam, mek, m, { from, q, reply }) => {
     try {
          const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) {

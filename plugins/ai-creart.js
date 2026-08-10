@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const axios = require('axios');
 
-malvin({
+shyam({
     pattern: "creart",
     alias: ["createart", "art", "aiart"],
     desc: "Generate AI images using Creart AI",
@@ -9,7 +9,7 @@ malvin({
     react: "🎨",
     use: ".creart <your prompt>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return reply('Please provide a prompt for image generation.\n\nExample: .creart a beautiful sunset over mountains');
@@ -24,7 +24,7 @@ malvin({
 
         const imageBuffer = Buffer.from(response.data);
 
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: imageBuffer,
             caption: `🎨 *Creart AI Generated Image*\n\n📝 *Prompt:* ${q}\n👤 *Requested by:* @${sender.split('@')[0]}`,
             mentions: [sender]

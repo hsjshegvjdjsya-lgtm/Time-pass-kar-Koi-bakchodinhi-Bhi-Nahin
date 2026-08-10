@@ -1,6 +1,6 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 
-malvin({
+shyam({
     pattern: "groupinfo",
     alias: ["ginfo", "groupdesc"],
     desc: "Get detailed group information",
@@ -8,19 +8,19 @@ malvin({
     react: "ℹ️",
     use: ".groupinfo",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         if (!isGroup) {
             return await reply('❌ This command can only be used in groups!');
         }
 
         // Get group metadata
-        const groupMetadata = await malvin.groupMetadata(from);
+        const groupMetadata = await shyam.groupMetadata(from);
         
         // Get group profile picture with better error handling
         let pp;
         try {
-            pp = await malvin.profilePictureUrl(from, 'image');
+            pp = await shyam.profilePictureUrl(from, 'image');
         } catch {
             // Use a reliable default image
             pp = 'https://i.ibb.co/VWt5CXzX/malvin-xd.jpg';
@@ -56,7 +56,7 @@ ${groupMetadata.desc?.toString() || '   • No description'}
 `.trim();
 
         // Send the message with image and mentions
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             image: { url: pp },
             caption: infoText,
             mentions: [...groupAdmins.map(v => v.id), owner]

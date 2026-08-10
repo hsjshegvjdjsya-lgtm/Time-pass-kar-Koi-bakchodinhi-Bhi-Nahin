@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { downloadContentFromMessage } = require("@whiskeysockets/baileys");
 
-malvin({
+shyam({
     pattern: "save",
     alias: ["savestatus", "statusave", "downloadstatus"],
     desc: "Save status media (images/videos)",
@@ -9,7 +9,7 @@ malvin({
     react: "💾",
     use: ".save (reply to status)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         const quotedMsg = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
         
@@ -61,20 +61,20 @@ malvin({
 
         // Send the saved status media
         if (mediaType === "image") {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 image: buffer,
-                caption: `💾 *Status Saved*\n\n🖼️ Image saved from status\n👤 *Saved by:* @${sender.split('@')[0]}\n> © Powered by Malvin King`,
+                caption: `💾 *Status Saved*\n\n🖼️ Image saved from status\n👤 *Saved by:* @${sender.split('@')[0]}\n> © Powered by shyam King`,
                 mentions: [sender]
             }, { quoted: fakevCard });
         } else if (mediaType === "video") {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 video: buffer,
-                caption: `💾 *Status Saved*\n\n🎥 Video saved from status\n👤 *Saved by:* @${sender.split('@')[0]}\n> © Powered by Malvin King`,
+                caption: `💾 *Status Saved*\n\n🎥 Video saved from status\n👤 *Saved by:* @${sender.split('@')[0]}\n> © Powered by shyam King`,
                 mentions: [sender]
             }, { quoted: fakevCard });
         }
 
-        await reply(`✅ *Status ${mediaType.toUpperCase()} Saved*\n\n👤 *Saved by:* @${sender.split('@')[0]}\n> © Powered by Malvin King`);
+        await reply(`✅ *Status ${mediaType.toUpperCase()} Saved*\n\n👤 *Saved by:* @${sender.split('@')[0]}\n> © Powered by shyam King`);
 
         console.log(`✅ Status ${mediaType} saved by ${sender}`);
 

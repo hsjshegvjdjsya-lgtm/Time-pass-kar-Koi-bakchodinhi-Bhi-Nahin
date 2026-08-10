@@ -1,21 +1,21 @@
 //---------------------------------------------
-//           MALVIN-XD PREFIX SYSTEM
+//           shyam-XD PREFIX SYSTEM
 //---------------------------------------------
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { malvin } = require('../malvin');
+const { shyam } = require('../shyam');
 const { getPrefix, setPrefix, resetPrefix } = require('../lib/prefix');
 
 // PREFIX COMMAND - Show current prefix
-malvin({
+shyam({
     pattern: "prefix",
     alias: ["botprefix", "pref"],
     desc: "Show current bot prefix",
     category: "general", 
     react: "🔧",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     try {
        const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         const currentPrefix = getPrefix();
@@ -43,14 +43,14 @@ malvin({
 });
 
 // SETPREFIX COMMAND - Change prefix (FIXED VERSION)
-malvin({
+shyam({
     pattern: "setprefix",
     alias: ["changeprefix", "newprefix"],
     desc: "Change the bot prefix", 
     category: "owner",
     react: "⚙️",
     filename: __filename
-}, async (malvin, mek, m, { from, reply, text, body, args }) => {
+}, async (shyam, mek, m, { from, reply, text, body, args }) => {
     try {
     
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
@@ -124,7 +124,7 @@ malvin({
         await reply(successText);
         
         // Also send a test message with new prefix
-        await malvin.sendMessage(from, { 
+        await shyam.sendMessage(from, { 
             text: `🔧 *Test message with new prefix:*\nType \`${newPrefix}ping\` to test if it works!` 
         });
         
@@ -135,14 +135,14 @@ malvin({
 });
 
 // RESETPREFIX COMMAND - Reset to default
-malvin({
+shyam({
     pattern: "resetprefix", 
     alias: ["defaultprefix", "restoreprefix"],
     desc: "Reset prefix to default",
     category: "owner",
     react: "🔄",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         if (!isOwner) {
@@ -168,14 +168,14 @@ malvin({
 });
 /*
 // TEST COMMAND - Test if prefix is working
-malvin({
+shyam({
     pattern: "testprefix",
     alias: ["prefixtest"],
     desc: "Test if prefix system is working",
     category: "general",
     react: "🧪",
     filename: __filename
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     try {
         const currentPrefix = getPrefix();
         

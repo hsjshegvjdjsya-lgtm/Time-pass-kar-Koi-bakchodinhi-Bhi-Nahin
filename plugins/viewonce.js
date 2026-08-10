@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const { downloadContentFromMessage } = require('@whiskeysockets/baileys');
 
-malvin({
+shyam({
     pattern: "viewonce",
     alias: ["vo", "reveal", "vv"],
     desc: "Reveal view-once media",
@@ -9,7 +9,7 @@ malvin({
     react: "👁️",
     use: ".viewonce (reply to view-once media)",
     filename: __filename,
-}, async (malvin, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
+}, async (shyam, mek, m, { from, args, isGroup, sender, reply, text, isAdmin }) => {
     try {
         // Extract quoted imageMessage or videoMessage
         const quoted = mek.message?.extendedTextMessage?.contextInfo?.quotedMessage;
@@ -24,7 +24,7 @@ malvin({
                 buffer = Buffer.concat([buffer, chunk]);
             }
             
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 image: buffer, 
                 fileName: 'revealed-image.jpg', 
                 caption: quotedImage.caption || '📸 Revealed view-once image'
@@ -40,7 +40,7 @@ malvin({
                 buffer = Buffer.concat([buffer, chunk]);
             }
             
-            await malvin.sendMessage(from, { 
+            await shyam.sendMessage(from, { 
                 video: buffer, 
                 fileName: 'revealed-video.mp4', 
                 caption: quotedVideo.caption || '🎥 Revealed view-once video'
@@ -59,7 +59,7 @@ malvin({
 });
 
 
-malvin({
+shyam({
     pattern: "vv2",
     alias: ["retrieve2", "viewonce2", "reveal2"],
     desc: "Retrieve view once messages (Owner Only)",
@@ -67,7 +67,7 @@ malvin({
     react: "🐳",
     use: ".vv2 (reply to view once message)",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, sender }) => {
+}, async (shyam, mek, m, { from, reply, sender }) => {
     try {
         const isOwner = await require('../lib/isOwnerOrSudo')(sender);
         if (!isOwner) {
@@ -100,7 +100,7 @@ malvin({
         let messageType;
 
         if (actualMessage.imageMessage) {
-            buffer = await malvin.downloadMediaMessage(
+            buffer = await shyam.downloadMediaMessage(
                 { message: { imageMessage: actualMessage.imageMessage } },
                 'buffer',
                 {},
@@ -110,7 +110,7 @@ malvin({
             messageType = "image";
         } 
         else if (actualMessage.videoMessage) {
-            buffer = await malvin.downloadMediaMessage(
+            buffer = await shyam.downloadMediaMessage(
                 { message: { videoMessage: actualMessage.videoMessage } },
                 'buffer',
                 {},
@@ -120,7 +120,7 @@ malvin({
             messageType = "video";
         }
         else if (actualMessage.audioMessage) {
-            buffer = await malvin.downloadMediaMessage(
+            buffer = await shyam.downloadMediaMessage(
                 { message: { audioMessage: actualMessage.audioMessage } },
                 'buffer',
                 {},
@@ -141,14 +141,14 @@ malvin({
                 messageContent = {
                     image: buffer,
                     mimetype: mimeType,
-                    caption: '🐳 *View Once Message Retrieved*\n\n> © Powered by Malvin King'
+                    caption: '🐳 *View Once Message Retrieved*\n\n> © Powered by shyam King'
                 };
                 break;
             case "video":
                 messageContent = {
                     video: buffer,
                     mimetype: mimeType,
-                    caption: '🐳 *View Once Video Retrieved*\n\n> © Powered by Malvin King'
+                    caption: '🐳 *View Once Video Retrieved*\n\n> © Powered by shyam King'
                 };
                 break;
             case "audio":
@@ -160,7 +160,7 @@ malvin({
                 break;
         }
 
-        await malvin.sendMessage(from, messageContent, { 
+        await shyam.sendMessage(from, messageContent, { 
             quoted: fakevCard 
         });
 

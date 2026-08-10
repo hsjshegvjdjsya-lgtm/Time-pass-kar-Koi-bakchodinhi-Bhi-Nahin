@@ -1,7 +1,7 @@
-const { malvin, fakevCard } = require('../malvin');
+const { shyam, fakevCard } = require('../shyam');
 
-// Malvin XD Clear Command
-malvin({
+// shyam XD Clear Command
+shyam({
     pattern: "clear",
     alias: ["cls", "clean", "delete"],
     desc: "Clear bot's messages",
@@ -9,7 +9,7 @@ malvin({
     react: "🧹",
     use: ".clear",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isAdmin, isGroup }) => {
+}, async (shyam, mek, m, { from, reply, isAdmin, isGroup }) => {
     try {
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         // Check permissions
@@ -33,7 +33,7 @@ malvin({
         // Delete the message after a short delay
         setTimeout(async () => {
             try {
-                await malvin.sendMessage(from, { delete: clearMsg.key });
+                await shyam.sendMessage(from, { delete: clearMsg.key });
                 console.log(`🧹 Messages cleared in ${from} by ${m.sender}`);
             } catch (deleteError) {
                 console.error('Error deleting clear message:', deleteError);
@@ -48,7 +48,7 @@ malvin({
 });
 
 // Enhanced clear command with options
-malvin({
+shyam({
     pattern: "clearall",
     alias: ["clearallmsgs", "cleanall"],
     desc: "Clear all bot messages (use with caution)",
@@ -56,7 +56,7 @@ malvin({
     react: "💥",
     use: ".clearall",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply, isAdmin, isGroup }) => {
+}, async (shyam, mek, m, { from, reply, isAdmin, isGroup }) => {
     try {
     
         const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
@@ -87,7 +87,7 @@ malvin({
         setTimeout(async () => {
             try {
                 // Delete the warning message
-                await malvin.sendMessage(from, { delete: warningMsg.key });
+                await shyam.sendMessage(from, { delete: warningMsg.key });
                 
                 // Send completion message that will also auto-delete
                 const completionMsg = await reply(
@@ -100,7 +100,7 @@ malvin({
                 // Auto-delete completion message
                 setTimeout(async () => {
                     try {
-                        await malvin.sendMessage(from, { delete: completionMsg.key });
+                        await shyam.sendMessage(from, { delete: completionMsg.key });
                     } catch (e) {
                         // Ignore deletion errors
                     }
@@ -121,7 +121,7 @@ malvin({
 });
 
 // Quick clear command for bot owner
-malvin({
+shyam({
     pattern: "purge",
     alias: ["quickclear"],
     desc: "Quick clear (owner only)",
@@ -129,7 +129,7 @@ malvin({
     react: "⚡",
     use: ".purge",
     filename: __filename,
-}, async (malvin, mek, m, { from, reply }) => {
+}, async (shyam, mek, m, { from, reply }) => {
     try {
          const isOwner = mek.key.fromMe || (await require('../lib/isOwner')(sender));
         // Owner only command
@@ -142,7 +142,7 @@ malvin({
         
         setTimeout(async () => {
             try {
-                await malvin.sendMessage(from, { delete: purgeMsg.key });
+                await shyam.sendMessage(from, { delete: purgeMsg.key });
                 console.log(`⚡ Quick purge by owner in ${from}`);
             } catch (e) {
                 // Silent fail

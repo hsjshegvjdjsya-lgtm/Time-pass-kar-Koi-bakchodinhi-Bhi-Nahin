@@ -1,9 +1,9 @@
-const { malvin, fakevCard } = require("../malvin");
+const { shyam, fakevCard } = require("../shyam");
 const fetch = require('node-fetch');
 const { sticker5 } = require('../lib/sticker');
 const axios = require('axios');
 
-malvin({
+shyam({
     pattern: "brat",
     alias: ["banime", "bratanime"],
     desc: "Create Brat Anime style text stickers",
@@ -11,7 +11,7 @@ malvin({
     react: "🎨",
     use: ".brat <your text>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`🎨 *Brat Anime Sticker*\n\nUsage: .brat <your text>\n\nExample: .brat aku ganteng`);
@@ -35,7 +35,7 @@ malvin({
         const buffer = Buffer.from(response.data);
 
         // Send as sticker
-        await malvin.sendMessage(from, {
+        await shyam.sendMessage(from, {
             sticker: buffer,
             caption: `🎨 *Brat Anime Sticker*\n\n📝 *Text:* ${q}\n👤 *By:* @${sender.split('@')[0]}`,
             mentions: [sender]
@@ -60,7 +60,7 @@ malvin({
     }
 });
 
-malvin({
+shyam({
     pattern: "brat2",
     alias: ['bratsticker2', 'brattext2', 'brat2'],
     desc: "Create Brat style text sticker",
@@ -68,7 +68,7 @@ malvin({
     react: "😈",
     use: ".brat <text>",
     filename: __filename,
-}, async (malvin, mek, m, { from, q, reply, sender }) => {
+}, async (shyam, mek, m, { from, q, reply, sender }) => {
     try {
         if (!q) {
             return await reply(`😈 *Brat Style Sticker*\n\nUsage: .brat <your text>\nExample: .brat Hello World`);
@@ -83,10 +83,10 @@ malvin({
         if (!res.ok) throw new Error(`API error! status: ${res.status}`);
         const buffer = await res.buffer();
 
-        const stiker = await sticker5(buffer, null, 'malvin xd', 'malvin');
+        const stiker = await sticker5(buffer, null, 'shyam xd', 'shyam');
 
         if (stiker) {
-            await malvin.sendMessage(from, {
+            await shyam.sendMessage(from, {
                 sticker: stiker,
                 caption: `😈 *Brat Style Sticker*\n\n📝 *Text:* ${q}\n👤 *By:* @${sender.split('@')[0]}`,
                 mentions: [sender]

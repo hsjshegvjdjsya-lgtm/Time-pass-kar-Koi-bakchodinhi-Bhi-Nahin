@@ -12,7 +12,7 @@ const settings = {
   
   // Your additional settings
   packname: '𝚂𝚑𝚢𝚊𝚖 xᴅ',
-  author: '𝚂𝙷𝚈𝙰𝙼 ᴋɪɴɢ',
+  author: '𝚂𝙷𝚈𝙰𝙼 𝙲𝙷𝙾𝚄𝙳𝙷𝙰𝚁𝙸',
   version: '3.1.1',
   prefix: '.',
   giphyApiKey: 'qnl7ssQChTdPjsKta2Ax2LMaGXz303tq',

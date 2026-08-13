@@ -1,0 +1,43 @@
+{
+  "name": "shyam-xd",
+  "version": "3.1.1",
+  "description": "SHYAM XD - Advanced WhatsApp Bot",
+  "website": "cooming soon",
+  "logo": "https://i.ibb.co/wFtFhcyc/Shyam-xd.jpg",
+  "keywords": ["shyam-xd", "whatsapp-bot"],
+  "repository": "https://github.com/dexsam07/SHYAM-XD",
+  "success_url": "/",
+  "stack": "container",
+  "env": {
+    "BOT_NAME": {
+      "description": "Your Bot Name",
+      "required": true,
+      "value": "𝚂𝙷𝚈𝙰𝙼 x𝙳"
+    },
+    "OWNER_NAME": {
+      "description": "Put Owner Name Here",
+      "required": true,
+      "value": "𝚂𝙷𝚈𝙰𝙼 ᴋɪɴɢ"
+    },
+    "OWNER_NUMBER": {
+      "description": "Put only one Owner Number Here",
+      "required": true,
+      "value": "917384287404"
+    },
+    "SESSION_ID": {
+      "description": "Put your session-id here. Must Start with 'DEX~'",
+      "required": false,
+      "value": "DEX~"
+    },
+    "MODE": {
+      "description": "Set Mode to 'public' to work in all chats, 'private' to work for you only",
+      "required": true,
+      "value": "public"
+    },
+    "TIMEZONE": {
+      "description": "Set your timezone",
+      "required": true,
+      "value": "Asia/kolkata"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-// Shyam King 🤴 
+// 𝚂𝙷𝚈𝙰𝙼 𝙲𝙷𝙾𝚄𝙳𝙷𝙰𝚁𝙸 🤴 
 require('./settings')
 const { Boom } = require('@hapi/boom')
 const fs = require('fs')
@@ -361,7 +361,7 @@ function loadPlugins() {
             try {
                 require(path.join(pluginsDir, file));
             } catch (error) {
-              //  console.log(chalk.red(`❌ Failed to load: ${file} - ${error.message}`));
+                console.error(chalk.red(`❌ Failed to load: ${file} - ${error.stack || error.message}`));
             }
         });
         
@@ -891,9 +891,7 @@ async function startShyamXD() {
             const antideleteConfig = loadAntideleteConfig();
             const currentSettings = loadSettings();
             
-            await shyamBot.sendMessage(botNumber, { 
-                image: { url: 'https://i.ibb.co/VWt5CXzX/shyam-xd.jpg' },
-                caption: `
+            const startupCaption = `
 ╭════════════════╮
 ┆  \`🤖 𝚂𝙷𝚈𝙰𝙼 - xᴅ\`  
 ╰════════════════╯
@@ -908,10 +906,29 @@ async function startShyamXD() {
 
 🍴 ғᴏʀᴋ ɴ ⭐ ᴍʏ ʀᴇᴘᴏ: https://github.com/dexsam07/SHYAM-XD/fork
                     
-> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ
-`,
-                ...channelInfo
-            });
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝙳𝙴𝚇 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ
+`;
+
+            try {
+                // Download first so Baileys receives a complete Buffer, not a remote URL stream.
+                const startupImage = await axios.get('https://i.ibb.co/VWt5CXzX/shyam-xd.jpg', {
+                    responseType: 'arraybuffer',
+                    timeout: 30000
+                });
+                await shyamBot.sendMessage(botNumber, {
+                    image: Buffer.from(startupImage.data),
+                    mimetype: startupImage.headers['content-type'] || 'image/jpeg',
+                    caption: startupCaption,
+                    ...channelInfo
+                });
+            } catch (mediaError) {
+                // Do not crash the connected bot if WhatsApp's media CDN rejects the upload.
+                console.error('⚠️ Startup image upload failed; sending text fallback:', mediaError.message);
+                await shyamBot.sendMessage(botNumber, {
+                    text: startupCaption,
+                    ...channelInfo
+                });
+            }
 
             await delay(1999)
             console.log(chalk.yellow(`\n\n                  ${chalk.bold.blue(`[ ${global.botname} ]`)}\n\n`))

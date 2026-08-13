@@ -1,0 +1,31 @@
+
+{
+"bot-name": "SHYAM-XD",
+  "description": "ᴊᴀᴠᴀsᴄʀɪᴘᴛ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ ᴄʀᴇᴀᴛᴇᴅ ʙʏ 𝙳𝙴𝚇 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ",
+  "logo": "https://i.ibb.co/wFtFhcyc/Shyam-xd.jpg",
+  "keywords": ["bot"],
+  "documentation-link": "https://github.com/dexsam07/SHYAM-XD",
+    "owner-verification":"dexsam007@gmail.com",
+  
+    "env": {
+      "SESSION_ID": {
+        "description": "Put your SESSION_ID here. It starts with DEX~",
+        "value":"",
+        "required": true
+        
+      },
+      
+    "OWNER_NUMBER": {
+      "description": "Enter owner number",
+      "required": true,
+      "value": "917384287404"
+      
+       },
+      "TIMEZONE": {
+      "description": "Enter country timezone",
+      "required": true,
+      "value": "Asia/kolkata"
+
+    }  
+  }
+}

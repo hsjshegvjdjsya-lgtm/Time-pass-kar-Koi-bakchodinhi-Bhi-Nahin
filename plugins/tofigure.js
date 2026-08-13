@@ -4,7 +4,7 @@
 //  ⚠️ DO NOT MODIFY THIS FILE OR REMOVE THIS CREDIT⚠️  
 //---------------------------------------------
 
-const { 𝐒𝐇𝐘𝐀𝐌-𝐗𝐌𝐃, fakevCard } = require('../shyam');
+const { shyam, fakevCard } = require('../shyam');
 const { channelInfo } = require('../lib/messageConfig');
 const axios = require('axios');
 const FormData = require('form-data');

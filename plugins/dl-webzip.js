@@ -57,7 +57,7 @@ shyam({
                        `📂 *Files Archived:* ${copiedFilesAmount}\n` +
                        `💾 *Archive Size:* ${(zipBuffer.length / 1024 / 1024).toFixed(2)} MB\n\n` +
                        `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                       `> © Powered by shyam King`;
+                       `> © Powered by 𝙳𝙴𝚇 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`;
 
         await shyam.sendMessage(
             from,

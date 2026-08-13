@@ -58,7 +58,7 @@ shyam({
                             `📝 *Description:* ${description || 'No description'}\n` +
                             `🔗 *Invite ID:* ${inviteId}\n\n` +
                             `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                            `> © Powered by shyam King`;
+                            `> © Powered by 𝙳𝙴𝚇 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`;
 
             if (image) {
                 await shyam.sendMessage(from, {
@@ -79,7 +79,7 @@ shyam({
                             `📝 *Description:* No description\n` +
                             `🔗 *Invite ID:* ${inviteId}\n\n` +
                             `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                            `> © Powered by shyam King`;
+                            `> © Powered by 𝙳𝙴𝚇 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`;
             
             await reply(infoText);
         }
@@ -94,7 +94,7 @@ shyam({
                             `📝 *Description:* ${description || 'No description'}\n` +
                             `🔗 *Invite ID:* ${inviteId}\n\n` +
                             `👤 *Requested by:* @${sender.split('@')[0]}\n` +
-                            `> © Powered by shyam King`;
+                            `> © Powered by 𝙳𝙴𝚇 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ`;
 
             if (image) {
                 await shyam.sendMessage(from, {

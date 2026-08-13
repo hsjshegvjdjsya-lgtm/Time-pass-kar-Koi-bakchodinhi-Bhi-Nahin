@@ -13,7 +13,7 @@ shyam({
     try {
         // Load owner info from settings
         
-        const ownerName = "𝚂𝙷𝚈𝙰𝙼 ᴋɪɴɢ";
+        const ownerName = "𝚂𝙷𝚈𝙰𝙼 𝙲𝙷𝙾𝚄𝙳𝙷𝙰𝚁𝙸";
         const ownerNumber = "917384287404";
         
         // Create vCard
@@ -50,7 +50,7 @@ shyam({
 • Business Inquiries
 • Technical Help
 
-> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴍᴀʟᴠɪɴ ᴛᴇᴄʜ🪀`,
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝙳𝙴𝚇 𝚂𝙷𝚈𝙰𝙼 ᴛᴇᴄʜ🪀`,
             ...channelInfo         
         }, { quoted: fakevCard });
 

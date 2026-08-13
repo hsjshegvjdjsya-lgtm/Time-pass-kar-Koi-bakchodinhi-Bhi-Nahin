@@ -532,7 +532,7 @@ shyam({
         const mainMenu = `
 \`🤖 ${toTinyCaps(currentSettings.botName || settings.botName || 'shyam-xd')}\`
 ╭─────────➣
-│↠👤 ᴏᴡɴᴇʀ : ${toTinyCaps(currentSettings.botOwner || settings.botOwner || '𝚂𝙷𝚈𝙰𝙼 ᴋɪɴɢ')}
+│↠👤 ᴏᴡɴᴇʀ : ${toTinyCaps(currentSettings.botOwner || settings.botOwner || '𝚂𝙷𝚈𝙰𝙼 𝙲𝚑𝚊𝚞𝚍𝚑𝚊𝚛𝚒')}
 │↠⏰ ᴛɪᴍᴇ: ${time}
 │↠📅 ᴅᴀᴛᴇ: ${date}
 │↠🌍 ᴍᴏᴅᴇ: ${toTinyCaps(currentSettings.commandMode || settings.commandMode || 'ᴘᴜʙʟɪᴄ')}

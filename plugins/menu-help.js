@@ -54,7 +54,7 @@ shyam({
 │ 📅 ᴅᴀᴛᴇ: ${date} 
 │ 🔧 ᴘʀᴇғɪx: ${prefix}
 │ 🧩 ᴄᴍᴅs: ${totalCommands}
-│ 👑 ᴏᴡɴᴇʀ: ${settings.OWNER_NAME || 'shyam King'}
+│ 👑 ᴏᴡɴᴇʀ: ${settings.OWNER_NAME || '𝚂𝙷𝚈𝙰𝙼 𝙲𝙷𝙾𝚄𝙳𝙷𝙰𝚁𝙸'}
 ╰─✦──✦
 
 `;

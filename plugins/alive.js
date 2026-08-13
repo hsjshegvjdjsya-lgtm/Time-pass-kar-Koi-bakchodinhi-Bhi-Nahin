@@ -42,7 +42,7 @@ const formatStatusInfo = (pushname, harareTime, harareDate, runtimeHours, runtim
 │   ᴜsᴇ ɪᴛ ᴡɪsᴇʟʏ ᴀɴᴅ ᴀᴛ ʏᴏᴜʀ ᴏᴡɴ ʀɪsᴋ ⚠️ 
 │
 ╰───〔 🥰 〕───
-🔗 ɢɪᴛʜᴜʙ: https://short.abella.icu/fOg
+🔗 ɢɪᴛʜᴜʙ: https://github.com/dexsam07/SHYAM-XD
 
 > ${settings.description}
 `.trim();
@@ -79,7 +79,7 @@ shyam({
     );
 
     // Use image URL from settings or default
-    const imageUrl = currentSettings.imageUrl || 'https://i.ibb.co/zHhMyRT3/malvin-xd.jpg';
+    const imageUrl = currentSettings.imageUrl || 'https://i.ibb.co/wFtFhcyc/Shyam-xd.jpg'
     
     // Send image with status info
     await shyam.sendMessage(from, {
